@@ -19,6 +19,7 @@ function interactive_plot( imageStack, colormapStr )
 	[w,h,nImages] = size(images);
 	z = 1;
 	imagesc( images(:,:,z) );
+	daspect([1 1 1]);
 	title( sprintf('z = %d',z) );
 	h = imgcf;
 	
@@ -49,6 +50,7 @@ function moveZ( key )
 
 	% imagesc( images(:,:,z) );
 	imagesc( images(:,:,z) );
+	daspect([1 1 1]);
 	title( sprintf('z = %d',z) );
 
 end

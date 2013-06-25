@@ -1,18 +1,29 @@
-function [mirroredImg] = mirrorImageBoundary( img, halfW )
+function [img] = mirrorImageBoundary( img, w )
 
-	[w,h] = size(img);
-	mirroredImg = padarray( img, [halfW halfW], 0 );
+	assert(numel(size(img)) == 3);	% 3D image stack
+	w = floor(w/2);
 
-	% North
-	mirroredImg(1:halfW,1+halfW:halfW+w) = flipud(img(2:1+halfW,:));
+	%% x-axis
+	%
+	dim = 2;
+	A = flipdim(img(:,2:1+w,:),dim);
+	B = flipdim(img(:,end-w:end-1,:),dim);
+	img = cat(dim,A,img,B);
 
-	% South
-	mirroredImg(halfW+h+1:end,1+halfW:halfW+w) = flipud(img(end-halfW:end-1,:));
-	
-	% West
-	mirroredImg(:,1:halfW) = fliplr(mirroredImg(:,halfW+2:halfW+1+halfW));
 
-	% East
-	mirroredImg(:,halfW+w+1:end) = fliplr(mirroredImg(:,w:w+halfW-1));
+	%% y-axis
+	%
+	dim = 1;
+	A = flipdim(img(2:1+w,:,:),dim);
+	B = flipdim(img(end-w:end-1,:,:),dim);
+	img = cat(dim,A,img,B);
+
+
+	%% z-axis
+	%
+	dim = 3;
+	A = flipdim(img(:,:,2:1+w),dim);
+	B = flipdim(img(:,:,end-w:end-1),dim);
+	img = cat(dim,A,img,B);
 
 end
