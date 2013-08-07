@@ -1,5 +1,11 @@
 function interactive_plot( imageStack, colormapStr )
 
+	%% Argument validation
+	%
+	if( ~exist('colormapStr','var') ) 
+		colormapStr = 'gray';
+	end
+
 	% imageStack(imageStack ~= 0) = 1;
 
 	%% Declare global variables

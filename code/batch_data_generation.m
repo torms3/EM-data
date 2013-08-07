@@ -2,7 +2,8 @@ function [data] = batch_data_generation( segIdx, w )
 
 	% load raw data
 	fprintf('Now loading e2006_e2198_kisuk.mat...\n');
-	load('../data/e2006_e2198_kisuk.mat');
+	[dpath] = get_project_data_path();
+	load([dpath '/e2006_e2198_kisuk.mat']);
 	fprintf('Done!\n\n');
 
 	data = cell(numel(segIdx),1);

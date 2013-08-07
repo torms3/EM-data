@@ -3,7 +3,7 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 	%% Options
 	%
 	if( ~exist('affinity','var') )
-		affinity = false;
+		affinity = true;
 	end
 
 	%% bb + mask = a mask for valid locations
@@ -19,14 +19,17 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 
 	%% Input normalization
 	%
+	% [kisuklee: TODO]  mean 0, var 1
 	img = 2*(img - 0.5);
 
 
 	%% whole training input data
 	%
 	if( affinity )
-		data.image = img(1:end-1,1:end-1,1:end-1);
-		data.mask  = bbMask(1:end-1,1:end-1,1:end-1);		
+		% data.image = img(1:end-1,1:end-1,1:end-1);
+		% data.mask  = bbMask(1:end-1,1:end-1,1:end-1);
+		data.image = img(2:end,2:end,2:end);
+		data.mask  = bbMask(2:end,2:end,2:end);
 		% label
 		[G] = generate_affinity_graph( lbl{:} );		
 		label = cell(3,1);

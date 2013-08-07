@@ -12,7 +12,7 @@ function interactive_plot4_test( img1, img2, img3, img4, clrStr )
 
 	%% Figure
 	%
-	% h = figure;
+	figure;
 	colormap( clrStr );
 
 
