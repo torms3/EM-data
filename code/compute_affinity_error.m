@@ -1,6 +1,9 @@
 function [ret] = compute_affinity_error( out, G, mask )
 
-	assert( iscell(out) & (numel(out) == 3) );
+	assert(iscell(out));
+	assert(numel(out) == 3);
+	
+	% convert from affinity graph to boundary map
 	affinity = cell(3,1);
 	affinity{1} = ~logical(G.x);
 	affinity{2} = ~logical(G.y);
@@ -13,10 +16,11 @@ function [ret] = compute_affinity_error( out, G, mask )
 	prec = zeros(numel(threshold),1);
 	rec = zeros(numel(threshold),1);
 	pixelErr = zeros(numel(threshold),1);
-	for i = 1:numel(threshold)
+	% for i = 1:numel(threshold)
+	parfor i = 1:numel(threshold)
 
 		th = threshold(i);
-		fprintf('(%d/%d) threshold = %f...\n',i,numel(threshold),th);		
+		fprintf('(%d/%d) threshold = %3f...\n',i,numel(threshold),th);		
 		
 		nTp = 0;
 		nFp = 0;

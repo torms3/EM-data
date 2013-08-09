@@ -1,5 +1,7 @@
 function [img] = import_forward_image( fname, segIdx )
 
+	fname = [fname '.test_batch' num2str(segIdx)];
+
 	fimg(1) = fopen([fname '.0'], 'r');
 	fimg(2) = fopen([fname '.1'], 'r');
 	fimg(3) = fopen([fname '.2'], 'r');

@@ -1,10 +1,16 @@
 function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity )
 
-	%% Options
+	%% Argument validations
 	%
 	if( ~exist('affinity','var') )
 		affinity = true;
 	end
+
+
+	%% Options
+	%
+	normalize = false;
+
 
 	%% bb + mask = a mask for valid locations
 	%
@@ -20,7 +26,9 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 	%% Input normalization
 	%
 	% [kisuklee: TODO]  mean 0, var 1
-	img = 2*(img - 0.5);
+	if( normalize )
+		img = 2*(img - 0.5);
+	end
 
 
 	%% whole training input data
@@ -49,11 +57,13 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 
 	%% Boundary mirroring & post-processing
 	%
-	data.image = mirrorImageBoundary( data.image, w );
-	padSz = floor(w/2);
-	for i = 1:numel(data.label)
-		data.label{i} = padarray( data.label{i}, [padSz padSz padSz], 0 );
+	if( w > 0 )
+		data.image = mirrorImageBoundary( data.image, w );
+		padSz = floor(w/2);
+		for i = 1:numel(data.label)
+			data.label{i} = padarray( data.label{i}, [padSz padSz padSz], 0 );
+		end
+		data.mask = padarray( data.mask, [padSz padSz padSz], false );
 	end
-	data.mask = padarray( data.mask, [padSz padSz padSz], false );
 
 end

@@ -8,10 +8,14 @@ function plot_affinity_result( ret )
 	end
 	bestFs = ret.fs(bestIdx);
 
+	% extreme
+	minPrec = min(ret.prec);
+	minRec  = min(ret.rec);
+
 	% plot
 	figure();
 	scatter(ret.rec,ret.prec,'*');
-	axis([0 1 0 1]);
+	axis([minRec 1 minPrec 1]);
 	hold on;
 
 		% best f-score
@@ -28,10 +32,13 @@ function plot_affinity_result( ret )
 	xlabel('Recall');
 	ylabel('Precision');
 	legend('Varying threshold','Best f-score','Location','Best');
+	title(sprintf('Best f-score: %.2f, precision: %.2f, recall: %.2f, pixel error: %.2f',bestFs,ret.prec(bestIdx),ret.rec(bestIdx),ret.pxlErr(bestIdx)));
 
-	fprintf('Best f-score = %4f\n',bestFs);
-	fprintf('Recall @ best f-score = %4f\n',ret.rec(bestIdx));
-	fprintf('Precision @ best f-score = %4f\n',ret.prec(bestIdx));
-	fprintf('Pixel error @ best f-score = %4f\n',ret.pxlErr(bestIdx));
+	fprintf('\n<<<<<<<<<< STATS >>>>>>>>>>\n');
+	fprintf('Best f-score \t= %.4f\n',bestFs);
+	fprintf('Recall \t\t= %.4f\n',ret.rec(bestIdx));
+	fprintf('Precision \t= %.4f\n',ret.prec(bestIdx));
+	fprintf('Pixel error \t= %.4f\n',ret.pxlErr(bestIdx));
+	fprintf('<<<<<<<<<< STATS >>>>>>>>>>\n');
 
 end
