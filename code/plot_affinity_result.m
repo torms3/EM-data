@@ -32,7 +32,7 @@ function plot_affinity_result( ret )
 	xlabel('Recall');
 	ylabel('Precision');
 	legend('Varying threshold','Best f-score','Location','Best');
-	title(sprintf('Best f-score: %.2f, precision: %.2f, recall: %.2f, pixel error: %.2f',bestFs,ret.prec(bestIdx),ret.rec(bestIdx),ret.pxlErr(bestIdx)));
+	title(sprintf('Best f-score: %.4f, precision: %.4f, recall: %.4f, pixel error: %.4f',bestFs,ret.prec(bestIdx),ret.rec(bestIdx),ret.pxlErr(bestIdx)));
 
 	fprintf('\n<<<<<<<<<< STATS >>>>>>>>>>\n');
 	fprintf('Best f-score \t= %.4f\n',bestFs);

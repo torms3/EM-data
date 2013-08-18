@@ -1,9 +1,9 @@
-function interactive_plot( imageStack, colormapStr )
+function interactive_plot( imageStack, coloring )
 
 	%% Argument validation
 	%
-	if( ~exist('colormapStr','var') ) 
-		colormapStr = 'gray';
+	if( ~exist('coloring','var') ) 
+		coloring = false;
 	end
 
 	% imageStack(imageStack ~= 0) = 1;
@@ -16,7 +16,14 @@ function interactive_plot( imageStack, colormapStr )
 	%% Figure
 	%
 	% h = figure;
-	colormap( colormapStr );
+	if( coloring )
+		nSeg = max(unique(imageStack)); disp(nSeg);
+		clrmap = rand(nSeg,3);
+		clrmap(1,:) = 0;
+		colormap(clrmap);
+	else
+		colormap('gray');
+	end
 
 
 	%% Extract image stack metadata
@@ -24,7 +31,11 @@ function interactive_plot( imageStack, colormapStr )
 	%	
 	[w,h,nImages] = size(images);
 	z = 1;
-	imagesc( images(:,:,z) );
+	if( coloring )
+		image( images(:,:,z) );
+	else	
+		imagesc( images(:,:,z) );
+	end
 	daspect([1 1 1]);
 	title( sprintf('z = %d',z) );
 	h = imgcf;
@@ -32,12 +43,12 @@ function interactive_plot( imageStack, colormapStr )
 
 	%% Set KeyPressFcn
 	%
-	set( h, 'KeyPressFcn', @(obj,evt) moveZ( evt.Key ) );
+	set( h, 'KeyPressFcn', @(obj,evt) moveZ( evt.Key, coloring ) );
 
 end
 
 
-function moveZ( key )
+function moveZ( key, coloring )
 
 	global images nImages h z
 
@@ -54,8 +65,12 @@ function moveZ( key )
 		end
 	end
 
-	% imagesc( images(:,:,z) );
-	imagesc( images(:,:,z) );
+	% image( images(:,:,z) );
+	if( coloring )
+		image( images(:,:,z) );
+	else	
+		imagesc( images(:,:,z) );
+	end
 	daspect([1 1 1]);
 	title( sprintf('z = %d',z) );
 

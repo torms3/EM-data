@@ -1,5 +1,12 @@
 function interactive_plot4_test( img1, img2, img3, img4, clrStr )
 
+	%% Argument validation
+	%
+	if( ~exist('clrStr','var') ) 
+		clrStr = 'gray';
+	end
+	
+
 	%% Declare global variables
 	%
 	global images nImages h z
@@ -12,7 +19,10 @@ function interactive_plot4_test( img1, img2, img3, img4, clrStr )
 
 	%% Figure
 	%
-	figure;
+	scn = get(0,'ScreenSize');
+	margin = 60;
+	szWin = scn(4) - 2*margin;
+	figure('Position',[scn(3)/2 margin szWin szWin]);
 	colormap( clrStr );
 
 

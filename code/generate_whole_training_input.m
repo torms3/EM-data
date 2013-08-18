@@ -14,13 +14,13 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 
 	%% bb + mask = a mask for valid locations
 	%
-	xx = bb{:}(1,:);
-	yy = bb{:}(2,:);
-	zz = bb{:}(3,:);
+	xx = bb(1,:);
+	yy = bb(2,:);
+	zz = bb(3,:);
 	
-	idx = false(size(mask{:}));
+	idx = false(size(mask));
 	idx(xx(1):xx(2),yy(1):yy(2),zz(1):zz(2)) = true;
-	bbMask = mask{:} & idx;
+	bbMask = mask & idx;
 
 
 	%% Input normalization
@@ -39,7 +39,7 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 		data.image = img(2:end,2:end,2:end);
 		data.mask  = bbMask(2:end,2:end,2:end);
 		% label
-		[G] = generate_affinity_graph( lbl{:} );		
+		[G] = generate_affinity_graph( lbl );		
 		label = cell(3,1);
 		label{1} = G.x;
 		label{2} = G.y;
@@ -50,7 +50,7 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 		data.mask  = bbMask;
 		% label
 		label = cell(1);
-		label{1} = (lbl{:} ~= 0);
+		label{1} = (lbl ~= 0);
 		data.label = label;
 	end
 

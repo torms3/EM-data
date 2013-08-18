@@ -29,9 +29,9 @@ function [err] = plot_train_error( fname )
 	figure;
 	hold on;
 
-		% convolution filter
+		% convolution filter - currently not used
 		w = avgWindow;
-		avg_filter = ones(w,1)/w;
+		avgFilter = ones(w,1)/w;
 
 		% testing error
 		x = train_info.test_freq*(1:nTest);

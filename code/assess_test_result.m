@@ -2,7 +2,9 @@ function [err,segm,chann] = assess_test_result( fname, segIdx )
 
 	%% Options
 	%
+	showError = true;
 	showOutputImages = false;
+	showGroundAffinity = false;
 
 
 	% load raw data
@@ -42,22 +44,27 @@ function [err,segm,chann] = assess_test_result( fname, segIdx )
 	chann = chann(hSzDiff+1:end-hSzDiff,hSzDiff+1:end-hSzDiff,hSzDiff+1:end-hSzDiff);
 
 
-	%% Compute error
+	%% Error
 	%
-	tic
-	[err] = compute_affinity_error( img, G, msk );
-	toc
-
-
-	%% Plot precision-recall curve
-	% 
-	plot_affinity_result( err );
+	if( showError )
+		% compute error
+		tic
+		[err] = compute_affinity_error( img, G, msk );
+		toc
+		% plot precision-recall curve
+		plot_affinity_result( err );
+	else
+		err = [];
+	end
 
 
 	%% Plot output
 	%
 	if( showOutputImages )
-		interactive_plot4_test( im{segIdx}, img{1}, img{2}, img{3}, 'gray' );
+		interactive_plot4_test( chann, img{1}, img{2}, img{3}, 'gray' );
+	end
+	if( showGroundAffinity )
+		interactive_plot4_test( chann, G.x, G.y, G.z, 'gray' );
 	end
 
 end
