@@ -1,4 +1,4 @@
-function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity )
+function [data] = generate_whole_training_input( img, lbl, bb, msk, w, affinity )
 
 	%% Argument validations
 	%
@@ -18,9 +18,9 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 	yy = bb(2,:);
 	zz = bb(3,:);
 	
-	idx = false(size(mask));
+	idx = false(size(msk));
 	idx(xx(1):xx(2),yy(1):yy(2),zz(1):zz(2)) = true;
-	bbMask = mask & idx;
+	bbMask = msk & idx;
 
 
 	%% Input normalization
@@ -33,23 +33,36 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 
 	%% whole training input data
 	%
-	if( affinity )		
+	if( affinity )
+		% image
 		data.image = img(2:end-1,2:end-1,2:end-1);
-		data.mask  = bbMask(2:end-1,2:end-1,2:end-1);
-		% label
+
+		% affinity label
 		[G] = generate_affinity_graph( lbl );
 		label = cell(3,1);
 		label{1} = G.x;
 		label{2} = G.y;
 		label{3} = G.z;
 		data.label = label;
-	else		
+
+		% affinity mask
+		[M] = generate_affinity_mask( bbMask );
+		mask = cell(3,1);
+		mask{1} = M.x;
+		mask{2} = M.y;
+		mask{3} = M.z;
+		data.mask = mask;
+	else
+		% image		
 		data.image = img;
-		data.mask  = bbMask;
+		
 		% label
 		label = cell(1);
 		label{1} = (lbl ~= 0);
 		data.label = label;
+
+		% mask
+		data.mask = bbMask;
 	end
 
 
