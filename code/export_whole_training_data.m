@@ -2,7 +2,6 @@ function [] = export_whole_training_data( fname, data )
 
 	fsz  = fopen([fname '.size'], 'w');
 	fimg = fopen([fname '.image'], 'w');
-	fmsk = fopen([fname '.mask' ], 'w');
 	
 	% size: image & mask
 	imgsz = size(data.image);
@@ -17,16 +16,15 @@ function [] = export_whole_training_data( fname, data )
 	% image
 	fwrite(fimg, data.image, 'double');
 
-	% mask
-	fwrite(fmsk, uint8(data.mask), 'uint8');
-
-	% label
-	
+	% label	& mask
 	for i = 1:nout
 		
 		flbl = fopen([fname '.label.' num2str(i)], 'w');
 		fwrite(flbl, double(data.label{i}), 'double');
 
-	end
+		fmsk = fopen([fname '.mask.' num2str(i)], 'w');
+		fwrite(fmsk, uint8(data.mask{i}), 'uint8');
+
+	end	
 
 end
