@@ -33,13 +33,11 @@ function [data] = generate_whole_training_input( img, lbl, bb, mask, w, affinity
 
 	%% whole training input data
 	%
-	if( affinity )
-		% data.image = img(1:end-1,1:end-1,1:end-1);
-		% data.mask  = bbMask(1:end-1,1:end-1,1:end-1);
-		data.image = img(2:end,2:end,2:end);
-		data.mask  = bbMask(2:end,2:end,2:end);
+	if( affinity )		
+		data.image = img(2:end-1,2:end-1,2:end-1);
+		data.mask  = bbMask(2:end-1,2:end-1,2:end-1);
 		% label
-		[G] = generate_affinity_graph( lbl );		
+		[G] = generate_affinity_graph( lbl );
 		label = cell(3,1);
 		label{1} = G.x;
 		label{2} = G.y;

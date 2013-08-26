@@ -19,14 +19,14 @@ function [dataset] = generate_e2006_e2198_dataset( fname )
 		fprintf('(%d/%d) %dth dataset is now being processed...\n',i,ndataset,i);
 
 		% image
-		D{i}.img = im{i}(2:end,2:end,2:end);
+		D{i}.img = im{i}(2:end-1,2:end-1,2:end-1);
 		
 		% label
 		[G] = generate_affinity_graph( seg{i}{:} );
 		D{i}.lbl = cat(4,G.x,G.y,G.z);
 
 		% mask
-		D{i}.msk = mask{i}{:}(2:end,2:end,2:end);
+		D{i}.msk = mask{i}{:}(2:end-1,2:end-1,2:end-1);
 
 		% valid index (place holder)
 		D{i}.validIdx = [];
