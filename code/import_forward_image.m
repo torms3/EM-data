@@ -6,11 +6,16 @@ function [img] = import_forward_image( fname, segIdx )
 	fimg(2) = fopen([fname '.1'], 'r');
 	fimg(3) = fopen([fname '.2'], 'r');
 
+	fsz = fopen([fname '.size'],'r');
+	x = fread(fsz,1,'uint32');
+	y = fread(fsz,1,'uint32');
+	z = fread(fsz,1,'uint32');
+
 	for i = 1:numel(fimg)
 
-		x = fread(fimg(i),1,'double');
-		y = fread(fimg(i),1,'double');
-		z = fread(fimg(i),1,'double');
+		if( fimg(i) < 0 )
+			continue;
+		end
 
 		img{i} = zeros(x*y*z,1);
 		img{i} = fread(fimg(i),prod(size(img{i})),'double');

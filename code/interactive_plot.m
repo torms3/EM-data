@@ -7,6 +7,9 @@ function interactive_plot( imageStack, coloring )
 	end
 
 	% imageStack(imageStack ~= 0) = 1;
+	if( (ndims(imageStack) == 4) & (size(imageStack,3) == 1) )
+		imageStack = reshape(imageStack, size(imageStack,1), size(imageStack,2), []);
+	end
 
 	%% Declare global variables
 	%

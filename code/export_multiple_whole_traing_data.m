@@ -6,7 +6,7 @@ function [] = export_multiple_whole_traing_data( dirName, data )
 	N = numel(data);
 	for i = 1:N
 
-		subname = [savePath '/' dirName '/batch' num2str(i)];
+		subname = [savePath '/' dirName '/data_batch_' num2str(i)];
 		disp(subname);
 		export_whole_training_data( subname, data{i} );
 

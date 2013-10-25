@@ -12,7 +12,7 @@ function [data] = batch_data_generation( segIdx, w )
 		idx = segIdx(i);
 		fprintf('(%d/%d) seg #%d is now being processed...\n',i,numel(segIdx),idx);
 		fprintf('Input size = %d\n',w);
-		[data{i}] = generate_whole_training_input( im{idx}, seg{idx}{:}, bb{idx}{:}, mask{idx}{:}, w, true );
+		[data{i}] = generate_whole_training_input( im{idx}, seg{idx}{:}, bb{idx}{:}, mask{idx}{:}, w, false );
 
 	end
 

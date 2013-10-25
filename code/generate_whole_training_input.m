@@ -9,7 +9,7 @@ function [data] = generate_whole_training_input( img, lbl, bb, msk, w, affinity 
 
 	%% Options
 	%
-	normalize = false;
+	normalize = true;
 
 
 	%% bb + mask = a mask for valid locations
@@ -25,9 +25,14 @@ function [data] = generate_whole_training_input( img, lbl, bb, msk, w, affinity 
 
 	%% Input normalization
 	%
-	% [kisuklee: TODO]  mean 0, var 1
+	% [kisuklee: TODO]  mean 0, var 1	
 	if( normalize )
-		img = 2*(img - 0.5);
+		% remove DC component
+		DC = mean(img(:));
+		img = img - DC;
+
+		% unit variance
+		img = img/std(img(:));
 	end
 
 
@@ -57,9 +62,7 @@ function [data] = generate_whole_training_input( img, lbl, bb, msk, w, affinity 
 		data.image = img;
 		
 		% label
-		label = cell(1);
-		label{1} = (lbl ~= 0);
-		data.label = label;
+		data.label = double(lbl ~= 0);
 
 		% mask
 		data.mask = bbMask;

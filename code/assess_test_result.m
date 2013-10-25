@@ -5,6 +5,7 @@ function [err,segm,chann] = assess_test_result( fname, segIdx )
 	showError = true;
 	showOutputImages = false;
 	showGroundAffinity = false;
+	symm_affin = true;
 
 
 	% load raw data
@@ -20,12 +21,21 @@ function [err,segm,chann] = assess_test_result( fname, segIdx )
 	% original affinity graph
 	fprintf('Now generating affinity graph...\n');
 	[G] = generate_affinity_graph( seg{segIdx}{:} );
+	if( symm_affin )
+		G.x = G.x(1:end-1,1:end-1,1:end-1);
+		G.y = G.y(1:end-1,1:end-1,1:end-1);
+		G.z = G.z(1:end-1,1:end-1,1:end-1);
+	end
 
 	% mask
 	fprintf('Now generating mask...\n');
 	msk = mask{segIdx}{:};
-	% msk = msk(1:end-1,1:end-1,1:end-1);
+	
 	msk = msk(2:end,2:end,2:end);
+	% [kisuklee: symmetric affinity]
+	if( symm_affin )
+		msk = msk(1:end-1,1:end-1,1:end-1);
+	end
 
 
 	%% Adjusting size difference between forward image and ground truth
@@ -42,7 +52,6 @@ function [err,segm,chann] = assess_test_result( fname, segIdx )
 	chann = im{segIdx};
 	chann = chann(2:end,2:end,2:end);
 	chann = chann(hSzDiff+1:end-hSzDiff,hSzDiff+1:end-hSzDiff,hSzDiff+1:end-hSzDiff);
-
 
 	%% Error
 	%

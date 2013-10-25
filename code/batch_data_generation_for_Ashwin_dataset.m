@@ -11,7 +11,7 @@ mold = [2 2];
 
 % batch generation
 w = 0;
-affinity = true;
+affinity = false;
 data = cell(size(stacks));
 for i = 1:numel(stacks)
 
