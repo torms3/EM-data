@@ -3,7 +3,7 @@ function [err] = plot_train_error( fname, iters )
 	%% Options
 	%
 	errType = 'RMSE'; % RMSE or MSE
-	avgWindow = 10;
+	avgWindow = 0;
 	logScale = false;
 	trainOnly = false;
 

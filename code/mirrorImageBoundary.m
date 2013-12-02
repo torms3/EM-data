@@ -21,9 +21,9 @@ function [img] = mirrorImageBoundary( img, w )
 
 	%% z-axis
 	%
-	dim = 3;
-	A = flipdim(img(:,:,2:1+w),dim);
-	B = flipdim(img(:,:,end-w:end-1),dim);
-	img = cat(dim,A,img,B);
+	% dim = 3;
+	% A = flipdim(img(:,:,2:1+w),dim);
+	% B = flipdim(img(:,:,end-w:end-1),dim);
+	% img = cat(dim,A,img,B);
 
 end
