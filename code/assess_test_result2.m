@@ -1,4 +1,8 @@
-function [err,prob] = assess_test_result2( fname, data )
+function [err,prob] = assess_test_result2( fname, data, med_filtering )
+
+	if( ~exist('med_filtering','var'))
+		med_filtering = true;
+	end
 
 	%% Options
 	%
@@ -16,11 +20,13 @@ function [err,prob] = assess_test_result2( fname, data )
 	[ret] = import_forward_image( fname );
 	A = exp(ret{1});
 	B = exp(ret{2});
-	prob = A./(A+B);
+	prob = B./(A+B);
 
 	% median filtering
-	for z = 1:size(prob,3)
-		prob(:,:,z) = medfilt2(prob(:,:,z),[4 4]);
+	if( med_filtering )
+		for z = 1:size(prob,3)
+			prob(:,:,z) = medfilt2(prob(:,:,z),[4 4]);
+		end
 	end
 	
 
@@ -42,6 +48,9 @@ function [err,prob] = assess_test_result2( fname, data )
 		toc
 		% plot precision-recall curve
 		plot_affinity_result( err );
+
+		% plot threshold optimization
+		plot_threshold_optimization( err );
 	else
 		err = [];
 	end

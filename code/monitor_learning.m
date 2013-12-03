@@ -38,15 +38,27 @@ function [train,test] = monitor_learning( fname )
 	fCls = fopen(sCls, 'r');
 	test.cls = fread(fCls, test.n, 'double');
 
+	% [kisuklee] TEMP
+	idx = (train.iter == 0);
+	train.iter(idx) = [];
+	train.err(idx) = [];
+	train.cls(idx) = [];
+	idx = (test.iter == 0);
+	test.iter(idx) = [];
+	test.err(idx) = [];
+	test.cls(idx) = [];
+
 	% Plot cost
 	figure;
 	hold on;
 
 		grid on;
-		plot(train.iter, train.err, '-k');
-		plot(test.iter, test.err, '-r');
+		h1 = plot(train.iter, train.err, '-k');
+		h2 = plot(test.iter, test.err, '-r');
 		xlabel('iteration');
 		ylabel('cost');
+		title('cost');
+		legend([h1 h2],'train','test');
 
 	hold off;
 
@@ -55,10 +67,12 @@ function [train,test] = monitor_learning( fname )
 	hold on;
 
 		grid on;
-		plot(train.iter, train.cls, '-k');
-		plot(test.iter, test.cls, '-r');
+		h1 = plot(train.iter, train.cls, '-k');
+		h2 = plot(test.iter, test.cls, '-r');
 		xlabel('iteration');
 		ylabel('classification error');
+		title('classification error');
+		legend([h1 h2],'train','test');
 
 	hold off;
 
