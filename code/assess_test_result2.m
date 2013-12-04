@@ -1,7 +1,10 @@
-function [err,prob] = assess_test_result2( fname, data, med_filtering )
+function [err,prob] = assess_test_result2( fname, data, outIdx, medfilt )
 
-	if( ~exist('med_filtering','var'))
-		med_filtering = true;
+	if( ~exist('outIdx','var'))
+		outIdx = 2;
+	end
+	if( ~exist('medfilt','var'))
+		medfilt = true;
 	end
 
 	%% Options
@@ -18,12 +21,12 @@ function [err,prob] = assess_test_result2( fname, data, med_filtering )
 	% import forward image
 	fprintf('Now importing forward image...\n');
 	[ret] = import_forward_image( fname );
-	A = exp(ret{1});
-	B = exp(ret{2});
-	prob = B./(A+B);
+	out{1} = exp(ret{1});
+	out{2} = exp(ret{2});
+	prob = out{outIdx}./(out{1}+out{2});
 
 	% median filtering
-	if( med_filtering )
+	if( medfilt )
 		for z = 1:size(prob,3)
 			prob(:,:,z) = medfilt2(prob(:,:,z),[4 4]);
 		end
@@ -42,10 +45,9 @@ function [err,prob] = assess_test_result2( fname, data, med_filtering )
 	%% Error
 	%
 	if( showError )
-		% compute error
-		tic
+		% compute pixel error
 		[err] = compute_pixel_error( prob, lbl );
-		toc
+
 		% plot precision-recall curve
 		plot_affinity_result( err );
 

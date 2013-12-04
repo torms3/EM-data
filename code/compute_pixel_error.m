@@ -4,7 +4,7 @@ function [ret] = compute_pixel_error( prob, lbl )
 
 	%% Best threshold
 	%
-	threshold = 0.039:0.01:0.999;
+	threshold = 0.01:0.01:0.999;
 	prec = zeros(numel(threshold),1);
 	rec = zeros(numel(threshold),1);
 	pixelErr = zeros(numel(threshold),1);
@@ -12,13 +12,14 @@ function [ret] = compute_pixel_error( prob, lbl )
 	parfor i = 1:numel(threshold)
 
 		th = threshold(i);
-		fprintf('(%d/%d) threshold = %.3f...\n',i,numel(threshold),th);		
+		% fprintf('(%d/%d) threshold = %.3f...\n',i,numel(threshold),th);
 		
 		nTp = 0;
 		nFp = 0;
 		nFn = 0;
 		nErr = 0;
 					
+		% binary map
 		bmap = prob < th;
 
 		err = xor(bmap,lbl);
@@ -33,7 +34,7 @@ function [ret] = compute_pixel_error( prob, lbl )
 
 		prec(i) = nTp/(nTp + nFp);
 		rec(i) = nTp/(nTp + nFn);
-		pixelErr(i) = nErr/numel(lbl);
+		pixelErr(i) = nErr/numel(lbl(:));
 
 	end
 

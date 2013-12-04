@@ -27,7 +27,11 @@ function [ret] = import_volume( fname, volType )
 		ret = reshape(ret,dim);
 
 	otherwise
-		assert(false);
+		fvol = fopen([fname],'r');
+		ret = zeros(vol,1);
+		ret = fread(fvol,vol,'double');
+		ret = reshape(ret,dim);
+		
 	end
 
 end
