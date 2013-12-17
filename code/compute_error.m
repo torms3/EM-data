@@ -6,7 +6,7 @@ function [ret] = compute_error( out, G, mask )
 
 	%% Best threshold
 	%
-	threshold = 0.01:0.01:0.99;
+	threshold = 0.00:0.01:0.99;
 	prec = zeros(numel(threshold),1);
 	rec = zeros(numel(threshold),1);
 	pixelErr = zeros(numel(threshold),1);

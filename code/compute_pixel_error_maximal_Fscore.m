@@ -1,12 +1,11 @@
-function [ret] = compute_pixel_error( prob, lbl )
-
-	lbl = ~lbl;
+function [ret] = compute_pixel_error_maximal_Fscore( prob, lbl )
 
 	%% Best threshold
 	%
-	threshold = 0.01:0.01:0.999;
+	threshold = 0.00:0.01:0.999;
 	prec = zeros(numel(threshold),1);
 	rec = zeros(numel(threshold),1);
+	fs = zeros(numel(threshold),1);
 	pixelErr = zeros(numel(threshold),1);
 	
 	parfor i = 1:numel(threshold)
@@ -20,7 +19,7 @@ function [ret] = compute_pixel_error( prob, lbl )
 		nErr = 0;
 					
 		% binary map
-		bmap = prob < th;
+		bmap = prob > th;
 
 		err = xor(bmap,lbl);
 		tp = ~err & lbl;
@@ -34,7 +33,8 @@ function [ret] = compute_pixel_error( prob, lbl )
 
 		prec(i) = nTp/(nTp + nFp);
 		rec(i) = nTp/(nTp + nFn);
-		pixelErr(i) = nErr/numel(lbl(:));
+		fs(i) = 2*prec(i)*rec(i)/(prec(i)+rec(i));
+		pixelErr(i) = 1 - fs(i);
 
 	end
 
@@ -42,7 +42,7 @@ function [ret] = compute_pixel_error( prob, lbl )
 	ret.rec = rec;
 	ret.pxlErr = pixelErr;
 	ret.th = threshold;
-	ret.fs = (2*prec.*rec)./(prec+rec);
+	ret.fs = fs;
 
 	% validation
 	invalid_idx = isnan(ret.prec) | isinf(ret.prec);
