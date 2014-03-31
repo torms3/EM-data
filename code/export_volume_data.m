@@ -1,8 +1,12 @@
 function [] = export_volume_data( fname, data )
 	
-	assert(isfield(data,'image'));
-	assert(isfield(data,'label'));
+%% Argument validation
 
+	assert(is_valid_volume_dataset(data));
+
+
+%% Export
+	
 	% size
 	fsz = fopen([fname '.size'], 'w');
 	imgsz = size(data.image);
@@ -12,7 +16,7 @@ function [] = export_volume_data( fname, data )
 	fimg = fopen([fname '.image'], 'w');
 	fwrite(fimg, double(data.image), 'double');
 
-	% % label
+	% label
 	flbl = fopen([fname '.label'], 'w');
 	fwrite(flbl, double(data.label), 'double');
 
@@ -20,6 +24,12 @@ function [] = export_volume_data( fname, data )
 	if( isfield(data,'mask') )
 		fmsk = fopen([fname '.mask'], 'w');
 		fwrite(fmsk, uint8(data.mask), 'uint8');
+	end
+
+	% auxiliary data (e.g., boundary probability map)
+	if( isfield(data,'aux') )
+		faux = fopen([fname '.aux'], 'w');
+		fwrite(faux, double(data.aux), 'double');
 	end
 
 end

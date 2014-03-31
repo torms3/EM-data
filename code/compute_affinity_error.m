@@ -20,7 +20,7 @@ function [ret] = compute_affinity_error( out, G, mask )
 	parfor i = 1:numel(threshold)
 
 		th = threshold(i);
-		fprintf('(%d/%d) threshold = %.3f...\n',i,numel(threshold),th);		
+		fprintf('(%d/%d) threshold = %.3f...\n',i,numel(threshold),th);
 		
 		nTp = 0;
 		nFp = 0;

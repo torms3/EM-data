@@ -52,8 +52,8 @@ function [G] = generate_affinity_graph( lbl )
 
 	%% Affinity graph
 	%
-	G.x = x;
-	G.y = y;
-	G.z = z;
+	G.x = double(x);
+	G.y = double(y);
+	G.z = double(z);
 
 end

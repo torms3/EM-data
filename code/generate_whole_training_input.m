@@ -9,7 +9,7 @@ function [data] = generate_whole_training_input( img, lbl, bb, msk, w, affinity 
 
 	%% Options
 	%
-	normalize = true;
+	normalize = false;
 
 
 	%% bb + mask = a mask for valid locations
@@ -38,35 +38,43 @@ function [data] = generate_whole_training_input( img, lbl, bb, msk, w, affinity 
 
 	%% whole training input data
 	%
-	if( affinity )
-		% image
-		data.image = img(2:end-1,2:end-1,2:end-1);
+	% if( affinity )
+	% 	% image
+	% 	data.image = img(2:end-1,2:end-1,2:end-1);
 
-		% affinity label
-		[G] = generate_affinity_graph( lbl );
-		label = cell(3,1);
-		label{1} = G.x;
-		label{2} = G.y;
-		label{3} = G.z;
-		data.label = label;
+	% 	% affinity label
+	% 	[G] = generate_affinity_graph( lbl );
+	% 	label = cell(3,1);
+	% 	label{1} = G.x;
+	% 	label{2} = G.y;
+	% 	label{3} = G.z;
+	% 	data.label = label;
 
-		% affinity mask
-		[M] = generate_affinity_mask( bbMask );
-		mask = cell(3,1);
-		mask{1} = M.x;
-		mask{2} = M.y;
-		mask{3} = M.z;
-		data.mask = mask;
-	else
-		% image		
-		data.image = img;
+	% 	% affinity mask
+	% 	[M] = generate_affinity_mask( bbMask );
+	% 	mask = cell(3,1);
+	% 	mask{1} = M.x;
+	% 	mask{2} = M.y;
+	% 	mask{3} = M.z;
+	% 	data.mask = mask;
+	% else
+	% 	% image		
+	% 	data.image = double(img);
 		
-		% label
-		data.label = double(lbl ~= 0);
+	% 	% label
+	% 	data.label = double(lbl ~= 0);
 
-		% mask
-		data.mask = bbMask;
+	% 	% mask
+	% 	data.mask = bbMask;
+	% end
+
+	data.image = double(img);
+	if( affinity )
+		data.label = double(lbl);
+	else
+		data.label = double(lbl~=0);
 	end
+	data.mask = bbMask;
 
 
 	%% Boundary mirroring & post-processing

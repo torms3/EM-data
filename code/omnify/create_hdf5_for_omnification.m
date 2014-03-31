@@ -1,10 +1,23 @@
-function [] = create_hdf5_for_omnification( fname, segm, chann, thold )
+function [] = create_hdf5_for_omnification( fname, segm, params, chann )
 
 	%% Argument validations
 	%
-	if( ~exist('thold','var') )
-        thold = 999;
+    assert(exist('fname','var')~=0);    
+    assert(exist('segm','var')~=0);
+    if ~exist('params','var')
+        params.Th = 999;
+        params.Tl = 200;
+        params.Ts = 100;
+        params.Te = 100;
     end
+	if( ~exist('chann','var') )
+        chann = [];
+    end
+
+
+    %% Augment the file name with threshold value
+    %
+    [fname] = watershed_fname( fname, params );
 
 
     %% Temporary dir for temporary files
@@ -24,8 +37,8 @@ function [] = create_hdf5_for_omnification( fname, segm, chann, thold )
 
     %% Raw hdf5
     %
-    generate_hdf5_segment_channel( segm, chann, fname );
-    dim = size(chann);
+    generate_hdf5_segment_channel( fname, segm, chann );
+    dim = size(segm(:,:,:,1));
 
     
     %% Watershed
@@ -33,8 +46,12 @@ function [] = create_hdf5_for_omnification( fname, segm, chann, thold )
     wstemp = [temp_path '/wstemp'];
     segmHDF5 = [fname '.segm.h5'];
     xxl_watershed_prepare_dired_hdf5( segmHDF5, wstemp, min(dim) );
-    sysline = [xxlws ' --filename ' wstemp ' --high 0.' num2str(thold) ...
-                     ' --dust 100 --dust_low 0.30 --low 0.3'];
+    sysline = [xxlws ' --filename ' wstemp ...
+                     ' --high 0.' num2str(params.Th) ...
+                     ' --dust ' num2str(params.Ts) ...
+                     ' --dust_low 0.' num2str(params.Te) ...
+                     ' --low 0.' num2str(params.Tl)];
+                     
     system(sysline);
 
     global seg

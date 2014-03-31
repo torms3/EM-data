@@ -19,9 +19,9 @@ function [ret] = compute_pixel_error_maximal_Fscore( prob, lbl )
 		nErr = 0;
 					
 		% binary map
-		bmap = prob > th;
+		bmap = prob < th;
 
-		err = xor(bmap,lbl);
+		err = xor(bmap,~logical(lbl));
 		tp = ~err & lbl;
 		fp = err & ~lbl;
 		fn = err & lbl;

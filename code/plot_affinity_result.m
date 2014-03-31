@@ -1,12 +1,16 @@
 function plot_affinity_result( ret )
 
+	%% Options
+	%
+	bFocus = false;
+
 	% best f-score
-	[fs_srted,idx] = sort(ret.fs,'descend');
+	[fs_srted,idx] = sort(ret.fscore,'descend');
 	bestIdx = idx(1);
 	if( (bestIdx == 1) | (bestIdx == numel(idx)) )
 		bestIdx = idx(2);
 	end
-	bestFs = ret.fs(bestIdx);
+	bestFs = ret.fscore(bestIdx);
 
 	% extreme
 	minPrec = min(ret.prec);
@@ -15,7 +19,11 @@ function plot_affinity_result( ret )
 	% plot
 	figure();
 	scatter(ret.rec,ret.prec,'*');
-	axis([minRec 1 minPrec 1]);
+	if( bFocus )
+		axis([minRec 1 minPrec 1]);
+	else
+		axis([0 1 0 1]);
+	end
 	hold on;
 
 		% best f-score

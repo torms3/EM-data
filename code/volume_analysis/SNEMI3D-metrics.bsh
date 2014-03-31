@@ -1,0 +1,62 @@
+/**
+ * SNEMI3D challenge: 3D segmentation of neurites in EM images
+ * 
+ * Script to calculate the segmentation error between some 3D 
+ * original labels and their corresponding proposed labels. 
+ * 
+ * The evaluation metric is:
+ *  - Rand error: 1 - F-score of adapted Rand index
+ * 
+ * @author Ignacio Arganda-Carreras (iarganda@mit.edu)
+ * @see <a href="http://brainiac.mit.edu/SNEMI3D/">http://brainiac.mit.edu/SNEMI3D/</a>
+ * This script released under the terms of the General Public License in its latest edition.
+ */
+  
+import trainableSegmentation.metrics.*;
+ 
+  
+// Get the list of images that are open
+ids = WindowManager.getIDList();
+  
+if ( ids == null || ids.length < 2 )
+{
+    IJ.showMessage( "You should have at least two images open." );
+    return;
+}
+  
+// Get all the titles of the open images        
+titles = new String[ ids.length ];
+for ( int i = 0; i < ids.length; ++i )
+{
+    titles[ i ] = ( WindowManager.getImage( ids[ i ] ) ).getTitle();
+}
+  
+// Create dialog        
+gd = new GenericDialog( "Evaluate segmentation results" );
+          
+gd.addMessage( "Image Selection:" );
+current = WindowManager.getCurrentImage().getTitle();
+gd.addChoice( "Original_labels", titles, current );
+gd.addChoice( "Proposal", titles, current.equals( titles[ 0 ] ) ? titles[ 1 ] : titles[ 0 ] );
+
+
+ 
+gd.showDialog();
+          
+if (gd.wasCanceled()) 
+    return;
+          
+originalLabels = WindowManager.getImage( ids[ gd.getNextChoiceIndex() ] );
+proposedLabels = WindowManager.getImage( ids[ gd.getNextChoiceIndex() ] );
+
+  
+ 
+IJ.log("---");
+IJ.log("Evaluating segmentation...");
+IJ.log("  Original labels: " + originalLabels.getTitle());
+IJ.log("  Proposed labels: " + proposedLabels.getTitle() + "\n");
+
+IJ.log("\nCalculating F-score of adapted Rand index...");
+fScore = RandError.adaptedRandIndexFScore3D( originalLabels, proposedLabels );
+    
+ IJ.log("  Adapted Rand error: " + (1.0 - fScore) );     

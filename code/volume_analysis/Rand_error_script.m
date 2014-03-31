@@ -1,0 +1,62 @@
+function [ret] = Rand_error_script( fname, truth, proposed )
+% for the purpose of computing Rand error,
+% channel is not necessary.
+
+	%% Argument validation
+	%
+	bWatershed = false;
+	if exist('proposed','var')
+		bWatershed = true;
+	end
+
+	%% Parameters for watershed
+	%	
+	params.Th = 958;
+	params.Tl = 300;% params.Tl = 200;
+	params.Ts = 400;
+	params.Te = 250;	
+
+	% systematically vary the watershed threshold
+	% threshold = 936:-1:934;
+	% threshold = 819;
+	% threshold(threshold == 930) = [];
+	% params.Th = 819;
+	% threshold = [200 400 600 800 1000];
+	% threshold = [1200 1400 1600 1800 2000];
+	% threshold = [2200 2400 2600 2800 3000];
+	threshold = 400:400:2400;
+
+	ret.threshold = threshold;
+	if( bWatershed )
+		for i = 1:numel(threshold)
+
+			% params.Th = threshold(i);
+			params.Ts = threshold(i);
+
+			% watershed
+			create_hdf5_for_omnification( fname, proposed, params );
+
+		end
+	else
+		% compute and display Rand error
+		for i = 1:numel(threshold)
+
+			% params.Th = threshold(i);
+			params.Ts = threshold(i);
+
+			% compute Rand error
+			[ws_fname] = watershed_fname( fname, params );
+			[ws_fname] = [ws_fname '.segm.h5'];
+			[watershed] = hdf5read(ws_fname,'/main');
+			[re] = compute_Rand_error( truth, watershed );
+			
+			% display Rand error
+			disp(['threshold = 0.' num2str(params.Th) ', Rand error = ' num2str(re.err)]);
+
+			% record
+			ret.Rand_error(i) = re.err;
+
+		end
+	end
+
+end

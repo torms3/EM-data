@@ -6,6 +6,12 @@ function interactive_plot( imageStack, coloring )
 		coloring = false;
 	end
 
+	%% Options
+	%
+	RF.grid = true;
+	RF.size = 25;
+
+
 	% imageStack(imageStack ~= 0) = 1;
 	if( (ndims(imageStack) == 4) & (size(imageStack,3) == 1) )
 		imageStack = reshape(imageStack, size(imageStack,1), size(imageStack,2), []);
@@ -13,8 +19,9 @@ function interactive_plot( imageStack, coloring )
 
 	%% Declare global variables
 	%
-	global images nImages h z
+	global z
 	images = imageStack;
+	h = figure;
 
 	%% Figure
 	%
@@ -32,28 +39,29 @@ function interactive_plot( imageStack, coloring )
 	%% Extract image stack metadata
 	%	and display the first image
 	%	
-	[w,h,nImages] = size(images);
+	[~,~,nImages] = size(images);
 	z = 1;
-	if( coloring )
-		image( images(:,:,z) );
-	else	
-		imagesc( images(:,:,z) );
+	slice = images(:,:,z);
+	if( coloring )		
+		image( slice );
+	else		
+		imagesc( slice );
 	end
-	daspect([1 1 1]);
+	daspect( [1 1 1] );
 	title( sprintf('z = %d',z) );
-	h = imgcf;
 	
 
 	%% Set KeyPressFcn
 	%
-	set( h, 'KeyPressFcn', @(obj,evt) moveZ( evt.Key, coloring ) );
+	set( h, 'KeyPressFcn', @(obj,evt) moveZ( evt.Key, images, coloring ) );
 
 end
 
 
-function moveZ( key, coloring )
+function moveZ( key, images, coloring )
 
-	global images nImages h z
+	global z
+	[~,~,nImages] = size(images);
 
 	switch key
 	case 'uparrow'
@@ -68,11 +76,11 @@ function moveZ( key, coloring )
 		end
 	end
 
-	% image( images(:,:,z) );
+	slice = images(:,:,z);
 	if( coloring )
-		image( images(:,:,z) );
+		image( slice );
 	else	
-		imagesc( images(:,:,z) );
+		imagesc( slice );
 	end
 	daspect([1 1 1]);
 	title( sprintf('z = %d',z) );
