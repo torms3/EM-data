@@ -1,10 +1,7 @@
 function interactive_multiplot( data, coloring, clrStr )
 
 	%% Argument validation
-	%
-	if( ~exist('clrStr','var') ) 
-		clrStr = 'gray';
-	end
+	%	
 	if( is_valid_volume_dataset(data) )
 		imgCell = struct2cell(data);
 	else
@@ -27,6 +24,11 @@ function interactive_multiplot( data, coloring, clrStr )
 		coloring = false(numel(imgCell),1);
 	else		
 		assert(numel(imgCell) == numel(coloring));
+	end
+	if( ~exist('clrStr','var') ) 
+		for i = 1:numel(imgCell)
+			clrStr{i} = 'gray';
+		end
 	end
 
 	[ret] = extract_subplot_dim( imgCell );
@@ -97,10 +99,10 @@ function interactive_multiplot( data, coloring, clrStr )
 			title( sprintf('z = %d',z) );
 		end
 
-		colormap(clrStr);
-		if( ~strcmp(clrStr,'gray') )
+		colormap(clrStr{i});
+		% if( ~strcmp(clrStr{i},'gray') )
 			% colorbar;
-		end
+		% end
 
 		if( invert_display )
 			axis off;
@@ -157,10 +159,10 @@ function moveZ( key, imgCell, clrmaps, clrStr )
 			title( sprintf('z = %d',z) );
 		end
 
-		colormap(clrStr);
-		if( ~strcmp(clrStr,'gray') )
+		colormap(clrStr{i});
+		% if( ~strcmp(clrStr{i},'gray') )
 			% colorbar;
-		end
+		% end
 
 		if( invert_display )
 			axis off;

@@ -10,6 +10,9 @@ function [] = export_volume_data( fname, data )
 	% size
 	fsz = fopen([fname '.size'], 'w');
 	imgsz = size(data.image);
+	if ndims(imgsz) < 3
+		imgsz = [imgsz 1];
+	end
 	fwrite(fsz, uint32(imgsz), 'uint32');	
 
 	% image

@@ -46,4 +46,7 @@ end
 %     imwrite(output(:,:,kk),outputFileName,'WriteMode','append','Compression','none');
 % end
 
+label = output;
+save(outputFileName,'label');
+
 matlabpool close

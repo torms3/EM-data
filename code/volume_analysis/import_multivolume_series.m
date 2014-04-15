@@ -1,4 +1,4 @@
-function [ret] = import_multivolume( fname, volType )
+function [ret] = import_multivolume_series( fname, n, volType )
 
 	if( ~exist('volType','var') )
 		volType = 'image';
@@ -27,15 +27,21 @@ function [ret] = import_multivolume( fname, volType )
 		end
 		disp(['volume ' num2str(i) '...']);
 
-		switch( volType )
-		case 'mask'
-			ret{i} = false(vol,1);
-			ret{i} = fread(fimg(i),vol,'uint8');
-			ret{i} = logical(reshape(ret{i},dim));
-		otherwise
-			ret{i} = zeros(vol,1);
-			ret{i} = fread(fimg(i),vol,'double');
-			ret{i} = reshape(ret{i},dim);
+		for j = 1:numel(n)
+
+			switch( volType )
+			case 'mask'
+				cur = false(vol,1);
+				cur = fread(fimg(i),vol,'uint8');
+				cur = logical(reshape(cur,dim));
+			otherwise
+				cur = zeros(vol,1);
+				cur = fread(fimg(i),vol,'double');
+				cur = reshape(cur,dim);
+			end
+
+			ret{i}(:,:,n(j)) = cur;
+
 		end
 
 	end

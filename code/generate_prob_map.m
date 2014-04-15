@@ -1,5 +1,8 @@
-function [prob,prob_medfilt] = generate_prob_map( fwdImg, outIdx, filtrad )
+function [prob,prob_medfilt] = generate_prob_map( fwdImg, outIdx, filtrad, appply_exp )
 
+	if ~exist('appply_exp','var')
+		appply_exp = false;
+	end
 	assert(ndims(fwdImg{1}) == 3);
 
 	if( ~exist('filtrad','var'))
@@ -7,7 +10,9 @@ function [prob,prob_medfilt] = generate_prob_map( fwdImg, outIdx, filtrad )
 	end
 
 	% softmax
-	fwdImg = cellfun(@exp,fwdImg,'UniformOutput',false);
+	if appply_exp
+		fwdImg = cellfun(@exp,fwdImg,'UniformOutput',false);
+	end
 	prob = fwdImg{outIdx}./sum(cat(4,fwdImg{:}),4);
 
 	% median filtering
