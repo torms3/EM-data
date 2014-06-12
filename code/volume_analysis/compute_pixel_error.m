@@ -12,11 +12,12 @@ function [ret] = compute_pixel_error( prob, truth, mask )
 
 	%% Preprocessing
 	%
-	prob = scaledata(prob,0,1);
+	% prob = scaledata(prob,0,1);
 
 	%% Best threshold
 	%
-	threshold = [0.1:0.1:0.9 0.91:0.01:0.99];
+	% threshold = [0.1:0.1:0.9 0.91:0.01:0.99];
+	threshold = [0.1:0.1:0.9];
 	nThresh = numel(threshold);
 
 	precision  = zeros(1,nThresh);

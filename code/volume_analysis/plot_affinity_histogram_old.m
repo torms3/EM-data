@@ -18,10 +18,11 @@ function plot_affinity_histogram( prob )
 	bFocus 	= true;
 	bMulti	= true;
 	% cutoff 	= 0.990;
-	cutoff 	= 0.800;
+	cutoff 	= 0.750;
+	roof	= 1.000;
 	% szBin 	= 0.001;
 	szBin 	= 0.01;
-	nBins 	= floor((1 - cutoff)/szBin);
+	nBins 	= floor((roof - cutoff)/szBin);
 
 	%% Plot
 	%

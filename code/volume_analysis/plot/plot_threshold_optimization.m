@@ -45,8 +45,8 @@ function plot_threshold_optimization( err, fscore )
 		bestPxlErr,err.thresh(bestIdx),err.pxlErr(baseIdx),0.5));
 
 	fprintf('\n<<<<<<<<<< STATS >>>>>>>>>>\n');
-	fprintf('Base pixel error = %.4f\n',err.pxlErr(baseIdx));
-	fprintf('Best pixel error = %.4f\n',err.pxlErr(bestIdx));
+	fprintf('Base pixel error = %.4f @ %.1f\n',err.pxlErr(baseIdx),err.thresh(baseIdx));
+	fprintf('Best pixel error = %.4f @ %.1f\n',err.pxlErr(bestIdx),err.thresh(bestIdx));
 	fprintf('<<<<<<<<<< STATS >>>>>>>>>>\n\n');
 
 end

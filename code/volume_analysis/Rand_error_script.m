@@ -11,21 +11,23 @@ function [ret] = Rand_error_script( fname, truth, proposed )
 
 	%% Parameters for watershed
 	%	
-	params.Th = 999;
+	params.Th = 999;% params.Th = 999;
 	params.Tl = 300;% params.Tl = 200;
 	params.Ts = 1600;
-	params.Te = 250;	
+	params.Te = 250;
 
 	% systematically vary the watershed threshold
-	% threshold = 895:-1:885;
-	threshold = 890;
-	% threshold(threshold == 890) = [];
+	threshold = 803:-1:801;
+	% threshold = 903:-1:897;
+	% threshold = 890;
+	% threshold(threshold == 910) = [];
 	% params.Th = 819;
 	% threshold = [200 400 600 800 1000];
 	% threshold = [1200 1400 1600 1800 2000];
 	% threshold = [2200 2400 2600 2800 3000];
 	% threshold = [1800 2000 2200 2400 2600 2800 3000];
-	% threshold = 400:400:2400;
+	% threshold = 200:200:3000;	
+	% threshold(threshold == 1600) = [];
 
 	ret.threshold = threshold;
 	if( bWatershed )

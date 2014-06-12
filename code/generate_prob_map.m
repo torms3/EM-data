@@ -6,7 +6,7 @@ function [prob,prob_medfilt] = generate_prob_map( fwdImg, outIdx, filtrad, apppl
 	assert(ndims(fwdImg{1}) == 3);
 
 	if( ~exist('filtrad','var'))
-		filtrad = 4;
+		filtrad = 5;
 	end
 
 	% softmax

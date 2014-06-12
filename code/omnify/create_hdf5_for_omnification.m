@@ -29,10 +29,14 @@ function [] = create_hdf5_for_omnification( fname, segm, params, chann )
 
     %% Path
     %    
-    addpath('/omelette/omic.home/zlateski/zcode/ziKode/trunk/matlab/');
-    addpath('/omelette/omic.home/zlateski/zcode/ziKode/trunk/matlab/hdf5/');
-    addpath('/omelette/omic.home/zlateski/zcode/ziKode/trunk/matlab/util/');
-    xxlws = '/omelette/omic.home/zlateski/quta/xxlws';
+    % addpath('/omelette/omic.home/zlateski/zcode/ziKode/trunk/matlab/');
+    % addpath('/omelette/omic.home/zlateski/zcode/ziKode/trunk/matlab/hdf5/');
+    % addpath('/omelette/omic.home/zlateski/zcode/ziKode/trunk/matlab/util/');
+    % xxlws = '/omelette/omic.home/zlateski/quta/xxlws';
+    addpath('/omicfs/home/zlateski/zcode/ziKode/trunk/matlab/');
+    addpath('/omicfs/home/zlateski/zcode/ziKode/trunk/matlab/hdf5/');
+    addpath('/omicfs/home/zlateski/zcode/ziKode/trunk/matlab/util/');
+    xxlws = '/omicfs/home/zlateski/quta/xxlws';
 
 
     %% Raw hdf5

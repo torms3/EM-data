@@ -1,4 +1,4 @@
-function interactive_multiplot( data, coloring, clrStr )
+function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap )
 
 	%% Argument validation
 	%	
@@ -65,7 +65,9 @@ function interactive_multiplot( data, coloring, clrStr )
 
 		if( coloring(i) )
 			nSeg = max(unique(imgCell{i})); disp(nSeg);
-			clrmap = rand(nSeg,3);
+			if( ~exist('clrmap','var') )
+				clrmap = rand(nSeg,3);
+			end
 			clrmap(1,:) = 0;
 			clrmaps{i} = clrmap;
 		else
@@ -80,18 +82,19 @@ function interactive_multiplot( data, coloring, clrStr )
 	%
 	for i = 1:numel(imgCell)
 
-		subplot(subx,suby,i);		
+		ax(i) = subplot(subx,suby,i);		
 		[x,y,nImages] = size(imgCell{i});
 		z = 1;		
 
 		if( isempty(clrmaps{i}) )
-			colormap( 'gray' );
 			imagesc( imgCell{i}(:,:,z) );
+			colormap( clrStr{i} );
 		else
-			colormap( clrmaps{i} );
 			image( imgCell{i}(:,:,z) );
-			freezeColors
+			colormap( clrmaps{i} );			
 		end
+
+		freezeColors
 		daspect([1 1 1]);
 		if( invert_display )
 			title( sprintf('z = %d',z), 'Color', 'w' );
@@ -99,13 +102,12 @@ function interactive_multiplot( data, coloring, clrStr )
 			title( sprintf('z = %d',z) );
 		end
 
-		colormap(clrStr{i});
-		% if( ~strcmp(clrStr{i},'gray') )
-			% colorbar;
-		% end
-
 		if( invert_display )
 			axis off;
+		end
+
+		if ( ~strcmp(clrStr{i},'gray') )
+			% colorbar;
 		end
 
 	end
@@ -142,16 +144,17 @@ function moveZ( key, imgCell, clrmaps, clrStr )
 
 	for i = 1:numel(imgCell)
 
-		subplot(subx,suby,i);
+		ax(i) = subplot(subx,suby,i);
 
 		if( isempty(clrmaps{i}) )
-			colormap( 'gray' );
 			imagesc( imgCell{i}(:,:,z) );
-		else
-			colormap( clrmaps{i} );
+			colormap( clrStr{i} );			
+		else			
 			image( imgCell{i}(:,:,z) );
-			freezeColors
+			colormap( clrmaps{i} );			
 		end
+		
+		freezeColors
 		daspect([1 1 1]);
 		if( invert_display )
 			title( sprintf('z = %d',z), 'Color', 'w' );
@@ -159,13 +162,12 @@ function moveZ( key, imgCell, clrmaps, clrStr )
 			title( sprintf('z = %d',z) );
 		end
 
-		colormap(clrStr{i});
-		% if( ~strcmp(clrStr{i},'gray') )
-			% colorbar;
-		% end
-
 		if( invert_display )
 			axis off;
+		end
+
+		if ( ~strcmp(clrStr{i},'gray') )
+			% colorbar;
 		end
 
 	end
@@ -189,10 +191,12 @@ function [ret] = extract_subplot_dim( imgCell )
 	case 4
 		subx = 2;
 		suby = 2;
+	case 5
+		subx = 2;
+		suby = 3;
 	case 6
-		subx = 3;
-		suby = 2;
-	% case 5
+		subx = 2;
+		suby = 3;
 	% case 6
 	% case 7
 	% case 8

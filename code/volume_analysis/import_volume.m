@@ -15,10 +15,16 @@ function [ret] = import_volume( fname, volType )
 
 	switch( volType )
 	case {'image','label'}
+	% case 'image'
 		fvol = fopen([fname '.' volType],'r');
 		ret = zeros(vol,1);
 		ret = fread(fvol,vol,'double');
 		ret = reshape(ret,dim);
+	% case 'label'
+	% 	fvol = fopen([fname '.' volType],'r');
+	% 	ret = zeros(vol,1);
+	% 	ret = fread(fvol,vol,'uint64');
+	% 	ret = reshape(ret,dim);
 	case 'mask'
 		fvol = fopen([fname '.' volType],'r');
 		ret = uint8(zeros(vol,1));

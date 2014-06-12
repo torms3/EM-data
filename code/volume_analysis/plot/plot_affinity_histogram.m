@@ -18,10 +18,15 @@ function plot_affinity_histogram( prob )
 	bFocus 	= true;
 	bMulti	= true;
 	% cutoff 	= 0.990;
-	cutoff 	= 0.800;
+	% cutoff 	= 0.800;
 	% szBin 	= 0.001;
-	szBin 	= 0.01;
-	nBins 	= floor((1 - cutoff)/szBin);
+	% szBin 	= 0.01;
+	% nBins 	= floor((1 - cutoff)/szBin);
+	bottom	= 0.75;
+	top		= 0.90;
+	szBin	= 0.005;
+	xvals	= bottom:szBin:top;
+	nBins	= 50;
 
 	%% Plot
 	%
@@ -40,7 +45,7 @@ function plot_affinity_histogram( prob )
 
 			% overall histogram
 			subplot(2,2,1);			
-			hist(prob(:));
+			hist(prob(:),nBins);
 			xlabel('affinity');
 			grid on;
 			title('overall histogram');
@@ -48,9 +53,10 @@ function plot_affinity_histogram( prob )
 			% x-affinity
 			subplot(2,2,2);
 			if( bFocus )
-				idx = (affin.x>=cutoff);
-				hist(affin.x(idx),nBins);
-				xlim([cutoff 1]);
+				% idx = (affin.x>=cutoff);
+				idx = (affin.x >= bottom) & (affin.x <= top);
+				hist(affin.x(idx),xvals);
+				xlim([bottom top]);
 			else
 				hist(affin.x(:));
 			end
@@ -61,9 +67,10 @@ function plot_affinity_histogram( prob )
 			% y-affinity
 			subplot(2,2,3);
 			if( bFocus )
-				idx = (affin.y>=cutoff);
-				hist(affin.y(idx),nBins);
-				xlim([cutoff 1]);
+				% idx = (affin.y>=cutoff);
+				idx = (affin.y >= bottom) & (affin.y <= top);
+				hist(affin.y(idx),xvals);
+				xlim([bottom top]);
 			else
 				hist(affin.y(:));
 			end
@@ -74,9 +81,10 @@ function plot_affinity_histogram( prob )
 			% z-affinity
 			subplot(2,2,4);
 			if( bFocus )
-				idx = (affin.z>=cutoff);
-				hist(affin.z(idx),nBins);
-				xlim([cutoff 1]);
+				% idx = (affin.z>=cutoff);
+				idx = (affin.z >= bottom) & (affin.z <= top);
+				hist(affin.z(idx),xvals);
+				xlim([bottom top]);
 			else
 				hist(affin.z(:));
 			end
