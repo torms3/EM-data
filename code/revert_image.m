@@ -24,7 +24,7 @@ function [img] = revert_image( img, config )
 	end	
 
 	if( transpose )
-		img = permute(img,[2 1 3]);
+		img = permute(img,[2 1 3]);		
 	end
 
 end

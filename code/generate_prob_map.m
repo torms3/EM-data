@@ -3,7 +3,6 @@ function [prob,prob_medfilt] = generate_prob_map( fwdImg, outIdx, filtrad, apppl
 	if ~exist('appply_exp','var')
 		appply_exp = false;
 	end
-	assert(ndims(fwdImg{1}) == 3);
 
 	if( ~exist('filtrad','var'))
 		filtrad = 5;
@@ -16,7 +15,7 @@ function [prob,prob_medfilt] = generate_prob_map( fwdImg, outIdx, filtrad, apppl
 	prob = fwdImg{outIdx}./sum(cat(4,fwdImg{:}),4);
 
 	% median filtering
-	if( filtrad > 0 )
+	if filtrad > 0
 		[prob_medfilt] = medfilt3( prob, filtrad );
 	end
 

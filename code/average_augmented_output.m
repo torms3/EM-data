@@ -1,27 +1,29 @@
-function [averaged_prob_list] = average_augmented_output( fname, indices, med )
+function [ret] = average_augmented_output( fname, indices )
 
-	if ~exist('med','var')
-		med = false;
-	end
+	outIdx = 2;
+	filtrad = 5;
 
-	averaged_prob_list = {};
+	avg = {};
+	prob = {};
+	accum = {};
 	for i = 1:numel(indices)
 		fprintf('(%d/%d) is now being processed...\n',i,numel(indices));
 		idx = indices(i);
-		sname = [fname '_' num2str(idx)];
-		[img] = import_forward_image( sname );
-		if med
-			[~,prob] = generate_prob_map( img, 2 );
-		else
-			[prob,~] = generate_prob_map( img, 2 );
-		end
-		[prob] = revert_image( prob, i-1 );
+		sname = [fname num2str(idx)];
+		[img] = import_multivolume( sname );		
+		[prob{i},~] = generate_prob_map( img, outIdx, filtrad );
+		[rprob] = revert_image( prob{i}, idx );
 		if ~exist('prob_sum','var')
-			prob_sum = prob;
+			prob_sum = rprob;
 		else
-			prob_sum = prob_sum + prob;
-		end		
-		averaged_prob_list{i} = medfilt3( prob_sum/i, 4 );
+			prob_sum = prob_sum + rprob;
+		end
+		avg{i} = medfilt3( prob_sum/i, filtrad );
+		accum{i} = prob_sum;
 	end
+
+	ret.avg = avg;
+	ret.prob = prob;
+	ret.accum = accum;
 
 end
