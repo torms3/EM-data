@@ -1,8 +1,8 @@
-function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap )
+function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap, ratio )
 
 	%% Argument validation
 	%	
-	if( is_valid_volume_dataset(data) )
+	if is_valid_volume_dataset(data)
 		imgCell = struct2cell(data);
 	else
 		if iscell(data)
@@ -20,15 +20,18 @@ function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap )
 			end
 		end
 	end
-	if( ~exist('coloring','var') ) 
+	if ~exist('coloring','var')
 		coloring = false(numel(imgCell),1);
 	else		
 		assert(numel(imgCell) == numel(coloring));
 	end
-	if( ~exist('clrStr','var') ) 
+	if ~exist('clrStr','var')
 		for i = 1:numel(imgCell)
 			clrStr{i} = 'gray';
 		end
+	end
+	if ~exist('ratio','var')
+		ratio = [1 1 1];
 	end
 
 	[ret] = extract_subplot_dim( imgCell );
@@ -54,7 +57,7 @@ function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap )
 	% szWin = scn(4) - 2*margin;
 	% figure('Position',[scn(3)/2 margin szWin szWin]);
 	h = figure;
-	if( invert_display )		
+	if invert_display
 		set( gcf, 'Color', 'k' );
 	end
 
@@ -95,7 +98,7 @@ function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap )
 		end
 
 		freezeColors
-		daspect([1 1 1]);
+		daspect(ratio);
 		if( invert_display )
 			title( sprintf('z = %d',z), 'Color', 'w' );
 		else
@@ -114,12 +117,12 @@ function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap )
 
 	%% Set KeyPressFcn
 	%
-	set( h, 'KeyPressFcn', @(obj,evt) moveZ( evt.Key, imgCell, clrmaps, clrStr ) );
+	set( h, 'KeyPressFcn', @(obj,evt) moveZ( evt.Key, imgCell, clrmaps, clrStr, ratio ) );
 
 end
 
 
-function moveZ( key, imgCell, clrmaps, clrStr )
+function moveZ( key, imgCell, clrmaps, clrStr, ratio )
 
 	[ret] = extract_subplot_dim( imgCell );
 	subx = ret.subx;
@@ -155,7 +158,7 @@ function moveZ( key, imgCell, clrmaps, clrStr )
 		end
 		
 		freezeColors
-		daspect([1 1 1]);
+		daspect(ratio);
 		if( invert_display )
 			title( sprintf('z = %d',z), 'Color', 'w' );
 		else

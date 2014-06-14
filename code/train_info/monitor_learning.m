@@ -13,12 +13,10 @@ function [data] = monitor_learning( cost_type, avgWindow, start_iter  )
 	end
 
 	% Load train info
-	% [train] = load_info( [fname '.train'] );
-	[train] = load_info( ['train'] );
+	[train] = load_info('train');
 
 	% Load test info
-	% [test] = load_info( [fname '.test'] );
-	[test] = load_info( ['test'] );
+	[test] = load_info('test');
 
 	% [kisuklee] TEMP
 	idx = (train.iter == 0);
@@ -68,10 +66,10 @@ function [data] = monitor_learning( cost_type, avgWindow, start_iter  )
 		h2 = plot(test.iter, test.err, '-r');
 					
 		% axis([0 max(train.iter) 0 max(train.err)]);
-		xlabel('Iteration');
+		xlabel('iteration');
 		ylabel(cost_type);
-		title(['Cost' avgStr]);
-		legend([h1 h2],'Train','Test');
+		title(['cost' avgStr]);
+		legend([h1 h2],'train','test');
 
 	hold off;
 
@@ -84,55 +82,11 @@ function [data] = monitor_learning( cost_type, avgWindow, start_iter  )
 		h2 = plot(test.iter, test.cls, '-r');
 
 		% axis([0 max(train.iter) 0 max(train.err)]);
-		xlabel('Iteration');
-		ylabel('Classification error');
-		title(['Classification error' avgStr]);
+		xlabel('iteration');
+		ylabel('classification error');
+		title(['classification error' avgStr]);
 		legend([h1 h2],'train','test');
 
 	hold off;
-
-end
-
-function [ret] = load_info( fname )
-
-	sInfo = [fname '.info'];
-	fInfo = fopen(sInfo, 'r');
-	ret.n = fread(fInfo, 1, 'uint64');
-
-	sIter = [fname '.iter'];
-	fIter = fopen(sIter, 'r');
-	ret.iter = fread(fIter, ret.n, 'uint64');
-
-	sErr = [fname '.err'];
-	fErr = fopen(sErr, 'r');
-	ret.err = fread(fErr, ret.n, 'double');
-
-	sCls = [fname '.cls'];
-	fCls = fopen(sCls, 'r');
-	ret.cls = fread(fCls, ret.n, 'double');
-
-end
-
-
-function [data] = smooth_curve( data, w )
-
-	if( w > 0 )
-
-		% smoothing(convolution) filter
-		hw = floor(w/2);
-		avgFilter = ones(w,1)/w;
-
-		% smoothing
-		data.iter = data.iter(1+hw:end-hw);
-		data.err  = conv(data.err, avgFilter, 'valid');
-		data.cls  = conv(data.cls, avgFilter, 'valid');
-
-		minVal = min([numel(data.iter) ... 
-					  numel(data.err)  ...
-					  numel(data.cls)]);
-		data.iter = data.iter(1:minVal);
-		data.err  = data.err(1:minVal);
-		data.cls  = data.cls(1:minVal);
-	end
 
 end
