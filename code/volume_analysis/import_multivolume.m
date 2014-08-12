@@ -1,6 +1,6 @@
 function [ret] = import_multivolume( fname, volType )
 
-	if( ~exist('volType','var') )
+	if ~exist('volType','var')
 		volType = 'image';
 	end
 	

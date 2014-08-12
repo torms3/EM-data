@@ -1,9 +1,9 @@
-function [] = view_stack( stack, perspective, resolution )
+function [rotated_stack] = view_stack( stack, perspective, resolution )
 
 	if ~exist('perspective','var')
 		perspective = 'front';
 	end
-	if ~exist('ratio','var')
+	if ~exist('resolution','var')
 		resolution = [6 6 30];	% SNEMI3D
 		% resolution = [7 7 40];	% Ashwin
 	end
@@ -18,6 +18,7 @@ function [] = view_stack( stack, perspective, resolution )
 	otherwise
 		ratio = [1 1 1];
 	end
+	rotated_stack = stack;
 
 	% parameters for interactive_multiplot
 	coloring = false;

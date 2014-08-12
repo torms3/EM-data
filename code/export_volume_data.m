@@ -1,12 +1,9 @@
 function [] = export_volume_data( fname, data )
 	
-%% Argument validation
-
+	%% Argument validation
 	assert(is_valid_volume_dataset(data));
 
-
-%% Export
-	
+	%% Export	
 	% size
 	fsz = fopen([fname '.size'], 'w');
 	imgsz = size(data.image);

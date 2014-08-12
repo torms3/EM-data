@@ -18,14 +18,9 @@ function [ret] = assess_boundary_result_script( fname, data, apply_exp )
 	ret.mprob = mprob;
 
 	if exist('data','var')
-		[truth] = adjust_border_effect( data.label, mprob );
-		[prob_err] = compute_pixel_error( prob, truth );
-		plot_threshold_optimization( prob_err );
-		[mprob_err] = compute_pixel_error( mprob, truth );
-		plot_threshold_optimization( mprob_err );
-
-		ret.prob_err = prob_err;
-		ret.mprob_err = mprob_err;
+		[err] = assess_probability_map_script( prob, data, mprob );
+		ret.prob_err  = err.prob_err;
+		ret.mprob_err = err.mprob_err;
 	end
 
 end
