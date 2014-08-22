@@ -1,4 +1,4 @@
-function [] = test_script( fname )
+function [] = stack2single( fname )
 
 	stack = loadtiff(fname);
 	stack = scaledata(single(stack),0,1);
