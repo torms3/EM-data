@@ -1,10 +1,23 @@
+function [] = process_affinity_output( train_fname, test_fname )
 
-[out.train] = import_multivolume( fname1 );
-[out.test] 	= import_multivolume( fname2 );
+	for i = 1:numel(train_fname)
 
-write_tif_image_stack( out.train{1}, 'train.affin.x.tif' );
-write_tif_image_stack( out.train{2}, 'train.affin.y.tif' );
-write_tif_image_stack( out.train{3}, 'train.affin.z.tif' );
-write_tif_image_stack( out.test{1}, 'test.affin.x.tif' );
-write_tif_image_stack( out.test{2}, 'test.affin.y.tif' );
-write_tif_image_stack( out.test{3}, 'test.affin.z.tif' );
+		fname = train_fname{i};
+		[out] = import_multivolume( fname );
+		write_tif_image_stack( out{1}, ['train' num2str(i) '.affin.x.tif'] );
+		write_tif_image_stack( out{2}, ['train' num2str(i) '.affin.y.tif'] );
+		write_tif_image_stack( out{3}, ['train' num2str(i) '.affin.z.tif'] );
+
+	end
+
+	for i = 1:numel(test_fname)
+
+		fname = test_fname{i};
+		[out] = import_multivolume( fname );
+		write_tif_image_stack( out{1}, ['test' num2str(i) '.affin.x.tif'] );
+		write_tif_image_stack( out{2}, ['test' num2str(i) '.affin.y.tif'] );
+		write_tif_image_stack( out{3}, ['test' num2str(i) '.affin.z.tif'] );
+
+	end
+
+end

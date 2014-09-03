@@ -1,7 +1,10 @@
-function [] = stack2single( fname )
+function [stack] = stack2single( fin, fout, cropsize )
 
-	stack = loadtiff(fname);
+	stack = loadtiff(fin);
 	stack = scaledata(single(stack),0,1);
-	saveastiff(stack,fname);
+	if exist('cropsize','var')
+		stack = adjust_border_effect(stack,cropsize,true);
+	end
+	saveastiff(stack,fout);
 
 end
