@@ -11,13 +11,21 @@ function [ret] = Rand_error_script( fname, truth, proposed )
 
 	%% Parameters for watershed
 	%	
-	params.Th = 999;% params.Th = 999;
-	params.Tl = 300;% params.Tl = 200;
+	% params.Th = 999;
+	% params.Tl = 300;
+	% params.Ts = 1600;
+	% params.Te = 250;
+	params.Th = 891;
+	params.Tl = 100;
 	params.Ts = 1600;
-	params.Te = 250;
+	params.Te = 100;
 
 	% systematically vary the watershed threshold
-	threshold = 803:-1:801;
+	threshold = [50 100 150 200 300 350 400];
+	% threshold = [885 895 905];
+	% threshold = 886:1:894;
+	% threshold(threshold == 890) = [];
+	% threshold = 803:-1:801;
 	% threshold = 903:-1:897;
 	% threshold = 890;
 	% threshold(threshold == 910) = [];
@@ -33,8 +41,10 @@ function [ret] = Rand_error_script( fname, truth, proposed )
 	if( bWatershed )
 		for i = 1:numel(threshold)
 
-			params.Th = threshold(i);
+			% params.Th = threshold(i);
+			% params.Tl = threshold(i);
 			% params.Ts = threshold(i);
+			params.Te = threshold(i);
 
 			% watershed
 			create_hdf5_for_omnification( fname, proposed, params );
@@ -44,8 +54,10 @@ function [ret] = Rand_error_script( fname, truth, proposed )
 		% compute and display Rand error
 		for i = 1:numel(threshold)
 
-			params.Th = threshold(i);
+			% params.Th = threshold(i);
+			% params.Tl = threshold(i);
 			% params.Ts = threshold(i);
+			params.Te = threshold(i);
 
 			% compute Rand error
 			[ws_fname] = watershed_fname( fname, params );

@@ -1,8 +1,16 @@
-function [segm,chann] = generate_segment_channel( fname, channel_data )
+function [segm,chann] = generate_segment_channel( fname, channel_data, load_from_tif )
+
+	if ~exist('load_from_tif','var')
+		load_from_tif = true;
+	end
 
 	% import forward image
 	fprintf('Now importing forward image...\n');
-	[img] = import_multivolume( fname );
+	if load_from_tif
+		[img] = load_affinity_from_tif( fname );
+	else
+		[img] = import_multivolume( fname );
+	end
 	segm = cat(4,img{1},img{2},img{3});
 	segm = single(scaledata(segm,0,1));
 

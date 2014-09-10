@@ -1,7 +1,7 @@
 function [] = export_volume_data( fname, data )
 	
 	%% Argument validation
-	assert(is_valid_volume_dataset(data));
+	% assert(is_valid_volume_dataset(data));
 
 	%% Export	
 	% size
@@ -17,8 +17,10 @@ function [] = export_volume_data( fname, data )
 	fwrite(fimg, double(data.image), 'double');
 
 	% label
-	flbl = fopen([fname '.label'], 'w');
-	fwrite(flbl, double(data.label), 'double');
+	if( isfield(data,'label') )
+		flbl = fopen([fname '.label'], 'w');
+		fwrite(flbl, double(data.label), 'double');
+	end
 
 	% mask
 	if( isfield(data,'mask') )

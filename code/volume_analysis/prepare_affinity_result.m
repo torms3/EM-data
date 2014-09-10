@@ -1,4 +1,8 @@
-function [ret] = prepare_affinity_result( fname, data )
+function [ret] = prepare_affinity_result( fname, data, load_from_tif )
+
+	if ~exist('load_from_tif','var')
+		load_from_tif = false;
+	end
 
 	%% Options
 	%
@@ -8,7 +12,11 @@ function [ret] = prepare_affinity_result( fname, data )
 
 	% import forward image
 	fprintf('Now importing forward image...\n');
-	[img] = import_multivolume( fname );
+	if load_from_tif
+		[img] = load_affinity_from_tif( fname );
+	else
+		[img] = import_multivolume( fname );
+	end
 
 	% original affinity graph
 	fprintf('Now generating affinity graph...\n');
