@@ -90,7 +90,7 @@ function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap, ratio
 		z = 1;		
 
 		if( isempty(clrmaps{i}) )
-			imagesc( imgCell{i}(:,:,z) );
+			imshow( imgCell{i}(:,:,z) );
 			colormap( clrStr{i} );
 		else
 			image( imgCell{i}(:,:,z) );
@@ -150,7 +150,7 @@ function moveZ( key, imgCell, clrmaps, clrStr, ratio )
 		ax(i) = subplot(subx,suby,i);
 
 		if( isempty(clrmaps{i}) )
-			imagesc( imgCell{i}(:,:,z) );
+			imshow( imgCell{i}(:,:,z) );
 			colormap( clrStr{i} );			
 		else			
 			image( imgCell{i}(:,:,z) );
