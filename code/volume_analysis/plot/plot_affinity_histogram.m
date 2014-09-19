@@ -23,7 +23,7 @@ function plot_affinity_histogram( prob )
 	% szBin 	= 0.01;
 	% nBins 	= floor((1 - cutoff)/szBin);
 	bottom	= 0.75;
-	top		= 0.90;
+	top		= 1.00;
 	szBin	= 0.005;
 	xvals	= bottom:szBin:top;
 	nBins	= 50;

@@ -1,15 +1,17 @@
-function [segm,chann] = generate_segment_channel( fname, channel_data, load_from_tif )
+function [segm,chann] = generate_segment_channel( fname, channel_data, crop_border )
 
-	if ~exist('load_from_tif','var')
-		load_from_tif = true;
+	if ~exist('crop_border','var')
+		crop_border = false;
 	end
 
 	% import forward image
 	fprintf('Now importing forward image...\n');
-	if load_from_tif
-		[img] = load_affinity_from_tif( fname );
-	else
-		[img] = import_multivolume( fname );
+	[img] = import_multivolume( fname );
+	% crop border	
+	if crop_border
+		img{1} = img{1}(2:end,2:end,:);
+		img{2} = img{2}(2:end,2:end,:);
+		img{3} = img{3}(2:end,2:end,:);
 	end
 	segm = cat(4,img{1},img{2},img{3});
 	segm = single(scaledata(segm,0,1));

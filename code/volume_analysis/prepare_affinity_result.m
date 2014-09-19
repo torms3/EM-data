@@ -1,21 +1,33 @@
-function [ret] = prepare_affinity_result( fname, data, load_from_tif )
+function [prep] = prepare_affinity_result( fname, data, filtrad, crop_volume )
 
-	if ~exist('load_from_tif','var')
-		load_from_tif = false;
+	if ~exist('filtrad','var')
+		filtrad = 0;
+	end
+	if ~exist('crop_volume','var')
+		crop_volume = [];
 	end
 
 	%% Options
 	%
-	show_error = true;
 	symm_affin = false;
 
 
 	% import forward image
 	fprintf('Now importing forward image...\n');
-	if load_from_tif
-		[img] = load_affinity_from_tif( fname );
-	else
-		[img] = import_multivolume( fname );
+	[img] = import_multivolume( fname );	
+
+	% median filtering
+	if filtrad > 0
+		[img{1}] = medfilt3( img{1}, filtrad );
+		[img{2}] = medfilt3( img{2}, filtrad );
+		[img{3}] = medfilt3( img{3}, filtrad );
+	end
+
+	% crop border	
+	if ~isempty(crop_volume)
+		img{1} = adjust_border_effect( img{1}, crop_volume, true );
+		img{2} = adjust_border_effect( img{2}, crop_volume, true );
+		img{3} = adjust_border_effect( img{3}, crop_volume, true );
 	end
 
 	% original affinity graph
@@ -60,11 +72,10 @@ function [ret] = prepare_affinity_result( fname, data, load_from_tif )
 
 	%% Return
 	%
-	% ret.prob 	= scaledata(prob,0,1);
-	ret.prob	= prob;
-	ret.truth 	= truth;
+	prep.prob	= prob;
+	prep.truth 	= truth;
 	if isfield(data,'mask')
-		ret.mask = mask;
+		prep.mask = mask;
 	end
 
 end
