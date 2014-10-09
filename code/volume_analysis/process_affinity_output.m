@@ -1,8 +1,8 @@
-function [] = process_affinity_output( fname, outname )
+function [] = process_affinity_output( fname, filtrad, outname )
 	
-	% filtrad = 5;
-	filtrad = 0;
-
+	if ~exist('filtrad','var')
+		filtrad = 0;
+	end
 	if ~exist('outname','var')
 		outname = fname;
 	end

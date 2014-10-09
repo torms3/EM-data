@@ -14,7 +14,7 @@ function [prep] = prepare_affinity_result( fname, data, filtrad, crop_volume )
 
 	% import forward image
 	fprintf('Now importing forward image...\n');
-	[img] = import_multivolume( fname );	
+	[img] = import_multivolume( fname );
 
 	% median filtering
 	if filtrad > 0
@@ -23,7 +23,7 @@ function [prep] = prepare_affinity_result( fname, data, filtrad, crop_volume )
 		[img{3}] = medfilt3( img{3}, filtrad );
 	end
 
-	% crop border	
+	% crop volume	
 	if ~isempty(crop_volume)
 		img{1} = adjust_border_effect( img{1}, crop_volume, true );
 		img{2} = adjust_border_effect( img{2}, crop_volume, true );

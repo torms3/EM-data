@@ -1,11 +1,20 @@
-function [ret] = adapted_Rand_index_2D( fname, data )
+function [ret] = adapted_Rand_index_2D( fname, data, filtrad )
+
+	if ~exist('filtrad','var')
+		filtrad = [];
+	end
 
 	% 4-connected neighborhood
 	conn = 4;	
 
 	% proposed boundary map
-	stack = loadtiff(fname);
-	stack = scaledata(single(stack),0,1);
+	outIdx = 2;
+	[prob,mprob] = generate_prob_map( fname, outIdx, filtrad );
+	if any(filtrad)
+		stack = mprob;
+	else
+		stack = prob;
+	end
 
 	% ground truth
 	segA = adjust_border_effect(single(data.label~=0),stack);

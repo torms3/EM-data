@@ -5,17 +5,17 @@ function [ret] = create_tif_stack( fpath )
 	end
 
 	% .png or .tif file list
-	listing = dir([fpath '*.png']);
-	if isempty(listing)
-		listing = dir([fpath '*.tif']);
+	flist = dir([fpath '*.png']);
+	if isempty(flist)
+		flist = dir([fpath '*.tif']);
 	end
 
 	% sort
-	names = extractfield(listing,'name');
+	names = extractfield(flist,'name');
 	names = sort(names);
 
 	ret = [];
-	for i = 1:numel(listing)
+	for i = 1:numel(flist)
 		disp(names{i});
 		ret(:,:,i) = imread([fpath names{i}]);
 	end

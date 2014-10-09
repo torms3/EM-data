@@ -1,4 +1,4 @@
-function [data] = monitor_learning( cost_type, avgWindow, start_iter  )
+function [data] = monitor_learning( cost_type, avgWindow, from, to )
 
 	%% Options
 	%
@@ -8,8 +8,11 @@ function [data] = monitor_learning( cost_type, avgWindow, start_iter  )
 	if ~exist('avgWindow','var')
 		avgWindow = 0;
 	end
-	if ~exist('start_iter','var')
-		start_iter = [1 1];
+	if ~exist('from','var')
+		from = [1 1];
+	end
+	if ~exist('to','var')
+		to = [];
 	end
 
 	% Load train info
@@ -36,14 +39,24 @@ function [data] = monitor_learning( cost_type, avgWindow, start_iter  )
 	end
 
 	% windowing
-	train.iter 	= train.iter(start_iter(1):end);
-	train.err 	= train.err(start_iter(1):end);
-	train.cls 	= train.cls(start_iter(1):end);
+	if isempty(to)
+		train.iter 	= train.iter(from(1):end);
+		train.err 	= train.err(from(1):end);
+		train.cls 	= train.cls(from(1):end);
+		test.iter 	= test.iter(from(2):end);
+		test.err 	= test.err(from(2):end);
+		test.cls 	= test.cls(from(2):end);		
+	else
+		train.iter 	= train.iter(from(1):to(1));
+		train.err 	= train.err(from(1):to(1));
+		train.cls 	= train.cls(from(1):to(1));
+		test.iter 	= test.iter(from(2):to(2));
+		test.err 	= test.err(from(2):to(2));
+		test.cls 	= test.cls(from(2):to(2));
+	end
 	train.n 	= numel(train.iter);
-	test.iter 	= test.iter(start_iter(2):end);
-	test.err 	= test.err(start_iter(2):end);
-	test.cls 	= test.cls(start_iter(2):end);
 	test.n 		= numel(test.iter);
+		
 
 	% convolution filter
 	[train] = smooth_curve( train, avgWindow );

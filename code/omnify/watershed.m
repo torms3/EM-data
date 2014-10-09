@@ -1,11 +1,11 @@
-function [] = watershed( fname, proposed, params )
+function [] = watershed( fname, affin, params )
 
 	%% Default parameters for watershed
 	%
 	if ~exist('params','var')
 		params.Th = [999];
 		params.Tl = [300];
-		params.Ts = [1600];
+		params.Ts = [400];
 		params.Te = [250];
 	end
 
@@ -22,7 +22,7 @@ function [] = watershed( fname, proposed, params )
 					prms.Ts = params.Ts(k);
 					prms.Te = params.Te(l);
 
-					create_hdf5_for_omnification( fname, proposed, prms );
+					create_hdf5_for_omnification( fname, affin, prms );
 
 				end
 			end

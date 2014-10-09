@@ -1,17 +1,13 @@
-function [ret] = assess_boundary_result_script( fname, data, apply_exp )
+function [ret] = assess_boundary_result( fname, data, filtrad )
 
-	if ~exist('apply_exp','var')
-		apply_exp = false;
+	if ~exist('filtrad','var')
+		filtrad = [];
 	end
-
+	
 	[out] = import_multivolume( fname );
 
 	outIdx = 2;
-	filtrad = 5;
-	% outIdx = 1;
-	% filtrad = 2;
-	% apply_exp = true;
-	[prob,mprob] = generate_prob_map( out, outIdx, filtrad, apply_exp );
+	[prob,mprob] = generate_prob_map( out, outIdx, filtrad );
 
 	ret.out = out;
 	ret.prob = prob;

@@ -1,23 +1,27 @@
-function [prob,prob_medfilt] = generate_prob_map( fwdImg, outIdx, filtrad, appply_exp )
+function [prob,mprob] = generate_prob_map( fwdimg, outidx, filtrad, appply_exp )
 
+	if ~exist('filtrad','var')
+		filtrad = [];
+	end
 	if ~exist('appply_exp','var')
 		appply_exp = false;
 	end
-	% assert(ndims(fwdImg{1}) == 3);
 
-	if( ~exist('filtrad','var'))
-		filtrad = 5;
+	% load from file
+	if isstr(fwdimg)
+		[fwdimg] = import_multivolume(fwdimg);
 	end
 
-	% softmax
+	% for softmax
 	if appply_exp
-		fwdImg = cellfun(@exp,fwdImg,'UniformOutput',false);
+		[fwdimg] = cellfun(@exp,fwdimg,'UniformOutput',false);
 	end
-	prob = fwdImg{outIdx}./sum(cat(4,fwdImg{:}),4);
+	[prob] = fwdimg{outidx}./sum(cat(4,fwdimg{:}),4);
 
 	% median filtering
-	if( filtrad > 0 )
-		[prob_medfilt] = medfilt3( prob, filtrad );
+	mprob = [];
+	if( any(filtrad) )
+		[mprob] = medfilt3( prob, filtrad );
 	end
 
 end
