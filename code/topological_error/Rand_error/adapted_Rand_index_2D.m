@@ -1,4 +1,4 @@
-function [ret] = adapted_Rand_index_2D( fname, data, filtrad )
+function [ret] = adapted_Rand_index_2D( proposed, data, filtrad )
 
 	if ~exist('filtrad','var')
 		filtrad = [];
@@ -8,10 +8,15 @@ function [ret] = adapted_Rand_index_2D( fname, data, filtrad )
 	conn = 4;	
 
 	% proposed boundary map
-	outIdx = 2;
-	[prob,mprob] = generate_prob_map( fname, outIdx, filtrad );
+	if isstr(proposed)
+		outIdx = 2;
+		[prob,~] = generate_prob_map( proposed, outIdx );
+	else
+		[prob] = proposed;
+	end
+		
 	if any(filtrad)
-		stack = mprob;
+		stack = medfilt3( prob, filtrad );
 	else
 		stack = prob;
 	end
@@ -42,6 +47,9 @@ function [ret] = adapted_Rand_index_2D( fname, data, filtrad )
 	fprintf('Best RI f-score= %.4f @ %.1f\n',srt(1),thresholds(idx(1)));
 	fprintf('<<<<<<<<<<< STATS >>>>>>>>>>>\n\n');
 
-	ret.RI = RI;
+	ret.val = RI;
+	ret.thresh = thresholds;
+
+	plot_error( ret, '2D Rand error' );
 
 end

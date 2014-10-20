@@ -9,6 +9,9 @@ function [ret] = compute_Rand_error( truth, watershed )
 	% compute rand error
 	ret.segA = cropped;
 	ret.segB = watershed;
-	[ret.err] = SNEMI3D_metrics( ret.segA, ret.segB );
+	[result] = SNEMI3D_metrics( ret.segA, ret.segB );
+	ret.err  = result.re;
+	ret.prec = result.prec;
+	ret.rec  = result.rec;
 
 end

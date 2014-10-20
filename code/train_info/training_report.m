@@ -1,13 +1,13 @@
-function [] = training_report( train_info, avgWindow )
+function [] = training_report( data, avgWindow )
 
 	if ~exist('avgWindow','var')
 		avgWindow = 0;
 	end
 
 	% Smoothing by averaging
-	data.train = smooth_curve( train_info.train, avgWindow );
-	data.test  = smooth_curve( train_info.test,  avgWindow );
-	data.cost  = train_info.cost;
+	data.train = smooth_curve( data.train, avgWindow );
+	data.test  = smooth_curve( data.test,  avgWindow );
+	data.cost  = train.cost;
 
 	% Draw plot
 	data.title = ['Cost, smoothing window = ' num2str(avgWindow)];

@@ -37,7 +37,9 @@ function [ret] = Rand_error_script( fname, truth, params )
 					% 	  'RI = ' 	num2str(RI.err)]);
 
 					% record
-					ret.RI(i) = RI.err;
+					ret.RI(i) 	= RI.err;
+					ret.prec(i) = RI.prec;
+					ret.rec(i) 	= RI.rec;
 
 				end
 			end

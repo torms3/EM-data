@@ -1,12 +1,14 @@
-function [data] = monitor_learning( cost_type, avgWindow, start_iter  )
+function [data] = monitor_learning( cost_type, avg_winidow, start_iter )
+
+	disp('abc')
 
 	%% Options
 	%
 	if ~exist('cost_type','var')
-		cost_type = 'RMSE';
+		cost_type = 'Cost';
 	end	
-	if ~exist('avgWindow','var')
-		avgWindow = 0;
+	if ~exist('avg_winidow','var')
+		avg_winidow = 0;
 	end
 	if ~exist('start_iter','var')
 		start_iter = [1 1];
@@ -44,10 +46,10 @@ function [data] = monitor_learning( cost_type, avgWindow, start_iter  )
 	test.n 		= numel(test.iter);
 
 	% convolution filter
-	[train] = smooth_curve( train, avgWindow );
-	[test] 	= smooth_curve( test, avgWindow );
-	if( avgWindow > 0 )
-		avgStr = [', smoothing window = ' num2str(avgWindow)];
+	[train] = smooth_curve( train, avg_winidow );
+	[test] 	= smooth_curve( test, avg_winidow );
+	if( avg_winidow > 0 )
+		avgStr = [', smoothing window = ' num2str(avg_winidow)];
 	else
 		avgStr = '';
 	end

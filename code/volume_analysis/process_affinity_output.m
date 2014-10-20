@@ -1,7 +1,7 @@
 function [] = process_affinity_output( fname, filtrad, outname )
 	
 	if ~exist('filtrad','var')
-		filtrad = 0;
+		filtrad = [];
 	end
 	if ~exist('outname','var')
 		outname = fname;
@@ -16,7 +16,7 @@ function [] = process_affinity_output( fname, filtrad, outname )
 		write_tif_image_stack( out{3}, [outname{i} '.affin.z.tif'] );
 
 		% median filtering
-		if( filtrad > 0 )
+		if any(filtrad)
 			[filtered{1}] = medfilt3( out{1}, filtrad );
 			[filtered{2}] = medfilt3( out{2}, filtrad );
 			[filtered{3}] = medfilt3( out{3}, filtrad );

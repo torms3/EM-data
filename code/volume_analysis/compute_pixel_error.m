@@ -60,7 +60,7 @@ function [ret] = compute_pixel_error( prob, truth, mask )
 	%
 	ret.prec   = precision;
 	ret.rec    = recall;
-	ret.pxlErr = pixelError;
+	ret.val    = pixelError;
 	ret.thresh = threshold;
 	ret.fscore = (2*precision.*recall)./(precision+recall);
 	ret.maxF   = 1-ret.fscore;

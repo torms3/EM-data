@@ -19,7 +19,7 @@
 % Output:
 %       re - adapated Rand error (1.0 - F-score of adapted Rand index)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [re] = SNEMI3D_metrics( segA, segB )
+function [ret] = SNEMI3D_metrics( segA, segB )
 
 segA = double(segA)+1;
 segB = double(segB)+1;
@@ -56,7 +56,9 @@ rec = sumAB / sumA;
 % F-score
 fScore = 2.0 * prec * rec / (prec + rec);
 
-re = 1.0 - fScore;
+ret.prec = prec;
+ret.rec = rec;
+ret.re = 1.0 - fScore;
 
 end
 

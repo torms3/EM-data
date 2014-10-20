@@ -1,11 +1,41 @@
-function [] = emplay( channel, alphas )
-	
-	if ~exist('alphas','var')
+function [] = volplay( volume, alphas )
+% 
+% Display 3D volume as a stack of 2D image slices
+% 
+% Usage:
+% 	volplay( volume )
+% 	volplay( volume, {alpha1,alpha2,...} )
+% 
+% 	volume: 3D volume as a stack of 2D image slices
+% 	alphas: cell array of 3D alpha channels of the same size with volume
+% 			(each alpha channel is re-scaled to [0,1])
+%
+% Key Control:
+%	'up' & 'down' 	move up and down along z-direction
+%	'c'	 			change alpha channel color randomly
+%	'1', '2', ...	turn on/off volume and/or alpha channels
+%	'p' 			save current figure as file
+%
+% Mouse Control:
+%	mouse scroll	adjust alpha level
+%
+% Dependency:
+%	scaledata
+%
+% Program written by:
+% Copyright (C) 2014 	Kisuk Lee <kiskulee@mit.edu>
+
+	if ~exist('alphas','var') || ~iscell(alphas)
 		alphas = {};
 	end
 
+	% preprocessing alpha channels
+	for i = 1:numel(alphas)
+		alphas{i} = scaledata(alphas{i},0,1);
+	end
+
 	% set data
-	data.channel = scaledata(double(channel),0,1);
+	data.volume = scaledata(double(volume),0,1);
 	data.alphas  = alphas;
 	data.rgb 	 = cell(1,numel(data.alphas));
 	data.z 		 = 1;
@@ -17,7 +47,7 @@ function [] = emplay( channel, alphas )
 	end
 
 	% additional info.
-	Z = size(channel,3);
+	Z = size(volume,3);
 	step = 0.05;
 
 	% display the first slice	
@@ -92,7 +122,7 @@ function [] = emplay( channel, alphas )
 	%
 	function display_slice()
 
-		img = data.channel(:,:,data.z);
+		img = data.volume(:,:,data.z);
 		if ~data.vis(1)
 			img = zeros(size(img));
 		end		

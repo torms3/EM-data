@@ -1,6 +1,6 @@
 function [data] = smooth_curve( data, w )
 
-	if( w > 0 )
+	if w > 0
 
 		% smoothing(convolution) filter
 		hw = floor(w/2);
@@ -17,6 +17,9 @@ function [data] = smooth_curve( data, w )
 		data.iter = data.iter(1:minVal);
 		data.err  = data.err(1:minVal);
 		data.cls  = data.cls(1:minVal);
+
+		data.n 	  = numel(data.iter);
+
 	end
 
 end
