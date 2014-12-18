@@ -36,7 +36,8 @@ function [ret] = adapted_Rand_index_2D( proposed, data, filtrad )
 
 		segB = stack > threshold;
 		segB = bwlabeln(segB,conn);
-		RI(i) = SNEMI3D_metrics(segA,segB);
+		metric = SNEMI3D_metrics(segA,segB);
+		RI(i) = metric.re;
 
 		fprintf('Rand index = %.4f @ %.1f\n',RI(i),threshold);
 

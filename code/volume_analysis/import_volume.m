@@ -20,13 +20,16 @@ function [vol] = import_volume( fname, dim, ext )
 % Kisuk Lee <kiskulee@mit.edu>, 2014
 	
 	if ~exist('dim','var')
-		dim = []
+		dim = [];
 	end
 
 	% volume dimension
 	if isempty(dim)
 		fsz = fopen([fname '.size'], 'r');
-		assert(fsz >= 0);
+		if fsz < 0
+			vol = [];
+			return;
+		end
 		x = fread(fsz, 1, 'uint32');
 		y = fread(fsz, 1, 'uint32');
 		z = fread(fsz, 1, 'uint32');
@@ -41,7 +44,10 @@ function [vol] = import_volume( fname, dim, ext )
 	else
 		fvol = fopen(fname, 'r');
 	end	
-	assert(fvol >= 0);
+	if fvol < 0
+		vol = [];
+		return;
+	end
 	
 	vol = zeros(prod(dim), 1);
 	vol = fread(fvol, size(vol), 'double');
