@@ -31,6 +31,6 @@ function [ret] = compute_voxel_error( prob, truth, thresh )
 	ret.err    = (ret.nFP + ret.nFN)/numel(bMap);
 	ret.poserr = ret.nFN/(ret.nTP + ret.nFN);
 	ret.negerr = ret.nFP/(ret.nTN + ret.nFP);
-	ret.balerr = mean(ret.poserr,ret.negerr);
+	ret.balerr = 0.5*ret.poserr + 0.5*ret.negerr;
 
 end
