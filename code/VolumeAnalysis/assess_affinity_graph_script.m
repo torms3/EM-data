@@ -1,6 +1,6 @@
 function assess_affinity_graph_script( fname, data, filtrad )
 
-	if ~exist('filtrad','vaf')
+	if ~exist('filtrad','var')
 		filtrad = 0;
 	end
 
