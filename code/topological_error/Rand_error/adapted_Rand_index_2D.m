@@ -22,7 +22,7 @@ function [ret] = adapted_Rand_index_2D( proposed, data, filtrad )
 	end
 
 	% ground truth
-	segA = adjust_border_effect(single(data.label~=0),stack);
+	segA = adjust_border_effect(single(data.label~=0),stack);	
 	segA = bwlabeln(segA,conn);
 
 	% iterate over different thresholds

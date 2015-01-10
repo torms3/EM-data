@@ -14,7 +14,7 @@ function plot_error( data, errname )
 	[~,baseIdx] = min(abs(data.thresh - 0.5));
 
 	% plot
-	figure();
+	figure;
 	plot(data.thresh,data.val);
 	axis([0 1 0 maxErr+0.1]);
 	hold on;

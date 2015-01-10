@@ -1,13 +1,13 @@
 function [ret] = compute_voxel_error( prob, truth, thresh )
 % 
-% Compute
+% Compute voxel-wise classification error
 % 
 % Usage:
 % 	compute_voxel_error( prob, truth )
 % 	compute_voxel_error( prob, truth, thresh )
 % 
 % 	prob : boundary probability map
-% 	truth: ground truth
+% 	truth: ground truth (segmentation or boundary map)
 % 	tresh: classification threshold
 %
 % Program written by:
@@ -24,15 +24,13 @@ function [ret] = compute_voxel_error( prob, truth, thresh )
 	ret.nFN = nnz(~bMap & ~logical(truth));
 	ret.nTN = numel(bMap) - (ret.nTP + ret.nFP + ret.nFN);
 
-	ret.posACC = ret.nTP/(ret.nTP+ret.nFN);
-	ret.negACC = ret.nTN/(ret.nTN+ret.nFP);
-	ret.balACC = 0.5*ret.posACC + 0.5*ret.negACC;
+	ret.prec = ret.nTP/(ret.nTP + ret.nFP);
+	ret.rec  = ret.nTP/(ret.nTP + ret.nFN);
+	ret.fs	 = 2*ret.prec*ret.rec/(ret.prec + ret.rec);
 
-	ret.posERR = 1 - ret.posACC;
-	ret.negERR = 1 - ret.negERR;
-	ret.balERR = 1 - ret.balACC;
-
-	ret.voxelACC = (ret.nTP+ret.nTN)/numel(bMap);
-	ret.voxelERR = 1 - ret.voxelACC;
+	ret.err    = (ret.nFP + ret.nFN)/numel(bMap);
+	ret.poserr = ret.nFN/(ret.nTP + ret.nFN);
+	ret.negerr = ret.nFP/(ret.nTN + ret.nFP);
+	ret.balerr = mean(ret.poserr,ret.negerr);
 
 end

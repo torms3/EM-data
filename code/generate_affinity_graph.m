@@ -19,7 +19,6 @@ function [G] = generate_affinity_graph( lbl )
 
 	x(bMap) = 0;
 	x(~bMap) = 1;
-	% x = x(:,1:end-1,1:end-1);
 	x = x(:,2:end,2:end);
 
 
@@ -32,7 +31,6 @@ function [G] = generate_affinity_graph( lbl )
 
 	y(bMap) = 0;
 	y(~bMap) = 1;
-	% y = y(1:end-1,:,1:end-1);
 	y = y(2:end,:,2:end);
 
 
@@ -46,7 +44,6 @@ function [G] = generate_affinity_graph( lbl )
 
 	z(bMap) = 0;
 	z(~bMap) = 1;
-	% z = z(1:end-1,1:end-1,:);
 	z = z(2:end,2:end,:);
 
 

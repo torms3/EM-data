@@ -56,8 +56,8 @@ rec = sumAB / sumA;
 % F-score
 fScore = 2.0 * prec * rec / (prec + rec);
 
-ret.prec = prec;
-ret.rec = rec;
+ret.prec = full(prec);
+ret.rec = full(rec);
 ret.re = 1.0 - fScore;
 
 end
