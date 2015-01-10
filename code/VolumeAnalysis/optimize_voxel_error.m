@@ -16,7 +16,7 @@ function [ret] = optimize_voxel_error( prob, truth, thresh )
 		data{i} = compute_voxel_error(prob,truth,threshold);		
 		data{i}.thresh = threshold;
 
-		fprintf('Voxel error = %.4f @ %.1f\n',data{i}.ERR,threshold);
+		fprintf('Voxel error = %.4f @ %.1f\n',data{i}.err,threshold);
 
 	end
 
