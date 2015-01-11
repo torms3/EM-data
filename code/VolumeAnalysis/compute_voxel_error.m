@@ -19,7 +19,7 @@ function [ret] = compute_voxel_error( prob, truth, thresh )
 
 	bMap = prob < thresh;	% binary map
 
-	ret.nTP = nnz(xor(bMap,~logical(truth)));
+	ret.nTP = nnz(~bMap & ~logical(truth));
 	ret.nFP = nnz(bMap & logical(truth));
 	ret.nFN = nnz(~bMap & ~logical(truth));
 	ret.nTN = numel(bMap) - (ret.nTP + ret.nFP + ret.nFN);
