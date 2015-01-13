@@ -28,9 +28,14 @@ function plot_2D_Rand_error( data )
 		  data.re(bestIdx),data.prec(bestIdx),data.rec(bestIdx),data.thresh(bestIdx)));
 
 	fprintf('\n<<<<<<<<<<<  STATS  >>>>>>>>>>>\n');
-	fprintf('Best RI f-score = %.4f @ %.1f\n',srt(1),data.thresh(idx(1)));
-	fprintf('Precision       = %.4f @ %.1f\n',data.prec(idx(1)),data.thresh(idx(1)));
-	fprintf('Recall          = %.4f @ %.1f\n',data.rec(idx(1)),data.thresh(idx(1)));
+	fprintf('Best RI f-score = %.4f @ %.1f\n',srt(1),data.thresh(bestIdx));
+	fprintf('Precision       = %.4f @ %.1f\n',data.prec(bestIdx),data.thresh(bestIdx));
+	fprintf('Recall          = %.4f @ %.1f\n',data.rec(bestIdx),data.thresh(bestIdx));
 	fprintf('<<<<<<<<<<<  STATS  >>>>>>>>>>>\n\n');
+
+	fprintf('%.4f\n',data.thresh(bestIdx));
+	fprintf('%.4f\n',srt(1));
+	fprintf('%.4f\n',data.prec(bestIdx));
+	fprintf('%.4f\n',data.rec(bestIdx));
 
 end
