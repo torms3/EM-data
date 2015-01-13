@@ -1,11 +1,11 @@
-function assess_affinity_graph_script( fname, data, filtrad )
+function assess_affinity_graph_script( fname, data, w, filtrad )
 
 	if ~exist('filtrad','var')
 		filtrad = 0;
 	end
 
 	% prepare
-	[prep] = prepare_affinity_graph(fname,data,filtrad);
+	[prep] = prepare_affinity_graph(fname,data,w,filtrad);
 
 
 	%% Voxel error
@@ -41,6 +41,11 @@ function assess_affinity_graph_script( fname, data, filtrad )
 
 	%% Save
 	%
+	if any(w)
+		x = w(1); y = w(2); z = w(3);
+		str = ['w' num2str(x) 'x' num2str(y) 'x' num2str(z)];
+		fname = [fname '.' str];
+	end
 	if filtrad > 0
 		fname = [fname '.median' num2str(filtrad)];
 	end
