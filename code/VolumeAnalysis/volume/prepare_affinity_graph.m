@@ -14,16 +14,20 @@ function [prep] = prepare_affinity_graph( fname, data, w, filtrad )
 	nvol = 3;
 	mvol = load_multivolume( fname, nvol );	
 
+	P.x = [];
+	P.y = [];
+	P.z = [];
+
 	if any(w)
 		one = [1 1 1];
 		P.x = adjust_border_effect(mvol{1},size(mvol{1})-w+one,true);
 		P.y = adjust_border_effect(mvol{2},size(mvol{2})-w+one,true);
 		P.z = adjust_border_effect(mvol{3},size(mvol{3})-w+one,true);
+	else
+		P.x = mvol{1}(2:end,2:end,2:end);
+		P.y = mvol{2}(2:end,2:end,2:end);
+		P.z = mvol{3}(2:end,2:end,2:end);
 	end
-	
-	P.x = mvol{1}(2:end,2:end,2:end);
-	P.y = mvol{2}(2:end,2:end,2:end);
-	P.z = mvol{3}(2:end,2:end,2:end);
 
 	P.xy = min(P.x,P.y);
 	P.yz = min(P.y,P.z);
