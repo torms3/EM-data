@@ -1,4 +1,4 @@
-function [prep] = prepare_affinity_graph( fname, data, w, filtrad )
+function [prep] = prepare_affinity_graph( fname, w, filtrad, data )
 
 	if isempty(w)
 		w = [0 0 0];
@@ -44,25 +44,26 @@ function [prep] = prepare_affinity_graph( fname, data, w, filtrad )
 		P.zx = medfilt3(P.zx,filtrad);
 	end
 
-	%% ground truth affinity graph
-	%
-	fprintf('Now generating ground truth affinity graph...\n');
-	truth = data.label;
-	if any(w)
-		truth = adjust_border_effect(truth,size(truth)-w+[1 1 1],true);	
-	end
-	G = generate_affinity_graph(truth);
-
-	G.xy = G.x & G.y;
-	G.yz = G.y & G.z;
-	G.zx = G.z & G.x;
-
 	%% preparation
 	%
 	prep.P = P;
-	prep.G = G;
-
-	% for watershed
 	prep.affin = cat(4,P.x,P.y,P.z);
+
+	%% ground truth affinity graph
+	%
+	if exist('data','var')
+		fprintf('Now generating ground truth affinity graph...\n');
+		truth = data.label;
+		if any(w)
+			truth = adjust_border_effect(truth,size(truth)-w+[1 1 1],true);	
+		end
+		G = generate_affinity_graph(truth);
+
+		G.xy = G.x & G.y;
+		G.yz = G.y & G.z;
+		G.zx = G.z & G.x;
+
+		prep.G = G;
+	end
 
 end

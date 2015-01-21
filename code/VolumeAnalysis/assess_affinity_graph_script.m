@@ -5,7 +5,7 @@ function assess_affinity_graph_script( fname, data, w, filtrad )
 	end
 
 	% prepare
-	[prep] = prepare_affinity_graph(fname,data,w,filtrad);
+	[prep] = prepare_affinity_graph(fname,w,filtrad,data);
 
 
 	%% Voxel error
