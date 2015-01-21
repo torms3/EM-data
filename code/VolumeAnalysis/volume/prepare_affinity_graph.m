@@ -62,4 +62,7 @@ function [prep] = prepare_affinity_graph( fname, data, w, filtrad )
 	prep.P = P;
 	prep.G = G;
 
+	% for watershed
+	prep.affin = cat(4,P.x,P.y,P.z);
+
 end
