@@ -18,7 +18,7 @@ function [ret] = import_multivolume_series( fname, n, volType )
 	fimg(1) = fopen([fname '.0'], 'r');
 	fimg(2) = fopen([fname '.1'], 'r');
 	fimg(3) = fopen([fname '.2'], 'r');
-	fimg(4) = fopen([fname '.3'], 'r');
+	% fimg(4) = fopen([fname '.3'], 'r');
 
 	for i = 1:numel(fimg)
 
