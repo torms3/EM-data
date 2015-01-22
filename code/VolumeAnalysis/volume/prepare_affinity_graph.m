@@ -3,7 +3,7 @@ function [prep] = prepare_affinity_graph( fname, w, filtrad, data )
 	if isempty(w)
 		w = [0 0 0];
 	else
-		assert(mod(w,2)==[1 1 1]);
+		assert(isequal(mod(w,2),[1 1 1]));
 	end
 
 	if ~exist('filtrad','var')
