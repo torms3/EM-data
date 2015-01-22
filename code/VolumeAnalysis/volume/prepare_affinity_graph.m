@@ -2,11 +2,14 @@ function [prep] = prepare_affinity_graph( fname, w, filtrad, data )
 
 	if isempty(w)
 		w = [0 0 0];
+	else
+		assert(mod(w,2)==[1 1 1]);
 	end
 
 	if ~exist('filtrad','var')
 		filtrad = 0;
 	end
+
 
 	%% proposed affinity graph
 	%
@@ -18,16 +21,18 @@ function [prep] = prepare_affinity_graph( fname, w, filtrad, data )
 	P.y = mvol{2};
 	P.z = mvol{3};
 
+	% border effect (ConvNet FoV)
 	if any(w)
 		one = [1 1 1];
-		P.x = adjust_border_effect(P.x,size(P.x)-w+one,true);
-		P.y = adjust_border_effect(P.y,size(P.y)-w+one,true);
-		P.z = adjust_border_effect(P.z,size(P.z)-w+one,true);
+		offset = floor(w/2) + one;
+		P.x = crop_volume(P.x,offset,size(P.x)-w+one);
+		P.y = crop_volume(P.y,offset,size(P.y)-w+one);
+		P.z = crop_volume(P.z,offset,size(P.z)-w+one);
+	else
+		P.x = P.x(2:end,2:end,2:end);
+		P.y = P.y(2:end,2:end,2:end);
+		P.z = P.z(2:end,2:end,2:end);	
 	end
-	
-	P.x = P.x(2:end,2:end,2:end);
-	P.y = P.y(2:end,2:end,2:end);
-	P.z = P.z(2:end,2:end,2:end);
 
 	P.xy = min(P.x,P.y);
 	P.yz = min(P.y,P.z);
@@ -44,21 +49,26 @@ function [prep] = prepare_affinity_graph( fname, w, filtrad, data )
 		P.zx = medfilt3(P.zx,filtrad);
 	end
 
+
 	%% preparation
 	%
 	prep.P = P;
 	prep.affin = cat(4,P.x,P.y,P.z);
 
+
 	%% ground truth affinity graph
 	%
 	if exist('data','var')
 		fprintf('Now generating ground truth affinity graph...\n');
-		truth = data.label;
+		
+		G = generate_affinity_graph(data.label);
 		if any(w)
-			truth = adjust_border_effect(truth,size(truth)-w+[1 1 1],true);	
+			offset = floor(w/2);
+			G.x = crop_volume(G.x,offset,size(P.x));
+			G.y = crop_volume(G.y,offset,size(P.y));
+			G.z = crop_volume(G.z,offset,size(P.z));
 		end
-		G = generate_affinity_graph(truth);
-
+		
 		G.xy = G.x & G.y;
 		G.yz = G.y & G.z;
 		G.zx = G.z & G.x;
