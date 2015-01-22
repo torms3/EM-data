@@ -29,7 +29,7 @@ function prepare_omnification_script( fname, w, filtrad, params, data )
 		if exist('data','var')
 			offset = floor(w/2) + [1 1 1];
 			sz = size(prep.P.x);
-			generate_channel(fname{i},data{i},offset,sz);
+			generate_channel(['watershed/' fname{i}],data{i},offset,sz);
 		end		
 	end
 
