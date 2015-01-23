@@ -54,7 +54,7 @@ function assess_affinity_graph_script( fname, data, offset, crop, filtrad )
 
 		%% Voxel error
 		%
-		disp(['Processing x-affinity...']);plot_voxel_error( data )
+		disp(['Processing x-affinity...']);
 		[result.x] = optimize_voxel_error(affin.x,GT.x);
 		disp(['Processing y-affinity...']);
 		[result.y] = optimize_voxel_error(affin.y,GT.y);
