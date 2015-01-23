@@ -31,14 +31,16 @@ function prepare_omnification_script( fname, params, offset, crop, filtrad, data
 
 		% coordinate correction
 		if ~isempty(offset)
-			affin.coord = affin.coord + offset;
-			fprintf('affinity graph coordinate = [%d,%d,%d]\n',affin.coord);
+			affin.coord = affin.coord + offset;			
 		end
 
 		% crop
 		if ~isempty(crop)
 			[affin] = crop_affinity_graph(affin,crop(1),crop(2));
 		end
+
+		fprintf('affinity graph coordinate = [%d,%d,%d]\n',affin.coord);
+		fprintf('affinity graph size 	   = [%d,%d,%d]\n',affin.size);
 
 		prep = single(cat(4,affin.x,affin.y,affin.z));
 		watershed(['watershed/' fname{i}],prep,params);
