@@ -40,12 +40,11 @@ function prepare_omnification_script( fname, params, offset, crop, filtrad, data
 			[affin] = crop_affinity_graph(affin,crop(1),crop(2));
 		end
 
-		watershed(['watershed/' fname{i}],prep.affin,params);
+		prep = single(cat(4,affin.x,affin.y,affin.z));
+		watershed(['watershed/' fname{i}],prep,params);
 
-		if exist('data','var')
-			offset = floor(w/2) + [1 1 1];
-			sz = size(prep.P.x);
-			generate_channel(['watershed/' fname{i}],data{i},offset,sz);
+		if exist('data','var')			
+			generate_channel(['watershed/' fname{i}],data{i},affin.coord,affin.size);
 		end		
 	end
 

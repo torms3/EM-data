@@ -16,6 +16,8 @@ function [truth] = prepare_affinity_truth( label, affin )
 % 		.xy 	xy-plane boundary
 % 		.yz 	yz-plane boundary
 % 		.zx 	zx-plane boundary
+% 		.coord	coordinate
+% 		.size	size
 %
 % Program written by:
 % Kisuk Lee <kiskulee@mit.edu> 	2015
