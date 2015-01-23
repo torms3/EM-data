@@ -3,10 +3,7 @@ function [] = watershed( fname, affin, params )
 	%% Default parameters for watershed
 	%
 	if ~exist('params','var')
-		params.Th = [999];
-		params.Tl = [300];
-		params.Ts = [400];
-		params.Te = [250];
+		[params] = default_watershed_params();
 	end
 
 
