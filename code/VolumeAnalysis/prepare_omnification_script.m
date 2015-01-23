@@ -44,7 +44,7 @@ function prepare_omnification_script( fname, params, offset, crop, filtrad, data
 		watershed(['watershed/' fname{i}],prep,params);
 
 		if exist('data','var')			
-			generate_channel(['watershed/' fname{i}],data{i},affin.coord,affin.size);
+			generate_channel(['watershed/' fname{i}],data{i}.image,affin.coord,affin.size);
 		end		
 	end
 
