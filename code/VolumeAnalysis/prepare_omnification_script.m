@@ -23,10 +23,8 @@ function prepare_omnification_script( fname, params, offset, crop, filtrad, data
 		end
 	end
 
-	if ~exist('watershed','dir')
-		disp('mkdir watershed');
-		mkdir('watershed');
-	end
+	% make directory for watershed
+	mkdir('watershed');
 
 	for i = 1:numel(fname)
 		affin = prepare_affinity_graph(fname{i},filtrad);
