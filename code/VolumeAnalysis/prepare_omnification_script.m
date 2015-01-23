@@ -1,17 +1,22 @@
-function prepare_omnification_script( fname, w, filtrad, params, data )
+function prepare_omnification_script( fname, params, offset, crop, filtrad, data )
 
-	if isempty(w)
-		w = [1 1 1];
+	if ~iscell(fname)
+		fname = {fname};
 	end
 
 	if ~exist('filtrad','var')
 		filtrad = 0;
 	end
 
-	if ~iscell(fname)
-		fname = {fname};
+	if ~exist('offset','var')
+		offset = [];
 	end
 
+	if ~exist('crop','var')
+		crop = []
+	end
+
+	% optional data for channel
 	if exist('data','var')
 		if ~iscell(data)
 			data = {data};
@@ -23,7 +28,18 @@ function prepare_omnification_script( fname, w, filtrad, params, data )
 	end
 
 	for i = 1:numel(fname)
-		prep = prepare_affinity_graph(fname{i},w,filtrad);
+		affin = prepare_affinity_graph(fname{i},filtrad);
+
+		% coordinate correction
+		if ~isempty(offset)
+			affin.coord = affin.coord + offset;
+		end
+
+		% crop
+		if ~isempty(crop)
+			[affin] = crop_affinity_graph(affin,crop(1),crop(2));
+		end
+
 		watershed(['watershed/' fname{i}],prep.affin,params);
 
 		if exist('data','var')

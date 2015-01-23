@@ -55,25 +55,4 @@ function [affin] = prepare_affinity_graph( fname, filtrad )
 	affin.coord = [1,1,1];
 	affin.size  = size(affin.x);
 
-
-	%% ground truth affinity graph
-	%
-	% if exist('data','var')
-	% 	fprintf('Now generating ground truth affinity graph...\n');
-		
-	% 	G = generate_affinity_graph(data.label);
-	% 	if ~isempty(w)
-	% 		offset = floor(w/2);
-	% 		G.x = crop_volume(G.x,offset,size(P.x));
-	% 		G.y = crop_volume(G.y,offset,size(P.y));
-	% 		G.z = crop_volume(G.z,offset,size(P.z));
-	% 	end
-		
-	% 	G.xy = G.x & G.y;
-	% 	G.yz = G.y & G.z;
-	% 	G.zx = G.z & G.x;
-
-	% 	prep.G = G;
-	% end
-
 end

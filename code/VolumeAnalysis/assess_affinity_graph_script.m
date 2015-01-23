@@ -35,7 +35,7 @@ function assess_affinity_graph_script( fname, data, offset, crop, filtrad )
 			affin.coord = affin.coord + offset;
 		end
 
-		%  crop
+		% crop
 		if ~isempty(crop)
 			% ConvNet FoV interpretation
 			if numel(crop == 1)
@@ -54,7 +54,7 @@ function assess_affinity_graph_script( fname, data, offset, crop, filtrad )
 
 		%% Voxel error
 		%
-		disp(['Processing x-affinity...']);
+		disp(['Processing x-affinity...']);plot_voxel_error( data )
 		[result.x] = optimize_voxel_error(affin.x,GT.x);
 		disp(['Processing y-affinity...']);
 		[result.y] = optimize_voxel_error(affin.y,GT.y);
@@ -93,15 +93,15 @@ function assess_affinity_graph_script( fname, data, offset, crop, filtrad )
 		sy = affin.size(2);
 		sz = affin.size(3);
 
-		str = sprintf('x%d_y%d_z%d_sx%d_sy%d_sz%d',ox,oy,oz,sx,sy,sz);
+		str = sprintf('x%d_y%d_z%d_dim%dx%dx%d',ox,oy,oz,sx,sy,sz);
 
-		% ConvNet FoV interpretation
-		if ~isempty(crop)
-			if numel(crop == 1)
-				w = crop(1);
-				str = sprintf('w%dx%dx%d',w(1),w(2),w(3));
-			end
-		end
+		% % ConvNet FoV interpretation
+		% if ~isempty(crop)
+		% 	if numel(crop == 1)
+		% 		w = crop(1);
+		% 		str = sprintf('w%dx%dx%d',w(1),w(2),w(3));
+		% 	end
+		% end
 			
 		fname = [fname '.' str];
 
@@ -109,7 +109,7 @@ function assess_affinity_graph_script( fname, data, offset, crop, filtrad )
 			fname = [fname '.median' num2str(filtrad)];
 		end
 
-		save(fname,'result');
+		save([fname '.mat'],'result');
 
 	end
 
