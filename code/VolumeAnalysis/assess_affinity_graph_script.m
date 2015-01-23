@@ -49,36 +49,36 @@ function assess_affinity_graph_script( fname, data, offset, crop, filtrad )
 		end
 
 		% prpare ground truth affinith graph
-		[truth] = prepare_affinity_truth(label,affin);
+		[GT] = prepare_affinity_truth(label,affin);
 
 
 		%% Voxel error
 		%
 		disp(['Processing x-affinity...']);
-		[result.x] = optimize_voxel_error(affin.x,truth.x);
+		[result.x] = optimize_voxel_error(affin.x,GT.x);
 		disp(['Processing y-affinity...']);
-		[result.y] = optimize_voxel_error(affin.y,truth.y);
+		[result.y] = optimize_voxel_error(affin.y,GT.y);
 		disp(['Processing z-affinity...']);
-		[result.z] = optimize_voxel_error(affin.z,truth.z);
+		[result.z] = optimize_voxel_error(affin.z,GT.z);
 
 
 		%% 2D Rand error
 		%
 		% xy-plane
 		prob  = affin.xy;
-		truth = truth.xy;
+		truth = GT.xy;
 		disp(['Processing xy-affinity...']);
 		[result.xy] = optimize_2D_Rand_error(prob,truth);
 
 		% yz-plane
 		prob  = rot90_3D(affin.yz,2,1);
-		truth = rot90_3D(truth.yz,2,1);
+		truth = rot90_3D(GT.yz,2,1);
 		disp(['Processing yz-affinity...']);
 		[result.yz] = optimize_2D_Rand_error(prob,truth);
 
 		% zx-plane
 		prob  = rot90_3D(affin.zx,1,3);
-		truth = rot90_3D(truth.zx,1,3);
+		truth = rot90_3D(GT.zx,1,3);
 		disp(['Processing zx-affinity...']);
 		[result.zx] = optimize_2D_Rand_error(prob,truth);
 
