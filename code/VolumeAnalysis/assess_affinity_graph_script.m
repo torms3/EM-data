@@ -21,7 +21,7 @@ function assess_affinity_graph_script( fname, data, offset, crop, filtrad )
 	end
 
 	for i = 1:numel(fname)
-		assess_affinity_graph(fname{i},data{i}.label,offst,crop,filtrad);
+		assess_affinity_graph(fname{i},data{i}.label,offset,crop,filtrad);
 	end
 
 
