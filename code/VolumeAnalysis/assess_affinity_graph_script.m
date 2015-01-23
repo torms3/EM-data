@@ -33,6 +33,7 @@ function assess_affinity_graph_script( fname, data, offset, crop, filtrad )
 		% coordinate correction
 		if ~isempty(offset)
 			affin.coord = affin.coord + offset;
+			fprintf('affinity graph coordinate = [%d,%d,%d]\n',affin.coord);
 		end
 
 		% crop

@@ -28,12 +28,13 @@ function [truth] = prepare_affinity_truth( label, affin )
 	truth = generate_affinity_graph(label);
 
 	% safeguard
-	assert(all(affin.coord > [1 1 1]));
+	assert(all(affin.coord > [1,1,1]));
 
 	% crop
-	truth.x = crop_volume(truth.x,affin.coord,affin.size);
-	truth.y = crop_volume(truth.y,affin.coord,affin.size);
-	truth.z = crop_volume(truth.z,affin.coord,affin.size);
+	offset  = affin.coord - [1,1,1];
+	truth.x = crop_volume(truth.x,offset,affin.size);
+	truth.y = crop_volume(truth.y,offset,affin.size);
+	truth.z = crop_volume(truth.z,offset,affin.size);
 
 	truth.xy = truth.x & truth.y;
 	truth.yz = truth.y & truth.z;
