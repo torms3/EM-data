@@ -1,7 +1,7 @@
 function prepare_omnification_script( fname, w, filtrad, params, data )
 
 	if isempty(w)
-		w = [0 0 0];
+		w = [1 1 1];
 	end
 
 	if ~exist('filtrad','var')
