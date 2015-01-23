@@ -24,6 +24,7 @@ function prepare_omnification_script( fname, params, offset, crop, filtrad, data
 	end
 
 	if ~exist('watershed','dir')
+		disp('mkdir watershed');
 		mkdir('watershed');
 	end
 
@@ -33,6 +34,7 @@ function prepare_omnification_script( fname, params, offset, crop, filtrad, data
 		% coordinate correction
 		if ~isempty(offset)
 			affin.coord = affin.coord + offset;
+			fprintf('affinity graph coordinate = [%d,%d,%d]\n',affin.coord);
 		end
 
 		% crop
