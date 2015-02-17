@@ -39,13 +39,13 @@ function assess_affinity_graph_script( fname, data, offset, crop, filtrad )
 		% crop
 		if ~isempty(crop)
 			% ConvNet FoV interpretation
-			if numel(crop == 1)
-				w 	   = crop(1);
+			if numel(crop) == 1
+				w 	   = crop{1};
 				offset = floor(w/2) + [1,1,1];
 				sz 	   = affin.size - w + [1,1,1];
 				[affin] = crop_affinity_graph(affin,offset,sz);
 			else
-				[affin] = crop_affinity_graph(affin,crop(1),crop(2));
+				[affin] = crop_affinity_graph(affin,crop{1},crop{2});
 			end
 		end
 

@@ -36,12 +36,12 @@ function [] = volplay( volume, alphas )
 
 	% set data
 	data.volume = scaledata(double(volume),0,1);
-	data.alphas  = alphas;
-	data.rgb 	 = cell(1,numel(data.alphas));
-	data.z 		 = 1;
-	data.level 	 = 0.5;
-	data.vis 	 = logical(zeros(1,1+numel(alphas)));
-	data.vis(1)  = true;	
+	data.alphas = alphas;
+	data.rgb 	= cell(1,numel(data.alphas));
+	data.z 		= 1;
+	data.level 	= 0.5;
+	data.vis 	= logical(zeros(1,1+numel(alphas)));
+	data.vis(1) = true;	
 	for i = 1:numel(data.rgb)
 		data.rgb{i} = rand(1,3);
 	end
