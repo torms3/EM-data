@@ -21,10 +21,7 @@ function [affin] = prepare_affinity_graph( fname, filtrad )
 % Program written by:
 % Kisuk Lee <kiskulee@mit.edu> 	2015
 
-	if ~exist('filtrad','var')
-		filtrad = 0;
-	end
-
+	if ~exist('filtrad','var');filtrad = 0;end;
 
 	%% proposed affinity graph
 	%

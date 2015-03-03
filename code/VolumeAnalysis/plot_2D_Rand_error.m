@@ -4,12 +4,12 @@ function plot_2D_Rand_error( data )
 	bestIdx   = idx(1);
 
 	figure;
-	plot(data.thresh,data.re);
+	plot(data.thresh,data.re,data.thresh,data.prec,data.thresh,data.rec);
 	axis([0 1 0 1]);
 	hold on;
 
-		plot(data.thresh,data.prec);
-		plot(data.thresh,data.rec);
+		% plot(data.thresh,data.prec);
+		% plot(data.thresh,data.rec);
 
 		% best f-score
 		circleSize = 80;

@@ -1,7 +1,8 @@
-function [ret] = optimize_2D_Rand_error( prob, truth, thresh )
+function [ret] = optimize_2D_Rand_error( prob, truth, mask, thresh )
 
+	if ~exist('mask','var');mask = [];end;
 	if ~exist('thresh','var')
-		thresh = [0.001 0.1:0.1:0.9 0.999];
+		thresh = [0.001 0.1:0.05:0.9 0.999];
 	end
 
 	% iterate through varying thresholds
@@ -13,7 +14,7 @@ function [ret] = optimize_2D_Rand_error( prob, truth, thresh )
 		threshold = thresh(i);
 		fprintf('(%d/%d)... ',i,nThresh);
 
-		RI{i} = compute_2D_Rand_error(prob,truth,threshold);
+		RI{i} = compute_2D_Rand_error(prob,truth,mask,threshold);
 		RI{i}.thresh = threshold;
 
 		fprintf('2D Rand error = %.4f @ %.1f\n',RI{i}.re,threshold);

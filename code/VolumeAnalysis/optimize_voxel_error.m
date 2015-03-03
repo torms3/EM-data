@@ -1,5 +1,6 @@
-function [ret] = optimize_voxel_error( prob, truth, thresh )
+function [ret] = optimize_voxel_error( prob, truth, mask, thresh )
 
+	if ~exist('mask','var');mask = [];end;
 	if ~exist('thresh','var')
 		thresh = [0.05 0.1:0.1:0.9 0.995];
 	end
@@ -13,7 +14,7 @@ function [ret] = optimize_voxel_error( prob, truth, thresh )
 		threshold = thresh(i);
 		fprintf('(%d/%d)... ',i,nThresh);
 
-		data{i} = compute_voxel_error(prob,truth,threshold);		
+		data{i} = compute_voxel_error(prob,truth,mask,threshold);		
 		data{i}.thresh = threshold;
 
 		fprintf('Voxel error = %.4f @ %.1f\n',data{i}.err,threshold);

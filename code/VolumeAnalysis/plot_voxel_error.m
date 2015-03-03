@@ -4,21 +4,21 @@ function plot_voxel_error( data )
 	bestIdx   = idx(1);
 
 	figure;
-	plot(data.thresh,data.err);
+	plot(data.thresh,data.err,data.thresh,data.prec,data.thresh,data.rec);
 	axis([0 1 0 1]);
 	hold on;
 
-		plot(data.thresh,data.prec);
-		plot(data.thresh,data.rec);
+	% plot(data.thresh,data.prec);
+	% plot(data.thresh,data.rec);
 
-		% best f-score
-		circleSize = 80;
-		x_loc = data.thresh(bestIdx);
-		scatter(x_loc,data.err(bestIdx),circleSize,'ro','fill');
+	% best f-score
+	circleSize = 80;
+	x_loc = data.thresh(bestIdx);
+	scatter(x_loc,data.err(bestIdx),circleSize,'ro','fill');
 
-		% lines indicating the best f-score
-		line([x_loc x_loc],[0 data.err(bestIdx)],'Color','r','LineStyle','--');
-		line([0 x_loc],[data.err(bestIdx) data.err(bestIdx)],'Color','r','LineStyle','--');
+	% lines indicating the best f-score
+	line([x_loc x_loc],[0 data.err(bestIdx)],'Color','r','LineStyle','--');
+	line([0 x_loc],[data.err(bestIdx) data.err(bestIdx)],'Color','r','LineStyle','--');
 
 	hold off;
 	grid on;
