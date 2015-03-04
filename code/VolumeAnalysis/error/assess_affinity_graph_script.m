@@ -6,7 +6,11 @@ function assess_affinity_graph_script( fname, data, offset, FoV, filtrad, option
 	if ~exist('FoV','var');FoV = [];		end;
 	if ~exist('filtrad','var');filtrad = 0;	end;
 	if ~exist('options','var')
-		options = [1 1 1]; % voxel, 2D Rand, 3D Rand
+		% options(1)	voxel error
+		% options(2)	2D Rand error
+		% options(3)	3D Rand error (connected component)
+		% options(4) 	3D Rand error (watershed)
+		options = [1 1 1 1];
 	end
 
 	for i = 1:numel(fname)
@@ -84,11 +88,17 @@ function assess_affinity_graph_script( fname, data, offset, FoV, filtrad, option
 
 		%% 3D Rand error
         %
+        % 3D connected component on thresholded affinity graph
         if options(3)
-	        % 3D connected component on thresholded affinity graph
-	        disp(['Processing 3D Rand error...']);
-	        msk  = crop_volume(GT.mask,[2 2 2]);
+	        disp(['Processing 3D Rand error (3D connected component)...']);
+	        msk = crop_volume(GT.mask,[2 2 2]);
 	        [result.xyz] = optimize_3D_Rand_error(affin,truth,msk);
+	    end
+	    % watershed
+	    if options(4)
+	        disp(['Processing 3D Rand error (watershed)...']);
+	        msk = crop_volume(GT.mask,[2 2 2]);
+	        [result.ws] = optimize_3D_Rand_error(affin,truth,msk);
 	    end
 
 
@@ -117,7 +127,7 @@ function update_result( fname, update )
 	if exist(fname,'file')
 		load(fname);
 		
-		fields = {'x','y','z','xy','zx','xyz'};
+		fields = {'x','y','z','xy','zx','xyz','ws'};
 		for i = 1:numel(fields)
 			field = fields{i};
 			if isfield(update,field)
