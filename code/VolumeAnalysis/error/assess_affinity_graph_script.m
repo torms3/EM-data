@@ -123,6 +123,7 @@ function update_result( fname, update )
 			if isfield(update,field)
 				value = getfield(update,field);
 				setfield(result,field,value);
+				disp(result);
 			end
 		end
 	else
