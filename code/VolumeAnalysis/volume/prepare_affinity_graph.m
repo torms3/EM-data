@@ -1,12 +1,12 @@
 function [affin] = prepare_affinity_graph( fname, filtrad )
 % 
-% Prepare 3D affinity graph from ConvNet outputs
+% Prepare 3D affinity graph from ZNN outputs
 % 
 % Usage:
 % 	prepare_affinity_graph( fname )
 % 	prepare_affinity_graph( fname, filtrad )
 % 	
-% 	fname		file name of the ConvNet outputs
+% 	fname		file name of the ZNN outputs
 %	filtrad		median filtering radius
 %
 % Return:
@@ -17,11 +17,15 @@ function [affin] = prepare_affinity_graph( fname, filtrad )
 % 		.xy 	xy-plane boundary prediction
 % 		.yz 	yz-plane boundary prediction
 % 		.zx 	zx-plane boundary prediction
+% 		.coord 	affinity graph coordinate
+% 		.size	affinity graph size
 %
 % Program written by:
 % Kisuk Lee <kiskulee@mit.edu> 	2015
 
-	if ~exist('filtrad','var');filtrad = 0;end;
+	if ~exist('filtrad','var')
+		filtrad = 0;
+	end
 
 	%% proposed affinity graph
 	%

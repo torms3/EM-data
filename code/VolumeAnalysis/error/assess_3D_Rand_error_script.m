@@ -46,7 +46,6 @@ function assess_3D_Rand_error_script( fname, data, offset, crop, filtrad )
 
         %% 3D Rand error
         %
-        % xy-plane
         disp(['Processing 3D Rand error...']);
         thresh = [0.001 0.1:0.1:0.5 0.6:0.01:0.8 0.9 0.999];
         [result] = optimize_3D_Rand_error(affin,GT,thresh);

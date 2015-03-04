@@ -3,10 +3,10 @@ function [vol] = import_volume( fname, dim, ext )
 % Import 3D volume from file
 % 
 % Usage:
-% 	export_volume( fname )
-% 	export_volume( fname, [x y z] )
-% 	export_volume( fname, [], ext )
-% 	export_volume( fname, [x y z], ext )
+% 	import_volume( fname )
+% 	import_volume( fname, [x y z] )
+% 	import_volume( fname, [], ext )
+% 	import_volume( fname, [x y z], ext )
 % 	
 % 	fname:	file name
 % 	dim:	3D volume dimension

@@ -1,4 +1,19 @@
 function [affin] = crop_affinity_graph( affin, offset, sz )
+% 
+% Crop 3D affinity graph
+% 
+% Usage:
+%   crop_affinity_graph( affin, offset, sz )
+%   
+%   affin       3D affinity graph
+%   offset      crop offset
+%   sz          crop size
+%
+% Return:
+%   affin       cropped affinity graph
+%
+% Program written by:
+% Kisuk Lee <kiskulee@mit.edu>  2015
 
 	affin.x  = crop_volume(affin.x,offset,sz);
 	affin.y  = crop_volume(affin.y,offset,sz);
