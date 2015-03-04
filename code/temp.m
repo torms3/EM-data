@@ -6,15 +6,16 @@ end
 disp(fname);
 
 % Standard 1M
-rng = 1:3;
-cd('~/Workbench/torms3/znn-release/experiments/e2198_e2006/SriniNet/exp2/iter_1M/output');pwd
-assess_affinity_graph_script(fname(rng),batch(rng),[],[37 37 37],0,[0 0 1 0]);
+% rng = 1:3;
+% cd('~/Workbench/torms3/znn-release/experiments/e2198_e2006/SriniNet/exp2/iter_1M/output');pwd
+% assess_affinity_graph_script(fname(rng),batch(rng),[],[37 37 37],0,[0 0 1 0]);
 
-% Standard 3.5M
-cd('~/Workbench/torms3/znn-release/experiments/e2198_e2006/SriniNet/exp2/iter_3.5M/output');pwd
-assess_affinity_graph_script(fname(rng),batch(rng),[],[37 37 37],0,[0 0 1 0]);
+% % Standard 3.5M
+% cd('~/Workbench/torms3/znn-release/experiments/e2198_e2006/SriniNet/exp2/iter_3.5M/output');pwd
+% assess_affinity_graph_script(fname(rng),batch(rng),[],[37 37 37],0,[0 0 1 0]);
 
 % Standard 5M
+rng = 5:12;
 cd('~/Workbench/torms3/znn-release/experiments/e2198_e2006/SriniNet/exp2/iter_5M/output');pwd
 assess_affinity_graph_script(fname(rng),batch(rng),[],[37 37 37],0,[0 0 1 0]);
 

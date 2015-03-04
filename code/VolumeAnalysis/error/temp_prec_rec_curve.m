@@ -7,7 +7,7 @@ function temp_prec_rec_curve(batch)
     FoV    = [37 37 37];
     offset = floor(FoV/2) + [1 1 1];
     ox  = offset(1);oy = offset(2);oz = offset(3);
-    sz  = dims{batch};    
+    sz  = dims{batch} - FoV + [1 1 1];
 
     header = '~/Workbench/torms3/znn-release/experiments/e2198_e2006/SriniNet/exp2/';
     tail   = sprintf('.x%d_y%d_z%d_dim%dx%dx%d.mat',ox,oy,oz,sz(1),sz(2),sz(3));
@@ -31,8 +31,7 @@ function temp_prec_rec_curve(batch)
     % load([header 'malis/exp2/iter_4.5M/output/out' num2str(batch) tail]);     % malis/exp2 5M
     % malis{3} = result.xyz;
 
-    header = '~/Workbench/torms3/znn-release/experiments/e2198_e2006/MALIS/output/';
-    tail = '.x19_y19_z19_dim204x204x204.mat';
+    header = '~/Workbench/torms3/znn-release/experiments/e2198_e2006/MALIS/output/original/';
     load([header 'out' num2str(batch) tail]);     % EyeWire
     eyewire = result.xyz;
 
@@ -68,8 +67,8 @@ function precision_recall_curve(s,m,e)
     hold off;
 
     FontSize = 12; 
-    legend({'Standard, 1M','Standard, 3.5M','Standard 5M', ...
-            'MALIS, 1M','MALIS, 3.5M','MALIS 5M', ...
+    legend({'Standard 1M','Standard 3.5M','Standard 5M', ...
+            'MALIS 1M','MALIS 3.5M','MALIS 5M', ...
             'EyeWire'},'Location','Best', ...
             'FontSize',FontSize);
 
