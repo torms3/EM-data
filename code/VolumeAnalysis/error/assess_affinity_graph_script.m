@@ -121,8 +121,9 @@ function update_result( fname, update )
 		for i = 1:numel(fields)
 			field = fields{i};
 			if isfield(update,field)
-				value = getfield(update,field);
-				setfield(result,field,value);
+				result.(field) = update.(field);
+				% value = getfield(update,field);
+				% setfield(result,field,value);
 				disp(result);
 			end
 		end
