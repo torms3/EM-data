@@ -1,7 +1,11 @@
-function training_speed( fname )
+function [ret] = training_speed( fname, str )
 
     if ~exist('fname','var')
         fname = 'train';
+    end
+
+    if ~exist('str','var')
+        str = [];
     end
 
     sInfo = [fname '.info'];
@@ -10,13 +14,12 @@ function training_speed( fname )
 
     sIter = [fname '.iter'];
     fIter = fopen(sIter, 'r');
-    ret.i = fread(fIter, ret.n, 'uint64');
+    ret.iter = fread(fIter, ret.n, 'uint64');
 
     sSpd  = [fname '.speed'];
     fSpd  = fopen(sSpd, 'r');    
-    ret.s = fread(fSpd, ret.n, 'double');
-    
-    figure;
-    plot(ret.i,ret.s);
+    ret.speed = fread(fSpd, ret.n, 'double');
+
+    ret.str = str;
 
 end

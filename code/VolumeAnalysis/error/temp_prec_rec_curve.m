@@ -35,8 +35,14 @@ function temp_prec_rec_curve(batch)
     load([header 'out' num2str(batch) tail]);     % EyeWire
     eyewire = result.xyz;
 
+    header = '~/Workbench/torms3/znn-release/experiments/e2198_e2006/SriniNet/exp5/';
+    load([header 'iter_500K/output/out' num2str(batch) tail]);     % Thick/exp5 500K
+    thick{1} = result.xyz;
+    load([header 'iter_1M/output/out' num2str(batch) tail]);     % Thick/exp5 1M
+    thick{2} = result.xyz;
+
     figure;
-    precision_recall_curve(standard,malis,eyewire);
+    precision_recall_curve(standard,malis,eyewire,thick);
 
     FontSize = 12;
     grid on;
@@ -47,7 +53,7 @@ function temp_prec_rec_curve(batch)
 
 end
 
-function precision_recall_curve(s,m,e)
+function precision_recall_curve(s,m,e,t)
 
     hold on;
 
@@ -64,12 +70,17 @@ function precision_recall_curve(s,m,e)
     % EyeWire
     d = e;plot(d.rec,d.prec,'-b');
 
+    % Thick
+    d = t{1};plot(d.rec,d.prec,':m');
+    d = t{2};plot(d.rec,d.prec,'-.m');
+
     hold off;
 
     FontSize = 12; 
     legend({'Standard 1M','Standard 3.5M','Standard 5M', ...
             'MALIS 1M','MALIS 3.5M','MALIS 5M', ...
-            'EyeWire'},'Location','Best', ...
+            'EyeWire', ...
+            'Thick 0.5M','Thick 1M'},'Location','Best', ...
             'FontSize',FontSize);
 
 end
