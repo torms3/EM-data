@@ -1,7 +1,5 @@
 function [data] = monitor_learning( cost_type, avg_winidow, start_iter )
 
-	disp('abc')
-
 	%% Options
 	%
 	if ~exist('cost_type','var')

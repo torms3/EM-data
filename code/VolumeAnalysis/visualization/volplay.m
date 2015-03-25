@@ -1,4 +1,4 @@
-function [] = volplay( volume, alphas )
+function [] = volplay( volume, alphas, map )
 % 
 % Display 3D volume as a stack of 2D image slices
 % 
@@ -28,6 +28,9 @@ function [] = volplay( volume, alphas )
 	if ~exist('alphas','var') || ~iscell(alphas)
 		alphas = {};
 	end
+	if ~exist('map','var')
+		map = [];
+	end
 
 	% preprocessing alpha channels
 	for i = 1:numel(alphas)
@@ -37,6 +40,7 @@ function [] = volplay( volume, alphas )
 	% set data
 	data.volume = scaledata(double(volume),0,1);
 	data.alphas = alphas;
+	data.map 	= map;
 	data.rgb 	= cell(1,numel(data.alphas));
 	data.z 		= 1;
 	data.level 	= 0.5;
@@ -124,11 +128,21 @@ function [] = volplay( volume, alphas )
 
 		img = data.volume(:,:,data.z);
 		if ~data.vis(1)
-			img = zeros(size(img));
+			img = ones(size(img));
 		end		
 		imshow(img);
 
 		hold on;
+		display_alpha(img);
+		display_map(img);
+		hold off;
+
+		title(['z = ' num2str(data.z)]);
+
+	end
+
+	function display_alpha(img)
+
 		for i = 1:numel(data.alphas)
 
 			alpha = data.alphas{i};
@@ -144,12 +158,23 @@ function [] = volplay( volume, alphas )
 			else
 				alpha = 0;
 			end
+			% alpha = scaledata(alpha,0,1);
 			set(h,'AlphaData',alpha);
 
 		end
-		hold off;
 
-		title(['z = ' num2str(data.z)]);
+	end
+
+	function display_map(img)
+
+		if ~isempty(data.map)
+			map = data.map(:,:,data.z);
+			map(map <= 0) = 0;
+			idx = find(map > 0);
+			[I,J] =ind2sub(size(map),idx);
+			axis ij;
+			scatter(J,I,0.01*(map(idx)),'rx','LineWidth',2);
+		end
 
 	end
 
