@@ -11,7 +11,7 @@ function [] = process_affinity_output( fname, filtrad, outname )
 		
 		fvol = fopen(fname{i},'r');
 		if fvol ~= -1
-			[tensor] = import_tensor(fname);
+			[tensor] = import_tensor(fname{i});
 			for j = 1:size(tensor,4)
 				out{j} = tensor(:,:,:,j);
 			end
