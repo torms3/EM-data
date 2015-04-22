@@ -9,11 +9,11 @@ function [] = process_affinity_output( fname, filtrad, outname )
 
 	for i = 1:numel(fname)
 		
-		fvol = fopen(fname,'r');
+		fvol = fopen(fname{i},'r');
 		if fvol ~= -1
 			[tensor] = import_tensor(fname);
-			for i = 1:size(tensor,4)
-				out{i} = tensor(:,:,:,i);
+			for j = 1:size(tensor,4)
+				out{j} = tensor(:,:,:,j);
 			end
 		else
 			[out] = import_multivolume( fname{i} );
