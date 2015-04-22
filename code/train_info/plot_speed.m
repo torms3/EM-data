@@ -1,4 +1,16 @@
-function plot_speed( data, titlestr )
+function plot_speed( data, from, titlestr )
+
+	if ~iscell(data)
+		data = {data};
+	end
+
+	if ~exist('from','var')
+		from = 1;
+	end
+
+	if ~exist('titlestr','var')
+		titlestr = '';
+	end
 
 	fontsize = get(0,'DefaultAxesFontSize');
 	set(0,'DefaultAxesFontSize',12);
@@ -6,7 +18,8 @@ function plot_speed( data, titlestr )
 	figure;
 	hold on;
 	for i = 1:numel(data)
-		plot(data{i}.iter,data{i}.speed);
+		n = data{i}.n;
+		plot(data{i}.iter(from:n),data{i}.speed(from:n));
 		lgnd{i} = data{i}.str;
 	end
 	hold off;

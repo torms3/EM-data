@@ -8,8 +8,16 @@ function [] = process_affinity_output( fname, filtrad, outname )
 	end
 
 	for i = 1:numel(fname)
-
-		[out] = import_multivolume( fname{i} );
+		
+		fvol = fopen([fname, 'r');
+		if fvol ~= -1
+			[tensor] = import_tensor(fname);
+			for i = 1:size(tensor,4)
+				out{i} = tensor(:,:,:,i);
+			end
+		else
+			[out] = import_multivolume( fname{i} );
+		end
 
 		write_tif_image_stack( out{1}, [outname{i} '.affin.x.tif'] );
 		write_tif_image_stack( out{2}, [outname{i} '.affin.y.tif'] );
