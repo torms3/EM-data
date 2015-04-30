@@ -1,6 +1,6 @@
 function [ret] = compute_3D_Rand_error( affin, truth, mask, thresh )
 
-    if ~exist('mask','var');mask = [];      end;   
+    if ~exist('mask','var');    mask = [];  end;
     if ~exist('thresh','var');thresh = 0.5; end;
 
     % ground truth
