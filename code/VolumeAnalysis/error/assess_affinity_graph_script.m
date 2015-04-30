@@ -1,10 +1,10 @@
 function assess_affinity_graph_script( fname, data, offset, FoV, filtrad, options )
 
-	if ~iscell(fname);fname = {fname};		end;
-	if ~iscell(data);data = {data};			end;	
-	if ~exist('offset','var');offset = [];	end;
-	if ~exist('FoV','var');FoV = [];		end;
-	if ~exist('filtrad','var');filtrad = 0;	end;
+	if ~iscell(fname);		fname = {fname};end;
+	if ~iscell(data);		  data = {data};end;
+	if ~exist('offset','var');	offset = [];end;
+	if ~exist('FoV','var');		   FoV = [];end;
+	if ~exist('filtrad','var'); filtrad = 0;end;
 	if ~exist('options','var')
 		% options(1)	voxel error
 		% options(2)	2D Rand error

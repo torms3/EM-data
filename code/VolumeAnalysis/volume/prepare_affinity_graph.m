@@ -30,8 +30,16 @@ function [affin] = prepare_affinity_graph( fname, filtrad )
 	%% proposed affinity graph
 	%
 	fprintf('Preparing affinity graph...\n');
-	nvol = 3;
-	mvol = load_multivolume(fname,nvol);
+	fvol = fopen(fname,'r');
+	if fvol ~= -1
+		tensor = import_tensor(fname);
+		for j = 1:size(tensor,4)
+			mvol{j} = tensor(:,:,:,j);
+		end
+	else
+		nvol = 3;
+		mvol = load_multivolume(fname,nvol);
+	end
 
 	affin.x = mvol{1};
 	affin.y = mvol{2};

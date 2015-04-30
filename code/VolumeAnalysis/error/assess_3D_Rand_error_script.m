@@ -1,10 +1,10 @@
-function assess_3D_Rand_error_script( fname, data, offset, crop, filtrad )
+function assess_3D_Rand_error_script( fname, data, offset, FoV, filtrad )
 
-    if ~iscell(fname);fname = {fname};      end;
-    if ~iscell(data);data = {data};         end;    
-    if ~exist('offset','var');offset = [];  end;
-    if ~exist('crop','var');crop = [];      end;
-    if ~exist('filtrad','var');filtrad = 0; end;
+    if ~iscell(fname);      fname = {fname};end;
+    if ~iscell(data);         data = {data};end;
+    if ~exist('offset','var');  offset = [];end;
+    if ~exist('FoV','var');        FoV = [];end;
+    if ~exist('filtrad','var'); filtrad = 0;end;
 
     for i = 1:numel(fname)      
         if isfield(data{i},'mask')
@@ -12,11 +12,11 @@ function assess_3D_Rand_error_script( fname, data, offset, crop, filtrad )
         else
             mask = true(data{i}.label);
         end
-        assess_affinity_graph(fname{i},data{i}.label,mask,offset,crop,filtrad);
+        assess_affinity_graph(fname{i},data{i}.label,mask,offset,FoV,filtrad);
     end
 
 
-    function assess_affinity_graph( fname, label, mask, offset, crop, filtrad )
+    function assess_affinity_graph( fname, label, mask, offset, FoV, filtrad )
 
         % prepare affinity graph
         [affin] = prepare_affinity_graph(fname,filtrad);
@@ -27,17 +27,11 @@ function assess_3D_Rand_error_script( fname, data, offset, crop, filtrad )
             fprintf('affinity graph coordinate = [%d,%d,%d]\n',affin.coord);
         end
 
-        % crop
-        if ~isempty(crop)
-            % ConvNet FoV interpretation
-            if numel(crop) == 1
-                w      = crop{1};
-                offset = floor(w/2) + [1,1,1];
-                sz     = affin.size - w + [1,1,1];
-                [affin] = crop_affinity_graph(affin,offset,sz);
-            else
-                [affin] = crop_affinity_graph(affin,crop{1},crop{2});
-            end
+        % crop FoV
+        if ~isempty(FoV)
+            offs    = floor(FoV/2) + [1,1,1];
+            sz      = affin.size - FoV + [1,1,1];
+            [affin] = crop_affinity_graph(affin,offs,sz);
         end
 
         % prpare ground truth affinith graph
