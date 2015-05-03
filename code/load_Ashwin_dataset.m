@@ -15,5 +15,10 @@ disp('load 7nm-notTrained as batch3...');
 load([homeDir '/data/Ashwin/7nm-notTrained.mat']);
 batch3 = data;
 
+% batch4: 10nm-IDSIA
+disp('load 10nm-IDSIA as batch4...');
+load([homeDir '/data/Ashwin/10nm-IDSIA.mat']);
+batch4 = data;
+
 clear data;
 clear homeDir;
