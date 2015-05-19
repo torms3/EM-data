@@ -8,6 +8,7 @@ function [] = time_stamped_weight( fpath, idx )
 		
 		% file handle
 		w = wlist(i);
+		disp(['Processing ' w.name '...']);
 		h = dir([w.name '.hist']);
 
 		% load weight history
