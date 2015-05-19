@@ -12,7 +12,7 @@ function [] = export_volume( fname, volume, ext )
 %
 % Results:
 %	[fname]	or [fname.ext]	3D volume in binary format
-%	[fname.size]			3D volume dimension in binary format
+%	[fname.size]	3D volume dimension in binary format
 %
 % Program written by:
 % Kisuk Lee <kiskulee@mit.edu>, 2014

@@ -1,39 +1,75 @@
 function compare_affinity_result()
 
 	% setup
-  header = '~/Workbench/torms3/znn-release/experiments/Ashwin/3D_affinity/train23_test1/VDH-P3_w69x5/';  
+  header = '~/Workbench/torms3/znn-release/experiments/Ashwin/3D_affinity/train23_test1/VDH-P3_w69x5/';
 
   % batch name
   batchname = {'7nm-512pix (Training)'; 		...
   						 '7nm-notTrained (Training)';	...
-  						 '7nm-IDSIA (Validation)';		...
-  						 '10nm-IDSIA (Generalization)'};
+               '7nm-IDSIA (Validation)'};
+  						 % '7nm-IDSIA (Validation)';		...
+  						 % '10nm-IDSIA (Generalization)'};
 
   % index
   idx = 1;
 
-  % VDH-P3-DO1
+  % % VDH-P3-DO1
+  % S{idx}.path  = [header 'exp3/iter_60K/output/'];
+  % S{idx}.lgnd	 = 'VDH-P3-DO1 (60K)';
+  % S{idx}.batch = [2 3 1 4];
+  % idx = idx + 1;
+
+  % % VDH-P3-DO2
+  % S{idx}.path  = [header 'exp5/iter_90K/output/'];
+  % S{idx}.lgnd	 = 'VDH-P3-DO2 (90K)';
+  % S{idx}.batch = [2 3 1 4];  
+  % idx = idx + 1;
+
+  % % VDH-P3-DO3
+  % S{idx}.path  = [header 'exp7/iter_90K/output/'];
+  % S{idx}.lgnd	 = 'VDH-P3-DO3 (90K)';
+  % S{idx}.batch = [2 3 1 4];  
+  % idx = idx + 1;
+
+  % % VDH-P3-DO4
+  % S{idx}.path  = [header 'exp8/iter_90K/output/'];
+  % S{idx}.lgnd	 = 'VDH-P3-DO4 (90K)';
+  % S{idx}.batch = [2 3 1 4];  
+  % idx = idx + 1;
+
+  % VDH-P3 (Dropout, 60K)
+  header = '~/Workbench/torms3/znn-release/experiments/Ashwin/3D_affinity/train23_test1/VDH-P3_w69x5/';
   S{idx}.path  = [header 'exp3/iter_60K/output/'];
-  S{idx}.lgnd	 = 'VDH-P3-DO1 (60K)';
-  S{idx}.batch = [2 3 1 4];
+  S{idx}.lgnd  = 'VDH-P3 (Dropout, 60K)';
+  S{idx}.batch = [2 3 1];
   idx = idx + 1;
 
-  % VDH-P3-DO2
-  S{idx}.path  = [header 'exp5/iter_90K/output/'];
-  S{idx}.lgnd	 = 'VDH-P3-DO2 (90K)';
-  S{idx}.batch = [2 3 1 4];  
+  % VDH-P2 (Dropout, 60K)
+  header = '~/Workbench/torms3/znn-release/experiments/Ashwin/3D_affinity/train23_test1/VeryDeep2H_w65x9/';
+  S{idx}.path  = [header 'dropout/rebalanced/global/eta02_out100/iter_60K/output/'];
+  S{idx}.lgnd  = 'VDH-P2 (Dropout, 60K)';
+  S{idx}.batch = [2 3 1];  
   idx = idx + 1;
 
-  % VDH-P3-DO3
-  S{idx}.path  = [header 'exp7/iter_90K/output/'];
-  S{idx}.lgnd	 = 'VDH-P3-DO3 (90K)';
-  S{idx}.batch = [2 3 1 4];  
+  % VDH-P2-v2 (Dropout, 60K)
+  header = '~/Workbench/torms3/znn-release/experiments/Ashwin/3D_affinity/train23_test1/VDH-P2_w65x9/';
+  S{idx}.path  = [header 'dropout/rebalanced/global/eta02_out100/iter_60K/output/'];
+  S{idx}.lgnd  = 'VDH-P2-v2 (Dropout, 60K)';
+  S{idx}.batch = [2 3 1];  
   idx = idx + 1;
 
-  % VDH-P3-DO4
-  S{idx}.path  = [header 'exp8/iter_90K/output/'];
-  S{idx}.lgnd	 = 'VDH-P3-DO4 (90K)';
-  S{idx}.batch = [2 3 1 4];  
+  % VDH-P1 (60K)
+  header = '~/Workbench/torms3/znn-release/experiments/Ashwin/3D_affinity/train23_test1/VDH-P1_w55x9/';
+  S{idx}.path  = [header 'rebalanced/global/eta02_out100/iter_60K/output/'];
+  S{idx}.lgnd  = 'VDH-P1 (60K)';
+  S{idx}.batch = [2 3 1];  
+  idx = idx + 1;
+
+  % VDH-P1-v2 (Dropout, 60K)
+  header = '~/Workbench/torms3/znn-release/experiments/Ashwin/3D_affinity/train23_test1/VDH-P1-v2_w55x9/';
+  S{idx}.path  = [header 'dropout/rebalanced/global/eta02_out100/iter_60K/output/'];
+  S{idx}.lgnd  = 'VDH-P1-v2 (Dropout, 60K)';
+  S{idx}.batch = [2 3 1];  
   idx = idx + 1;
 
   % collect data
@@ -80,11 +116,11 @@ function compare_affinity_result()
 		figure;
 		h = bar(data,'grouped');
 		v = axis;
-		axis([v(1) v(2) 0.07 v(4)]);
+		axis([v(1) v(2) 0.07 0.105]);
 		grid on;
 		set(gca,'XTickLabel',batchname,'XTick',1:numel(batchname));
 		fix_xticklabels(gca,0.1,{'FontSize',12});
-		legend(lgnd,'Location','NorthWest');
+		legend(lgnd,'Location','NorthEast');
 		ylabel('Best pixel error');
 		title('Affinity Classification Error');
 
@@ -100,7 +136,7 @@ function compare_affinity_result()
 		figure;
 		h = bar(data,'grouped');
 		v = axis;
-		axis([v(1) v(2) 0.07 v(4)]);
+		axis([v(1) v(2) 0.06 0.13]);
 		grid on;
 		set(gca,'XTickLabel',batchname,'XTick',1:numel(batchname));
 		fix_xticklabels(gca,0.1,{'FontSize',12});

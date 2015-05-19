@@ -19,37 +19,44 @@ function malis_prec_rec_curve( batch )
     % colormap
     color = colormap(lines);
 
-    % % SriniNet-v2 Standard 0.5M
-    % S{idx}.path  = [header 'exp8/iter_500K/output/'];
-    % S{idx}.fname = ['out' num2str(batch) tail];
-    % S{idx}.lgnd  = 'SriniNet-v2 Standard 0.5M';
-    % S{idx}.line  = ':k';
-    % % S{idx}.color = color(idx,:);
-    % idx = idx + 1;
+    % SriniNet-v2 Standard 0.5M
+    S{idx}.path  = [header 'exp8/iter_500K/output/'];
+    S{idx}.fname = ['out' num2str(batch) tail];
+    S{idx}.lgnd  = 'SriniNet-v2 Standard 0.5M';
+    S{idx}.line  = ':k';
+    % S{idx}.color = color(idx,:);
+    idx = idx + 1;
 
-    % % SriniNet-v2 Standard 1M
-    % S{idx}.path  = [header 'exp8/iter_1M/output/'];
-    % S{idx}.fname = ['out' num2str(batch) tail];
-    % S{idx}.lgnd  = 'SriniNet-v2 Standard 1M';
-    % S{idx}.line  = '-.k';
-    % % S{idx}.color = color(idx,:);
-    % idx = idx + 1;
+    % SriniNet-v2 Standard 1M
+    S{idx}.path  = [header 'exp8/iter_1M/output/'];
+    S{idx}.fname = ['out' num2str(batch) tail];
+    S{idx}.lgnd  = 'SriniNet-v2 Standard 1M';
+    S{idx}.line  = '-.k';
+    % S{idx}.color = color(idx,:);
+    idx = idx + 1;
 
-    % % SriniNet-v2 Standard 1.5M
-    % S{idx}.path  = [header 'exp8/iter_1.5M/output/'];
-    % S{idx}.fname = ['out' num2str(batch) tail];
-    % S{idx}.lgnd  = 'SriniNet-v2 Standard 1.5M';
-    % S{idx}.line  = '--k';
-    % % S{idx}.color = color(idx,:);
-    % idx = idx + 1;
+    % SriniNet-v2 Standard 1.5M
+    S{idx}.path  = [header 'exp8/iter_1.5M/output/'];
+    S{idx}.fname = ['out' num2str(batch) tail];
+    S{idx}.lgnd  = 'SriniNet-v2 Standard 1.5M';
+    S{idx}.line  = '--k';
+    % S{idx}.color = color(idx,:);
+    idx = idx + 1;
 
-    % % SriniNet-v2 Standard 2M
-    % S{idx}.path  = [header 'exp8/iter_2M/output/'];
-    % S{idx}.fname = ['out' num2str(batch) tail];
-    % S{idx}.lgnd  = 'SriniNet-v2 Standard 2M';
-    % S{idx}.line  = '-k';
-    % % S{idx}.color = color(idx,:);
-    % idx = idx + 1;
+    % SriniNet-v2 Standard 2M
+    S{idx}.path  = [header 'exp8/iter_2M/output/'];
+    S{idx}.fname = ['out' num2str(batch) tail];
+    S{idx}.lgnd  = 'SriniNet-v2 Standard 2M';
+    S{idx}.line  = '-k';
+    % S{idx}.color = color(idx,:);
+    idx = idx + 1;
+
+    % SriniNet-v2 MALIS2 0.5M
+    S{idx}.path  = [header 'exp8/iter_500K/malis/exp5/iter_0.5M/output/'];
+    S{idx}.fname = ['out' num2str(batch) tail];
+    S{idx}.lgnd  = 'SriniNet-v2 MALIS2 0.5M';
+    S{idx}.line  = '-r';
+    idx = idx + 1;
 
     % % SriniNet-v2 MALIS 0.5M (eta = 0.001)
     % S{idx}.path  = [header 'exp8/iter_500K/malis/exp1/iter_500K/output/'];
@@ -128,20 +135,20 @@ function malis_prec_rec_curve( batch )
     % S{idx}.line  = '-r';
     % idx = idx + 1;
 
-    % EyeWire    
-    S{idx}.path  = '~/Workbench/torms3/znn-release/experiments/e2198_e2006/MALIS/output/original/';
+    % % EyeWire    
+    % S{idx}.path  = '~/Workbench/torms3/znn-release/experiments/e2198_e2006/MALIS/output/original/';
+    % S{idx}.fname = ['out' num2str(batch) tail];
+    % S{idx}.lgnd  = 'EyeWire';
+    % S{idx}.line  = '-b';
+    % idx = idx + 1;
+
+    % EyeWire
+    S{idx}.path  = '~/Workbench/torms3/znn-release/experiments/e2198_e2006/MALIS/output/';
     S{idx}.fname = ['out' num2str(batch) tail];
     S{idx}.lgnd  = 'EyeWire';
     S{idx}.line  = '-b';
     idx = idx + 1;
-
-    % EyeWire 2
-    S{idx}.path  = '~/Workbench/torms3/znn-release/experiments/e2198_e2006/MALIS/output/';
-    S{idx}.fname = ['out' num2str(batch) tail];
-    S{idx}.lgnd  = 'EyeWire 2';
-    S{idx}.line  = '-r';
-    idx = idx + 1;
-
+    
     figure;
     hold on;
     for i = 1:numel(S)

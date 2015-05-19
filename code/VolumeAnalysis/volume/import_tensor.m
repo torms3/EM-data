@@ -1,8 +1,8 @@
-function [tensor] = import_tensor( fname, dim, ext )
+function [tensor] = import_tensor( fname, dim, ext, dtype )
 	
-	if ~exist('dim','var')
-		dim = [];
-	end
+	if ~exist('dim','var'); 					dim = []; end;
+	if ~exist('ext','var'); 					ext = []; end;
+	if ~exist('dtype','var'); dtype = 'double'; end;
 
 	% tensor dimension
 	if isempty(dim)
@@ -21,10 +21,10 @@ function [tensor] = import_tensor( fname, dim, ext )
 	fprintf('dim = [%d %d %d %d]\n',dim(1),dim(2),dim(3),dim(4));
 	
 	% tensor
-	if exist('ext','var')		
-		ftensor = fopen([fname '.' ext], 'r');
-	else
+	if isempty(ext)
 		ftensor = fopen(fname, 'r');
+	else
+		ftensor = fopen([fname '.' ext], 'r');
 	end	
 	if ftensor < 0
 		tensor = [];
@@ -32,7 +32,7 @@ function [tensor] = import_tensor( fname, dim, ext )
 	end
 	
 	tensor = zeros(prod(dim), 1);
-	tensor = fread(ftensor, size(tensor), 'double');
+	tensor = fread(ftensor, size(tensor), dtype);
 	tensor = reshape(tensor, dim);
 
 end

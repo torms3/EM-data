@@ -1,8 +1,7 @@
-function compare_learning( list, fname, w, from )
+function compare_learning( list, fname, w )
 
-	if ~exist('fname','var');fname = 'test';end;
-	if ~exist('w','var');							w = 1;end;
-	if ~exist('from','var');			 from = 1;end;
+	if ~exist('fname','var'); fname = 'test'; end;
+	if ~exist('w','var');							 w = 1; end;
 
 	compare('cost');
 	compare('CLSE');	
@@ -31,8 +30,6 @@ function compare_learning( list, fname, w, from )
 		hold off;
 		grid on;
 
-		x = xlim;
-		xlim([from x(2)]);
 		legend(h,lgnd);
 		xlabel('Iteration');
 

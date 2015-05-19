@@ -1,5 +1,8 @@
 function [] = process_boundary_output( fname, filtrad, outname )
 
+	if ~iscell(fname)
+		fname = {fname};
+	end
 	if ~exist('filtrad','var')
 		filtrad = [];
 	end
