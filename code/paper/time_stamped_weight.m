@@ -1,5 +1,7 @@
 function [] = time_stamped_weight( fpath, idx )
 
+	cd(fpath);
+
 	% weight list
 	wlist = dir('*.weight');
 	for i = 1:numel(wlist)
