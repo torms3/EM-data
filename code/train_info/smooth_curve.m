@@ -3,7 +3,7 @@ function [data] = smooth_curve( data, w )
 	if w > 0
 
 		% smoothing(convolution) filter
-		halfw 			= floor(w/2);
+		halfw 		= floor(w/2);
 		avgFilter 	= ones(w,1)/w;
 
 		% smoothing

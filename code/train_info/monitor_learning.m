@@ -66,7 +66,7 @@ function [data] = monitor_learning( cost_type, avg_winidow, start_iter, errshade
 
 		% train		
 		h(1) = plot(train.iter,train.err,'-k');
-		xlim([train.iter(1) train.iter(end)]);
+		% xlim([train.iter(1) train.iter(end)]);
 		if isfield(train,'stderr') & errshade(1)
 			stderr = [train.stderr(:) train.stderr(:)];
 			shadedErrorBar(train.iter,train.err,stderr,{'-k','LineWidth',1.5},1,errline);
@@ -94,7 +94,7 @@ function [data] = monitor_learning( cost_type, avg_winidow, start_iter, errshade
 
 		% train
 		h(1) = plot(train.iter,train.cls,'-k');
-		xlim([train.iter(1) train.iter(end)]);
+		% xlim([train.iter(1) train.iter(end)]);
 		if isfield(train,'stdcls') & errshade(1)
 			stdcls = [train.stdcls(:) train.stdcls(:)];
 			shadedErrorBar(train.iter,train.cls,stdcls,{'-k','LineWidth',1.5},1,errline);

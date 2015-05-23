@@ -2,30 +2,72 @@ function [ret] = optimize_2D_Rand_error( prob, truth, mask, thresh )
 
 	if ~exist('mask','var');mask = [];end;
 	if ~exist('thresh','var')
-		thresh = [0.001 0.1:0.05:0.9 0.999];
+		thresh = [0.01 0.1:0.1:0.9 0.99];
 	end
 
-	% iterate through varying thresholds
-	nThresh = numel(thresh);
-	RI = cell(1,nThresh);
+
+	%% 1st pass
+    % resolution = 0.1
+    disp(['1st pass...']);
+    [data] = iterate_over(thresh);
+
+
+	%% 2st pass
+    % resolution = 0.05
+    disp(['2nd pass...']);
+    [~,I]  = min(extractfield(cell2mat(data),'re'));
+    pivot  = data{I}.thresh;
+    thresh = union(thresh,[pivot-0.05,pivot+0.05]);
+    [data]   = iterate_over(thresh);
+
+
+    %% 3rd pass
+    % resolution = 0.01
+    disp(['3rd pass...']);
+    [~,I]  = min(extractfield(cell2mat(data),'re'));
+    pivot  = data{I}.thresh;
+    thresh = union(thresh,pivot-0.05:0.01:pivot+0.05);
+    [data]   = iterate_over(thresh);
+
+
+	%% Return
+    %
+	data = cell2mat(data);
 	
-	parfor i = 1:nThresh
+	ret.thresh = extractfield(data,'thresh');
+	ret.prec   = extractfield(data,'prec');
+	ret.rec    = extractfield(data,'rec');
+	ret.re 	   = extractfield(data,'re');
 
-		threshold = thresh(i);
-		fprintf('(%d/%d)... ',i,nThresh);
 
-		RI{i} = compute_2D_Rand_error(prob,truth,mask,threshold);
-		RI{i}.thresh = threshold;
+	function ret = iterate_over(thresh)
+    
+        nThresh = numel(thresh);
+        ret = cell(1,nThresh);
+        if exist('data','var')
+            old = extractfield(cell2mat(data),'thresh');
+        else
+            old = [];    
+        end
 
-		fprintf('2D Rand error = %.4f @ %.1f\n',RI{i}.re,threshold);
+        idx = 1;
+        for i = 1:nThresh
 
-	end
+            threshold = thresh(i);
 
-	RI = cell2mat(RI);
-	
-	ret.thresh = extractfield(RI,'thresh');
-	ret.prec   = extractfield(RI,'prec');
-	ret.rec    = extractfield(RI,'rec');
-	ret.re 	   = extractfield(RI,'re');
+            I = find(old == threshold,1);
+            if isempty(I)
+                fprintf('(%d/%d)... ',i,nThresh);
+                ret{idx} = compute_2D_Rand_error(prob,truth,mask,threshold);
+                ret{idx}.thresh = threshold;
+                fprintf('2D Rand error = %.4f @ %.2f\n',ret{idx}.re,threshold);
+            else
+                ret{idx} = data{I};
+            end
+            idx = idx + 1;
+
+        end
+
+    end
 
 end
