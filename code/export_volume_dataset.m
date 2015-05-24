@@ -1,4 +1,4 @@
-function [] = export_volume_data( fname, data )
+function [] = export_volume_dataset( fname, data )
 		
 	% size
 	fsz = fopen([fname '.size'], 'w');
@@ -22,6 +22,12 @@ function [] = export_volume_data( fname, data )
 	if( isfield(data,'mask') )
 		fmsk = fopen([fname '.mask'], 'w');
 		fwrite(fmsk, uint8(data.mask), 'uint8');
+	end
+
+	% CLAHE
+	if( isfield(data,'CLAHE') )
+		fclh = fopen([fname '.CLAHE'], 'w');
+		fwrite(fclh, double(data.CLAHE), 'double');
 	end
 
 end

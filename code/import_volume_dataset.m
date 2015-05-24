@@ -15,4 +15,9 @@ function [data] = import_volume_dataset( fname )
 		data.mask = vol;
 	end
 
+	[vol] = import_volume(fname,[],'CLAHE');
+	if ~isempty(vol)
+		data.CLAHE = vol;
+	end
+
 end
