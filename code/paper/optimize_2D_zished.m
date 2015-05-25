@@ -19,6 +19,7 @@ function optimize_2D_zished( ipath, gpath )
         rec  = fread(fd,1,'double');
         disp(prec);
         disp(rec);
+        fclose(fd);
     end
 
     function run_zished
