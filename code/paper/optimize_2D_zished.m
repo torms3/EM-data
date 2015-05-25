@@ -4,9 +4,10 @@ function ret = optimize_2D_zished( ipath, gpath )
     basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
     zished  = [basedir 'bin/watershed'];
 
-    high = 0.999;
-    low  = 0.001;
-    sz   = 25;
+    best.high = 0.999;
+    best.low  = 0;
+    best.size = 25;
+    best.thld = 0.1;
 
     %% optimizing high
      
@@ -33,17 +34,31 @@ function ret = optimize_2D_zished( ipath, gpath )
     data   = iterate_over(thresh,'high');
 
 
+    % %% optimizing low
+    % [~,I] = min(extractfield(cell2mat(data),'re'));
+    % best.high = data{I}.high;
+    % best.low  = data{I}.low;
+    % best.size = data{I}.size;
+    % best.thld = data{I}.thld;
+
+    % %% 1st pass
+    % % resolution = 0.1    
+    % disp(['1st pass...']);
+    % thresh = [0:0.1:data{I}.high-0.001];
+    % data   = iterate_over(thresh,'low');
+
+
     %% Return
     %
     data = cell2mat(data);
     
-    ret.high   = extractfield(data,'high');
-    ret.low    = extractfield(data,'low');
-    ret.size   = extractfield(data,'size');
-    ret.thold  = extractfield(data,'thold');
-    ret.prec   = extractfield(data,'prec');
-    ret.rec    = extractfield(data,'rec');
-    ret.re     = extractfield(data,'re');
+    ret.high = extractfield(data,'high');
+    ret.low  = extractfield(data,'low');
+    ret.size = extractfield(data,'size');
+    ret.thld = extractfield(data,'thld');
+    ret.prec = extractfield(data,'prec');
+    ret.rec  = extractfield(data,'rec');
+    ret.re   = extractfield(data,'re');
 
 
     function ret = iterate_over(thresh,name)
@@ -64,7 +79,9 @@ function ret = optimize_2D_zished( ipath, gpath )
             I = find(old == threshold,1);
             if isempty(I)
                 fprintf('(%d/%d)...\n',i,nThresh);
-                ret{idx} = run_zished(thresh(i),low,sz,min(low+0.1,thresh(i)));
+                args = best;                
+                args.(name) = thresh(i);
+                ret{idx} = run_zished(thresh(i),args);
             else
                 ret{idx} = data{I};
             end
@@ -74,19 +91,19 @@ function ret = optimize_2D_zished( ipath, gpath )
 
     end
 
-    function ret = run_zished(h,l,s,t)
+    function ret = run_zished(args)
 
         % arguments
         args = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --size=%d --thold=%.3f', ...
-                       ipath,gpath,h,l,s,t);
+                       ipath,gpath,args.high,args.low,args.size,args.thld);
         sysline = [zished args];
         [~,cmdout] = system(sysline);
         disp(cmdout);
         C = textscan(cmdout,'Precision : %f\nRecall    : %f\nRand error: %f');
-        ret.high = h;
-        ret.low  = l;
-        ret.size = s;
-        ret.thld = t;
+        ret.high = args.high;
+        ret.low  = args.low;
+        ret.size = args.size;
+        ret.thld = args.thld;
         ret.prec = C{1};
         ret.rec  = C{2};
         ret.re   = C{3};
