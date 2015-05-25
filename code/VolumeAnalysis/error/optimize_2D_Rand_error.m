@@ -18,7 +18,7 @@ function [ret] = optimize_2D_Rand_error( prob, truth, mask, thresh )
     [~,I]  = min(extractfield(cell2mat(data),'re'));
     pivot  = data{I}.thresh;
     thresh = union(thresh,[pivot-0.05,pivot+0.05]);
-    [data]   = iterate_over(thresh);
+    [data] = iterate_over(thresh);
 
 
     %% 3rd pass
@@ -27,7 +27,7 @@ function [ret] = optimize_2D_Rand_error( prob, truth, mask, thresh )
     [~,I]  = min(extractfield(cell2mat(data),'re'));
     pivot  = data{I}.thresh;
     thresh = union(thresh,pivot-0.05:0.01:pivot+0.05);
-    [data]   = iterate_over(thresh);
+    [data] = iterate_over(thresh);
 
 
 	%% Return

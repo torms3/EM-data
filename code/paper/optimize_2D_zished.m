@@ -24,6 +24,14 @@ function data = optimize_2D_zished( ipath, gpath )
     thresh = union(thresh,[pivot-0.05,pivot+0.05]);
     data   = iterate_over(thresh,'high');
 
+    %% 3rd pass
+    % resolution = 0.01
+    disp(['3rd pass...']);
+    [~,I]  = min(extractfield(cell2mat(data),'re'));
+    pivot  = data{I}.('high');
+    thresh = union(thresh,pivot-0.05:0.01:pivot+0.05);
+    data   = iterate_over(thresh,'high');
+
 
     function ret = iterate_over(thresh,name)
 
