@@ -15,8 +15,8 @@ function optimize_2D_zished( ipath, gpath )
         
         fd = fopen([basedir 'prec_rec.dat'],'r');
         assert(fd ~= -1);
-        prec = fread(fsz,1,'double');
-        rec  = fread(fsz,1,'double');
+        prec = fread(fd,1,'double');
+        rec  = fread(fd,1,'double');
         disp(prec);
         disp(rec);
     end
