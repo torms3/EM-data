@@ -91,22 +91,22 @@ function ret = optimize_2D_zished( ipath, gpath )
 
     end
 
-    function result = run_zished(args)
+    function ret = run_zished(args)
 
         % arguments
-        args = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --size=%d --thold=%.3f', ...
+        sysargs = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --size=%d --thold=%.3f', ...
                        ipath,gpath,args.high,args.low,args.size,args.thld);
-        sysline = [zished args];
+        sysline = [zished sysargs];
         [~,cmdout] = system(sysline);
         disp(cmdout);
         C = textscan(cmdout,'Precision : %f\nRecall    : %f\nRand error: %f');
-        result.high = args.high;
-        result.low  = args.low;
-        result.size = args.size;
-        result.thld = args.thld;
-        result.prec = C{1};
-        result.rec  = C{2};
-        result.re   = C{3};
+        ret.high = args.high;
+        ret.low  = args.low;
+        ret.size = args.size;
+        ret.thld = args.thld;
+        ret.prec = C{1};
+        ret.rec  = C{2};
+        ret.re   = C{3};
     end
 
 end
