@@ -22,7 +22,7 @@ function optimize_2D_zished( ipath, gpath )
         sysline = [zished args];
         [~,cmdout] = system(sysline);
         disp(cmdout);
-        dat = textscan(cmdout,'Precision : %f\nRecall    : %f\nRand error: %f');
+        dat = textscan(cmdout,'Precision : %f\nRecall    : %f\nRand error: %f')
     end
 
     function disp_param
