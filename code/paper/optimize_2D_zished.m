@@ -5,20 +5,21 @@ function ret = optimize_2D_zished( ipath, gpath )
     zished  = [basedir 'bin/watershed'];
 
     high = 0.999;
-    low  = 0.300;
+    low  = 0.001;
     sz   = 25;
-    thld = 0.400;
 
+    %% optimizing high
+     
     %% 1st pass
     % resolution = 0.1    
     disp(['1st pass...']);
-    thresh = [low+0.1:0.1:0.9 0.99];
+    thresh = [0.01 0.1:0.1:0.9 0.99];
     ret = iterate_over(thresh);
 
 
     function ret = iterate_over(thresh)
         for i = 1:numel(thresh)
-            data = run_zished(thresh(i),low,sz,thld);
+            data = run_zished(thresh(i),low,sz,min(low+0.1,thresh(i)));
             prec(i) = data{1};
             rec(i) = data{2};
             re(i) = data{3};
