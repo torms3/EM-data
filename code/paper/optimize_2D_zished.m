@@ -1,7 +1,8 @@
 function optimize_2D_zished( ipath, gpath )
     
     % zished path
-    zished = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/bin/watershed';
+    basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
+    zished  = [basedir 'bin/watershed'];
 
     high = 999;
     low  = 300;
@@ -11,6 +12,13 @@ function optimize_2D_zished( ipath, gpath )
     for high = 500:100:1000
         disp_param;
         run_zished;
+        
+        fd = fopen([basedir 'prec_rec.dat'],'r');
+        assert(fd ~= -1);
+        prec = fread(fsz,1,'double');
+        rec  = fread(fsz,1,'double');
+        disp(prec);
+        disp(rec);
     end
 
     function run_zished
