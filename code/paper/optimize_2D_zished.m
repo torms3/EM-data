@@ -26,7 +26,7 @@ function optimize_2D_zished( ipath, gpath )
 
     function disp_param
         disp(['high = ' num2str(high/1000) ', low = ' num2str(low/1000) ...
-        ', size = ' num2str(sz) ', thold = ' num2str(thld)]);
+        ', size = ' num2str(sz) ', thold = ' num2str(thld/1000)]);
     end
 
 end
