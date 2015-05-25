@@ -1,7 +1,7 @@
 function optimize_2D_zished( ipath, gpath )
     
     % zished path
-    zished = '~/Workbench/seung-lab/watershed/zi/watershed/bin/watershed';
+    zished = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/bin/watershed';
 
     high = 0.99;
     low  = 0.3;
