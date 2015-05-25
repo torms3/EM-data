@@ -25,8 +25,14 @@ function list = metric_table()
             load(file(1).name,'result');
             
             % measurements
-            list(i).pixel(j)   = min(result.voxel.err);
-            list(i).rand2D(j)  = min(result.conn.re);
+            if exist('result','var')
+                list(i).pixel(j)   = min(result.voxel.err);
+                list(i).rand2D(j)  = min(result.conn.re);
+            else
+                list{i}.pixel(j)   = nan;
+                list{i}.rand2D(j)  = nan;
+            end
+            clear result;
         end
     end
 

@@ -1,4 +1,4 @@
-function compare_boundary_result()
+function compare_boundary_result
 
     % batch name
     batchname = {'7nm-512pix (Training)';     ...
@@ -18,12 +18,17 @@ function compare_boundary_result()
 
             % load
             file = dir(['out' num2str(batch(j)) '*.mat']);
-            load(file(1).name,'result');
+            if isempty(file)
+                S{i}.pixel(j)   = nan;
+                S{i}.rand2D(j)  = nan;
+            else
+                load(file(1).name,'result');
             
-            % metrics
-            S{i}.pixel(j)   = min(result.voxel.err);
-            S{i}.rand2D(j)  = min(result.conn.re);
-
+                % metrics
+                S{i}.pixel(j)   = min(result.voxel.err);
+                S{i}.rand2D(j)  = min(result.conn.re);
+            end
+            
         end
 
     end

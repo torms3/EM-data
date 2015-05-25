@@ -1,0 +1,11 @@
+This folder contains a MATLAB library for efficient testing of DNNs on images.  Please refer to processImageWithNet.m for comments and usage instructions.
+
+Note that the library needs a trained net to be of any use.
+
+Authors: Alessandro Giusti and Dan Claudiu Cireșan
+Dalle Molle Institute for Artificial Intelligence (IDSIA)
+Lugano, Switzerland
+
+Contact: alessandrog@idsia.ch - dan@idsia.ch
+
+FOR RESEARCH USE ONLY, DO NOT REDISTRIBUTE
