@@ -34,18 +34,34 @@ function ret = optimize_2D_zished( ipath, gpath )
     data   = iterate_over(thresh,'high');
 
 
-    % %% optimizing low
-    % [~,I] = min(extractfield(cell2mat(data),'re'));
-    % best.high = data{I}.high;
-    % best.low  = data{I}.low;
-    % best.size = data{I}.size;
-    % best.thld = data{I}.thld;
+    %% optimizing low
+    [~,I] = min(extractfield(cell2mat(data),'re'));
+    best.high = data{I}.high;
+    best.low  = data{I}.low;
+    best.size = data{I}.size;
+    best.thld = data{I}.thld;
 
-    % %% 1st pass
-    % % resolution = 0.1    
-    % disp(['1st pass...']);
-    % thresh = [0:0.1:data{I}.high-0.001];
-    % data   = iterate_over(thresh,'low');
+    %% 1st pass
+    % resolution = 0.1    
+    disp(['1st pass...']);
+    thresh = [0:0.1:data{I}.high];
+    data   = iterate_over(thresh,'low');
+
+    %% 2st pass
+    % resolution = 0.05
+    disp(['2nd pass...']);
+    [~,I]  = min(extractfield(cell2mat(data),'re'));
+    pivot  = data{I}.('low');
+    thresh = union(thresh,[max(pivot-0.05,0),min(pivot+0.05,best.high)]);
+    data   = iterate_over(thresh,'low');
+
+    %% 3rd pass
+    % resolution = 0.01
+    disp(['3rd pass...']);
+    [~,I]  = min(extractfield(cell2mat(data),'re'));
+    pivot  = data{I}.('low');
+    thresh = union(thresh,max(pivot-0.05,0):0.01:min(pivot+0.05,best.high));
+    data   = iterate_over(thresh,'low');
 
 
     %% Return
