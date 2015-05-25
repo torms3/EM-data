@@ -9,7 +9,7 @@ function optimize_2D_zished( ipath, gpath )
     thld = 400;
 
     for high = 500:100:1000
-        disp(['high = ' num2str(high)]);
+        disp_param;
         run_zished;
     end
 
@@ -19,10 +19,14 @@ function optimize_2D_zished( ipath, gpath )
         args = sprintf(' --ipath=%s --gpath=%s --high %.3f --low %.3f --size %d --thold %.3f', ...
                        ipath,gpath,high/1000,low/1000,sz,thld/1000);
         sysline = [zished args];
-        disp(sysline);
         [~,cmdout] = system(sysline);
         disp(cmdout);
 
+    end
+
+    function disp_param
+        disp(['high = ' num2str(high/1000) ', low = ' num2str(low/1000) ...
+        ', size = ' num2str(sz) ', thold = ' num2str(thld)]);
     end
 
 end
