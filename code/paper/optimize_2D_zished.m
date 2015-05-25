@@ -19,9 +19,9 @@ function ret = optimize_2D_zished( ipath, gpath )
     function ret = iterate_over(thresh)
         for i = 1:numel(thresh)
             data = run_zished(thresh(i),low,sz,thld);
-            prec(i) = data{1}(1);
-            rec(i) = data{1}{2};
-            re(i) = data{1}{3};
+            prec(i) = data(1);
+            rec(i) = data{2};
+            re(i) = data{3};
         end
         ret.thresh = thresh;
         ret.prec = prec;
