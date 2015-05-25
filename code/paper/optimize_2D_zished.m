@@ -4,10 +4,10 @@ function optimize_2D_zished( ipath, gpath )
     basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
     zished  = [basedir 'bin/watershed'];
 
-    high = 999;
-    low  = 300;
+    high = 0.999;
+    low  = 0.300;
     sz   = 25;
-    thld = 400;
+    thld = 0.400;
 
     %% 1st pass
     % resolution = 0.1    
@@ -26,16 +26,11 @@ function optimize_2D_zished( ipath, gpath )
 
         % arguments
         args = sprintf(' --ipath=%s --gpath=%s --high %.3f --low %.3f --size %d --thold %.3f', ...
-                       ipath,gpath,h/1000,l/1000,s,t/1000);
+                       ipath,gpath,h,l,s,t);
         sysline = [zished args];
         [~,cmdout] = system(sysline);
         disp(cmdout);
         data = textscan(cmdout,'Precision : %f\nRecall    : %f\nRand error: %f');
-    end
-
-    function disp_param
-        disp(['high = ' num2str(high/1000) ', low = ' num2str(low/1000) ...
-        ', size = ' num2str(sz) ', thold = ' num2str(thld/1000)]);
     end
 
 end
