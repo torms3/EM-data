@@ -63,12 +63,12 @@ function assess_result( fname, data, offset, FoV, filtrad, options )
         end
 
 
-        % %% 2D Rand error (watershed)
-        % % 
-        % if options(3)
-        %     disp(['Processing 2D Rand error (watershed)...']);            
-        %     [result.ws] = optimize_3D_Rand_error(affin,truth,msk);
-        % end
+        %% 2D Rand error (watershed)
+        % 
+        if options(3)
+            disp(['Processing 2D Rand error (watershed)...']);
+            % [result.ws] = optimize_2D_zished(affin,truth,msk);
+        end
 
 
         %% Save
