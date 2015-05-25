@@ -44,7 +44,7 @@ function ret = optimize_2D_zished( ipath, gpath )
     %% 1st pass
     % resolution = 0.1    
     disp(['1st pass...']);
-    thresh = [0:0.1:data{I}.high];
+    thresh = [0:0.1:data{I}.high-0.001];
     data   = iterate_over(thresh,'low');
 
     %% 2st pass
