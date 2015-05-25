@@ -1,4 +1,4 @@
-function optimize_2D_zished( ipath, gpath )
+function ret = optimize_2D_zished( ipath, gpath )
     
     % zished path
     basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
@@ -13,13 +13,20 @@ function optimize_2D_zished( ipath, gpath )
     % resolution = 0.1    
     disp(['1st pass...']);
     thresh = [low+0.1:0.1:0.9 0.99];
-    [data] = iterate_over(thresh);
+    ret = iterate_over(thresh);
 
 
-    function data = iterate_over(thresh)
+    function ret = iterate_over(thresh)
         for i = 1:numel(thresh)
             data = run_zished(thresh(i),low,sz,thld);
+            prec(i) = data{1}(1);
+            rec(i) = data{1}{2};
+            re(i) = data{1}{3};
         end
+        ret.thresh = thresh;
+        ret.prec = prec;
+        ret.rec = rec;
+        ret.re = re;
     end
 
     function data = run_zished(h,l,s,t)
