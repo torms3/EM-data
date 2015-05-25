@@ -94,7 +94,7 @@ function ret = optimize_2D_zished( ipath, gpath )
 
             I = find(old == threshold,1);
             if isempty(I)
-                fprintf('(%d/%d)...\n',i,nThresh);
+                fprintf('(%d/%d)...%s=%f\n',i,nThresh,name,thresh(i));
                 args = best;                
                 args.(name) = thresh(i);
                 ret{idx} = run_zished(args);
