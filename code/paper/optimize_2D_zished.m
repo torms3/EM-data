@@ -1,4 +1,4 @@
-function cmdout = optimize_2D_zished( ipath, gpath )
+function optimize_2D_zished( ipath, gpath )
     
     % zished path
     basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
@@ -10,11 +10,11 @@ function cmdout = optimize_2D_zished( ipath, gpath )
     thld = 400;
 
     for high = 500:100:1000
-        cmdout = disp_param;
+        disp_param;
         run_zished;
     end
 
-    function cmdout = run_zished
+    function run_zished
 
         % arguments
         args = sprintf(' --ipath=%s --gpath=%s --high %.3f --low %.3f --size %d --thold %.3f', ...
