@@ -42,7 +42,7 @@ function data = optimize_2D_zished( ipath, gpath )
 
             I = find(old == threshold,1);
             if isempty(I)
-                fprintf('(%d/%d)... ',i,nThresh);
+                fprintf('(%d/%d)...\n',i,nThresh);
                 ret{idx} = run_zished(thresh(i),low,sz,min(low+0.1,thresh(i)));
             else
                 ret{idx} = data{I};
