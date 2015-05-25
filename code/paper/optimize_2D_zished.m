@@ -52,7 +52,7 @@ function ret = optimize_2D_zished( ipath, gpath )
     disp(['2nd pass...']);
     [~,I]  = min(extractfield(cell2mat(data),'re'));
     pivot  = data{I}.('low');
-    thresh = union(thresh,[max(pivot-0.05,0),min(pivot+0.05,best.high)]);
+    thresh = union(thresh,[max(pivot-0.05,0),min(pivot+0.05,best.high-0.001)]);
     data   = iterate_over(thresh,'low');
 
     %% 3rd pass
@@ -60,7 +60,7 @@ function ret = optimize_2D_zished( ipath, gpath )
     disp(['3rd pass...']);
     [~,I]  = min(extractfield(cell2mat(data),'re'));
     pivot  = data{I}.('low');
-    thresh = union(thresh,max(pivot-0.05,0):0.01:min(pivot+0.05,best.high));
+    thresh = union(thresh,max(pivot-0.05,0):0.01:min(pivot+0.05,best.high-0.001));
     data   = iterate_over(thresh,'low');
 
 
@@ -97,7 +97,7 @@ function ret = optimize_2D_zished( ipath, gpath )
                 fprintf('(%d/%d)...%s=%f\n',i,nThresh,name,thresh(i));
                 args = best;                
                 args.(name) = thresh(i);
-                args.thld = min(args.low+0.1,args.high);
+                args.thld = min(args.low+0.1,args.high-0.001);
                 ret{idx} = run_zished(args);
             else
                 ret{idx} = data{I};
