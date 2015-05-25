@@ -25,7 +25,7 @@ function optimize_2D_zished( ipath, gpath )
     function data = run_zished(h,l,s,t)
 
         % arguments
-        args = sprintf(' --ipath=%s --gpath=%s --high %.3f --low %.3f --size %d --thold %.3f', ...
+        args = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --size=%d --thold=%.3f', ...
                        ipath,gpath,h,l,s,t);
         sysline = [zished args];
         [~,cmdout] = system(sysline);
