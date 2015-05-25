@@ -8,7 +8,7 @@ function optimize_2D_zished( ipath, gpath )
     sz   = 25;
     thld = 0.4;
 
-    for high = 0.5:0.1:0.1
+    for high = 0.5:0.1:1
         disp(['high = ' num2str(high)]);
         run_zished;
     end
