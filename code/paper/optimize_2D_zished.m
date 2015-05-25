@@ -81,7 +81,7 @@ function ret = optimize_2D_zished( ipath, gpath )
                 fprintf('(%d/%d)...\n',i,nThresh);
                 args = best;                
                 args.(name) = thresh(i);
-                ret{idx} = run_zished(thresh(i),args);
+                ret{idx} = run_zished(args);
             else
                 ret{idx} = data{I};
             end
