@@ -1,4 +1,4 @@
-function data = optimize_2D_zished( ipath, gpath )
+function ret = optimize_2D_zished( ipath, gpath )
     
     % zished path
     basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
@@ -31,6 +31,19 @@ function data = optimize_2D_zished( ipath, gpath )
     pivot  = data{I}.('high');
     thresh = union(thresh,pivot-0.05:0.01:pivot+0.05);
     data   = iterate_over(thresh,'high');
+
+
+    %% Return
+    %
+    data = cell2mat(data);
+    
+    ret.high   = extractfield(data,'high');
+    ret.low    = extractfield(data,'low');
+    ret.size   = extractfield(data,'size');
+    ret.thold  = extractfield(data,'thold');
+    ret.prec   = extractfield(data,'prec');
+    ret.rec    = extractfield(data,'rec');
+    ret.re     = extractfield(data,'re');
 
 
     function ret = iterate_over(thresh,name)
