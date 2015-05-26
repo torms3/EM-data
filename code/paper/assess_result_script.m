@@ -1,4 +1,4 @@
-function assess_result_script
+function assess_result_script( filtrad )
 
     % options(1)    voxel error
     % options(2)    2D Rand error (connected component)
@@ -27,40 +27,41 @@ function assess_result_script
             sz  = size(data{num}.label);
             str = sprintf('x1_y1_z1_dim%dx%dx%d',sz);
             
-            rname = [fname '.' str '.mat'];            
-            rlist = dir(rname);
-            if isempty(rlist)
-                options = [1 1 1];
-                assess_result(fname,data(num),[],[],[],options);
-            else
-                load(rname);
-                fields = {'voxel','conn','ws'};
-                options = [1 1 1];
-                for i = 1:numel(fields)
-                    if isfield(result,fields{i})
-                        options(i) = 0;
+            if any(filtrad)
+                rname = [fname '.' str '.median' num2str(filtrad) '.mat'];
+                rlist = dir(rname);
+                if isempty(rlist)
+                    options = [1 1 1];
+                    assess_result(fname,data(num),[],[],filtrad,options);
+                else
+                    load(rname);
+                    fields = {'voxel','conn','ws'};
+                    options = [1 1 1];
+                    for i = 1:numel(fields)
+                        if isfield(result,fields{i})
+                            options(i) = 0;
+                        end
                     end
+                    assess_result(fname,data(num),[],[],filtrad,options);
                 end
-                assess_result(fname,data(num),[],[],[],options);
-            end
-
-            rname = [fname '.' str '.median5.mat'];
-            rlist = dir(rname);
-            if isempty(rlist)
-                options = [1 1 1];
-                assess_result(fname,data(num),[],[],5,options);
             else
-                load(rname);
-                fields = {'voxel','conn','ws'};
-                options = [1 1 1];
-                for i = 1:numel(fields)
-                    if isfield(result,fields{i})
-                        options(i) = 0;
+                rname = [fname '.' str '.mat'];            
+                rlist = dir(rname);
+                if isempty(rlist)
+                    options = [1 1 1];
+                    assess_result(fname,data(num),[],[],[],options);
+                else
+                    load(rname);
+                    fields = {'voxel','conn','ws'};
+                    options = [1 1 1];
+                    for i = 1:numel(fields)
+                        if isfield(result,fields{i})
+                            options(i) = 0;
+                        end
                     end
+                    assess_result(fname,data(num),[],[],[],options);
                 end
-                assess_result(fname,data(num),[],[],5,options);
             end
-
         end
 
     end
