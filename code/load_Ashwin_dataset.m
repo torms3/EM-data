@@ -10,9 +10,9 @@ function ret = load_Ashwin_dataset
     ret{nbatch} = data;
     nbatch = nbatch + 1;
 
-    % batch2: 7nm-512pxl
-    disp('load 7nm-512pxl as batch2...');
-    load([homeDir '/data/Ashwin/7nm-512pxl.mat']);
+    % batch2: 7nm-512pix
+    disp('load 7nm-512pix as batch2...');
+    load([homeDir '/data/Ashwin/7nm-512pix.mat']);
     ret{nbatch} = data;
     nbatch = nbatch + 1;
 
