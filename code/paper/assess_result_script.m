@@ -22,8 +22,7 @@ function assess_result_script( options )
             num = num2str(batch(j));
 
             % output
-            out = dir(['/out' num '.1']);
-            fname = {[pwd out]};
+            fname = {[pwd 'out' num2str(num) '.1']};
             
             assess_result(fname,data(num),[],[],[],options);
             assess_result(fname,data(num),[],[],5,options);
