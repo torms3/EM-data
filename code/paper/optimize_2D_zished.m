@@ -74,7 +74,7 @@ function ret = optimize_2D_zished( ipath, gpath )
     %% 1st pass
     % resolution = 0.1    
     disp(['1st pass...']);
-    thresh = [data{data{I}.low+0.1:0.1:data{I}.high-0.001];
+    thresh = [data{I}.low+0.1:0.1:data{I}.high-0.001];
     data   = iterate_over(thresh,'thld');
 
     %% 2st pass
@@ -82,7 +82,7 @@ function ret = optimize_2D_zished( ipath, gpath )
     disp(['2nd pass...']);
     [~,I]  = min(extractfield(cell2mat(data),'re'));
     pivot  = data{I}.('thld');
-    thresh = union(thresh,[max(pivot-0.05,data{data{I}.low),min(pivot+0.05,best.high-0.001)]);
+    thresh = union(thresh,[max(pivot-0.05,data{I}.low),min(pivot+0.05,best.high-0.001)]);
     data   = iterate_over(thresh,'thld');
 
 
