@@ -22,6 +22,8 @@ function assess_result_script( options )
             num = num2str(batch(j));
             disp(['batch' num]);
 
+            data
+
             % output
             fname = [pwd '/out' num '.1'];
             
