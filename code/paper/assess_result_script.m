@@ -20,9 +20,10 @@ function assess_result_script( options )
         for j = 1:numel(batch)
 
             num = num2str(batch(j));
+            disp(['batch' num])
 
             % output
-            fname = {[pwd 'out' num2str(num) '.1']};
+            fname = {[pwd 'out' num '.1']};
             
             assess_result(fname,data(num),[],[],[],options);
             assess_result(fname,data(num),[],[],5,options);
