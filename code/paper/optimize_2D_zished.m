@@ -5,9 +5,8 @@ function ret = optimize_2D_zished( ipath, gpath )
     zished  = [basedir 'bin/watershed'];
 
     best.high = 0.999;
-    best.low  = 0;
-    best.size = 20;
-    best.thld = 0.1;
+    best.low  = 0;    
+    best.thld = 10;
 
     %% optimizing high
      
@@ -38,7 +37,6 @@ function ret = optimize_2D_zished( ipath, gpath )
     [~,I] = min(extractfield(cell2mat(data),'re'));
     best.high = data{I}.high;
     best.low  = data{I}.low;
-    best.size = data{I}.size;
     best.thld = data{I}.thld;
 
     %% 1st pass
@@ -64,17 +62,16 @@ function ret = optimize_2D_zished( ipath, gpath )
     data   = iterate_over(thresh,'low');
 
 
-    %% optimizing size
+    %% optimizing size threshold
     [~,I] = min(extractfield(cell2mat(data),'re'));
     best.high = data{I}.high;
     best.low  = data{I}.low;
-    best.size = data{I}.size;
     best.thld = data{I}.thld;
 
     %% 1st pass
     % resolution = 0.1    
     disp(['1st pass...']);
-    thresh = [best.size:10:100];
+    thresh = [best.thld:10:100];
     data   = iterate_over(thresh,'thld');
     
 
@@ -84,7 +81,6 @@ function ret = optimize_2D_zished( ipath, gpath )
     
     ret.high = extractfield(data,'high');
     ret.low  = extractfield(data,'low');
-    ret.size = extractfield(data,'size');
     ret.thld = extractfield(data,'thld');
     ret.prec = extractfield(data,'prec');
     ret.rec  = extractfield(data,'rec');
@@ -125,15 +121,14 @@ function ret = optimize_2D_zished( ipath, gpath )
     function ret = run_zished(args)
 
         % arguments
-        sysargs = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --size=%d --thold=%.3f', ...
-                       ipath,gpath,args.high,args.low,args.size,args.thld);
+        sysargs = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --thold=%.3f', ...
+                       ipath,gpath,args.high,args.low,args.thld);
         sysline = [zished sysargs];
         [~,cmdout] = system(sysline);
         disp(cmdout);
         C = textscan(cmdout,'Precision : %f\nRecall    : %f\nRand error: %f');
         ret.high = args.high;
         ret.low  = args.low;
-        ret.size = args.size;
         ret.thld = args.thld;
         ret.prec = C{1};
         ret.rec  = C{2};
