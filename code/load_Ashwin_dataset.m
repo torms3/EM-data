@@ -7,28 +7,28 @@ function ret = load_Ashwin_dataset
     % batch1: 7nm-IDSIA
     disp('load 7nm-IDSIA as batch1...');
     load([homeDir '/data/Ashwin/7nm-IDSIA.mat']);
-    data.gpath = '~/Workbench/torms3/znn-release/dataset/Ashwin/data/batch1.segm';
+    data.gpath = '/data/home/kisuklee/Workbench/torms3/znn-release/dataset/Ashwin/data/batch1.segm';
     ret{nbatch} = data;
     nbatch = nbatch + 1;
 
     % batch2: 7nm-512pix
     disp('load 7nm-512pix as batch2...');
     load([homeDir '/data/Ashwin/7nm-512pix.mat']);
-    data.gpath = '~/Workbench/torms3/znn-release/dataset/Ashwin/data/batch2.segm';
+    data.gpath = '/data/home/kisuklee/Workbench/torms3/znn-release/dataset/Ashwin/data/batch2.segm';
     ret{nbatch} = data;
     nbatch = nbatch + 1;
 
     % batch3: 7nm-notTrained
     disp('load 7nm-notTrained as batch3...');
     load([homeDir '/data/Ashwin/7nm-notTrained.mat']);
-    data.gpath = '~/Workbench/torms3/znn-release/dataset/Ashwin/data/batch3.segm';
+    data.gpath = '/data/home/kisuklee/Workbench/torms3/znn-release/dataset/Ashwin/data/batch3.segm';
     ret{nbatch} = data;
     nbatch = nbatch + 1;
 
     % batch4: 10nm-IDSIA
     disp('load 10nm-IDSIA as batch4...');
     load([homeDir '/data/Ashwin/10nm-IDSIA.mat']);
-    data.gpath = '~/Workbench/torms3/znn-release/dataset/Ashwin/data/batch4.segm';
+    data.gpath = '/data/home/kisuklee/Workbench/torms3/znn-release/dataset/Ashwin/data/batch4.segm';
     ret{nbatch} = data;
     nbatch = nbatch + 1;
 
