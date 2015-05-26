@@ -6,7 +6,7 @@ function ret = optimize_2D_zished( ipath, gpath )
 
     best.high = 0.999;
     best.low  = 0;
-    best.size = 25;
+    best.size = 50;
     best.thld = 0.1;
 
     %% optimizing high
@@ -62,6 +62,28 @@ function ret = optimize_2D_zished( ipath, gpath )
     pivot  = data{I}.('low');
     thresh = union(thresh,max(pivot-0.05,0):0.01:min(pivot+0.05,best.high-0.001));
     data   = iterate_over(thresh,'low');
+
+
+    %% optimizing thold
+    [~,I] = min(extractfield(cell2mat(data),'re'));
+    best.high = data{I}.high;
+    best.low  = data{I}.low;
+    best.size = data{I}.size;
+    best.thld = data{I}.thld;
+
+    %% 1st pass
+    % resolution = 0.1    
+    disp(['1st pass...']);
+    thresh = [data{data{I}.low+0.1:0.1:data{I}.high-0.001];
+    data   = iterate_over(thresh,'thld');
+
+    %% 2st pass
+    % resolution = 0.05
+    disp(['2nd pass...']);
+    [~,I]  = min(extractfield(cell2mat(data),'re'));
+    pivot  = data{I}.('thld');
+    thresh = union(thresh,[max(pivot-0.05,data{data{I}.low),min(pivot+0.05,best.high-0.001)]);
+    data   = iterate_over(thresh,'thld');
 
 
     %% Return
