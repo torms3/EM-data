@@ -1,4 +1,4 @@
-function ret = optimize_2D_zished( ipath, gpath )
+function [ret1,ret2] = optimize_2D_zished( ipath, gpath )
     
     % zished path
     basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
@@ -61,6 +61,17 @@ function ret = optimize_2D_zished( ipath, gpath )
     thresh = union(thresh,max(pivot-0.05,0):0.01:min(pivot+0.05,best.high-0.001));
     data   = iterate_over(thresh,'low');
 
+    %% Return
+    %
+    data = cell2mat(data);
+    
+    ret1.high = extractfield(data,'high');
+    ret1.low  = extractfield(data,'low');
+    ret1.thld = extractfield(data,'thld');
+    ret1.prec = extractfield(data,'prec');
+    ret1.rec  = extractfield(data,'rec');
+    ret1.re   = extractfield(data,'re');
+
 
     %% optimizing size threshold
     [~,I] = min(extractfield(cell2mat(data),'re'));
@@ -79,12 +90,12 @@ function ret = optimize_2D_zished( ipath, gpath )
     %
     data = cell2mat(data);
     
-    ret.high = extractfield(data,'high');
-    ret.low  = extractfield(data,'low');
-    ret.thld = extractfield(data,'thld');
-    ret.prec = extractfield(data,'prec');
-    ret.rec  = extractfield(data,'rec');
-    ret.re   = extractfield(data,'re');
+    ret2.high = extractfield(data,'high');
+    ret2.low  = extractfield(data,'low');
+    ret2.thld = extractfield(data,'thld');
+    ret2.prec = extractfield(data,'prec');
+    ret2.rec  = extractfield(data,'rec');
+    ret2.re   = extractfield(data,'re');
 
 
     function ret = iterate_over(thresh,name)
