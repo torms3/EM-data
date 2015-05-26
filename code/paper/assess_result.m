@@ -67,7 +67,7 @@ function assess_result( fname, data, offset, FoV, filtrad, options )
         % 
         if options(3)
             disp(['Processing 2D Rand error (watershed)...']);
-            % [result.ws] = optimize_2D_zished(affin,truth,msk);
+            [result.ws,result.zws] = optimize_2D_zished(ipath,gpath);
         end
 
 
