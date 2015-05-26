@@ -51,7 +51,7 @@ function assess_result_script( filtrad )
                 rlist = dir(rname);
                 if isempty(rlist)
                     options = [1 1 1];
-                    assess_result(fname,data(num),[],[],[],options);
+                    assess_result(fname,data(num),[],[],0,options);
                 else
                     load(rname);
                     fields = {'voxel','conn','ws'};
@@ -62,7 +62,7 @@ function assess_result_script( filtrad )
                         end
                     end
                     if any(options)
-                        assess_result(fname,data(num),[],[],[],options);
+                        assess_result(fname,data(num),[],[],0,options);
                     end
                 end
             end

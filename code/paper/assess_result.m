@@ -1,4 +1,4 @@
-function assess_result( fname, data, offset, FoV, filtrad, options )
+function assess_result( fname, data, offset, FoV, filtrad, options, gpath )
 
     if ~iscell(fname);      fname = {fname};end;
     if ~iscell(data);         data = {data};end;
