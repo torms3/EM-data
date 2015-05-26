@@ -19,6 +19,7 @@ function assess_result( fname, data, offset, FoV, filtrad, options )
             mask = true(size(data{i}.label));
         end
         disp(['Processing ' fname{i} '...']);
+        gpath = data{i}.gpath;
         assess_boundary(fname{i},data{i}.label,mask);
     end
 
@@ -67,6 +68,7 @@ function assess_result( fname, data, offset, FoV, filtrad, options )
         % 
         if options(3)
             disp(['Processing 2D Rand error (watershed)...']);
+            ipath = fname;
             [result.ws,result.zws] = optimize_2D_zished(ipath,gpath);
         end
 

@@ -23,7 +23,7 @@ function assess_result_script( options )
             disp(['batch' num]);
 
             % output
-            fname = {[pwd '/out' num '.1']};
+            fname = [pwd '/out' num '.1'];
             
             assess_result(fname,data(num),[],[],[],options);
             assess_result(fname,data(num),[],[],5,options);
