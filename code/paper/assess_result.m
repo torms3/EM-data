@@ -98,7 +98,7 @@ function update_result( fname, update )
     if exist(fname,'file')
         load(fname);
         
-        fields = {'voxel','conn','ws'};
+        fields = {'voxel','conn','ws','zws'};
         for i = 1:numel(fields)
             field = fields{i};
             if isfield(update,field)
