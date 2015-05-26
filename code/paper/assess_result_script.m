@@ -25,14 +25,15 @@ function assess_result_script
             
             % load & assess missing ones
             sz  = size(data{num}.label);
-            str = sprintf('x1_y1_z1_dim%dx%dx%d',sz);                
+            str = sprintf('x1_y1_z1_dim%dx%dx%d',sz);
             
-            rlist = dir([fname '.' str '.mat']);
+            rname = [fname '.' str '.mat'];            
+            rlist = dir(rname);
             if isempty(rlist)
                 options = [1 1 1];
                 assess_result(fname,data(num),[],[],[],options);
             else
-                load([str '.mat']);
+                load(rname);
                 fields = {'voxel','conn','ws'};
                 options = [1 1 1];
                 for i = 1:numel(fields)
@@ -43,12 +44,13 @@ function assess_result_script
                 assess_result(fname,data(num),[],[],[],options);
             end
 
-            rlist = dir([fname '.' str '.median5.mat']);
+            rname = [fname '.' str '.median5.mat'];
+            rlist = dir(rname);
             if isempty(rlist)
                 options = [1 1 1];
                 assess_result(fname,data(num),[],[],5,options);
             else
-                load([str '.median5.mat']);
+                load(rname);
                 fields = {'voxel','conn','ws'};
                 options = [1 1 1];
                 for i = 1:numel(fields)
