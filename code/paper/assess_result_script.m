@@ -42,7 +42,9 @@ function assess_result_script( filtrad )
                             options(i) = 0;
                         end
                     end
-                    assess_result(fname,data(num),[],[],filtrad,options);
+                    if any(options)
+                        assess_result(fname,data(num),[],[],filtrad,options);
+                    end
                 end
             else
                 rname = [fname '.' str '.mat'];            
@@ -59,7 +61,9 @@ function assess_result_script( filtrad )
                             options(i) = 0;
                         end
                     end
-                    assess_result(fname,data(num),[],[],[],options);
+                    if any(options)
+                        assess_result(fname,data(num),[],[],[],options);
+                    end
                 end
             end
         end
