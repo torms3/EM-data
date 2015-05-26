@@ -5,11 +5,11 @@ function [train,test] = load_SNEMI3D_dataset
     % batch1: train
     disp('load SNEMI3D train...');
     load([homeDir '/data/SNEMI3D/train.mat']);
-    train.gapth = '';
+    train.gpath = '/data/home/kisuklee/Workbench/torms3/znn-release/dataset/SNEMI3D/data/batch1.segm';
 
     % batch2: test
     disp('load SNEMI3D test...');
     load([homeDir '/data/SNEMI3D/test.mat']);
-    test.gpath = '';
+    test.gpath = '/data/home/kisuklee/Workbench/torms3/znn-release/dataset/SNEMI3D/data/batch2.segm';
 
 end
