@@ -71,7 +71,7 @@ function ret = optimize_2D_zished( ipath, gpath )
     %% 1st pass
     % resolution = 0.1    
     disp(['1st pass...']);
-    thresh = [best.thld:10:100];
+    thresh = [best.thld:100:1000];
     data   = iterate_over(thresh,'thld');
     
 
@@ -107,7 +107,6 @@ function ret = optimize_2D_zished( ipath, gpath )
                 fprintf('(%d/%d)...%s=%f\n',i,nThresh,name,thresh(i));
                 args = best;                
                 args.(name) = thresh(i);
-                args.thld = min(args.low+0.1,args.high-0.001);
                 ret{idx} = run_zished(args);
             else
                 ret{idx} = data{I};
