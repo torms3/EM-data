@@ -12,6 +12,9 @@ function assess_result( fname, data, offset, FoV, filtrad, options )
         options = [1 1 0];
     end
 
+    disp('options');
+    disp(options);
+
     for i = 1:numel(fname)
         if isfield(data{i},'mask')
             mask = data{i}.mask;

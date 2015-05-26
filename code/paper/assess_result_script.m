@@ -27,7 +27,7 @@ function assess_result_script
             sz  = size(data{num}.label);
             str = sprintf('x1_y1_z1_dim%dx%dx%d',sz);                
             
-            rlist = dir([str '.mat']);
+            rlist = dir([fname '.' str '.mat']);
             if isempty(rlist)
                 options = [1 1 1];
                 assess_result(fname,data(num),[],[],[],options);
@@ -43,7 +43,7 @@ function assess_result_script
                 assess_result(fname,data(num),[],[],[],options);
             end
 
-            rlist = dir([str '.median5.mat']);
+            rlist = dir([fname '.' str '.median5.mat']);
             if isempty(rlist)
                 options = [1 1 1];
                 assess_result(fname,data(num),[],[],5,options);
