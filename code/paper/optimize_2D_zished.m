@@ -6,7 +6,7 @@ function [ret1,ret2] = optimize_2D_zished( ipath, gpath )
 
     best.high = 0.999;
     best.low  = 0;    
-    best.thld = 10;
+    best.thld = 0;
 
     %% optimizing high
      
