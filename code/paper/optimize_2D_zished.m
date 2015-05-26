@@ -63,14 +63,14 @@ function [ret1,ret2] = optimize_2D_zished( ipath, gpath )
 
     %% Return
     %
-    data = cell2mat(data);
+    data1 = cell2mat(data);
     
-    ret1.high = extractfield(data,'high');
-    ret1.low  = extractfield(data,'low');
-    ret1.thld = extractfield(data,'thld');
-    ret1.prec = extractfield(data,'prec');
-    ret1.rec  = extractfield(data,'rec');
-    ret1.re   = extractfield(data,'re');
+    ret1.high = extractfield(data1,'high');
+    ret1.low  = extractfield(data1,'low');
+    ret1.thld = extractfield(data1,'thld');
+    ret1.prec = extractfield(data1,'prec');
+    ret1.rec  = extractfield(data1,'rec');
+    ret1.re   = extractfield(data1,'re');
 
 
     %% optimizing size threshold
@@ -88,14 +88,14 @@ function [ret1,ret2] = optimize_2D_zished( ipath, gpath )
 
     %% Return
     %
-    data = cell2mat(data);
+    data2 = cell2mat(data);
     
-    ret2.high = extractfield(data,'high');
-    ret2.low  = extractfield(data,'low');
-    ret2.thld = extractfield(data,'thld');
-    ret2.prec = extractfield(data,'prec');
-    ret2.rec  = extractfield(data,'rec');
-    ret2.re   = extractfield(data,'re');
+    ret2.high = extractfield(data2,'high');
+    ret2.low  = extractfield(data2,'low');
+    ret2.thld = extractfield(data2,'thld');
+    ret2.prec = extractfield(data2,'prec');
+    ret2.rec  = extractfield(data2,'rec');
+    ret2.re   = extractfield(data2,'re');
 
 
     function ret = iterate_over(thresh,name)
