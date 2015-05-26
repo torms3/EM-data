@@ -13,10 +13,10 @@ function assess_result_script( options )
     list = cell2mat(get_exp_list);
     for i = 1:numel(list)
 
-        disp(list{i}.lgnd);
-        cd(list{i}.path);
+        disp(list(i).lgnd);
+        cd(list(i).path);
 
-        batch = list{i}.batch;
+        batch = list(i).batch;
         for j = 1:numel(batch)
 
             num = num2str(batch(j));
