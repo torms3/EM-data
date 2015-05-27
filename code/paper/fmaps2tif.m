@@ -22,7 +22,7 @@ function [] = fmaps2tif( fname, map, z )
     else        
         if any(z)
             assert(z>0 & z<=Z);
-            ret = fmaps(:,:,z,:);
+            ret = squeeze(fmaps(:,:,z,:));
             fname = [fname '.z' num2str(z)];
             write_tif_image_stack(ret,fname);
         else
@@ -32,7 +32,7 @@ function [] = fmaps2tif( fname, map, z )
 
     function save_fmap
         for map = 1:M
-            fmap = fmaps(:,:,:,map);
+            fmap = squeeze(fmaps(:,:,:,map));
             fname = [fname '.map' num2str(map)];
             write_tif_image_stack(fmap,fname);
         end
