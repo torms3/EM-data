@@ -4,6 +4,7 @@ function vol2tif( fname, dim )
         dim = [];
     end
 
+    disp(['vol2tif: ' fname]);
     vol = import_volume(fname,dim);
     write_tif_image_stack(vol,[fname '.tif']);
 
