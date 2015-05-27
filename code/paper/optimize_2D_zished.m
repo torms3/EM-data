@@ -100,15 +100,14 @@ function [ret1,ret2] = optimize_2D_zished( ipath, gpath )
 
     function ret = iterate_over(thresh,name)
 
-        nThresh = numel(thresh);
-        ret = cell(1,nThresh);
+        nThresh = numel(thresh);        
         if exist('data','var')
             old = extractfield(cell2mat(data),name);
         else
             old = [];    
         end
-
-        idx = 1;
+        
+        ret = {};
         for i = 1:nThresh
 
             threshold = thresh(i);
@@ -116,13 +115,12 @@ function [ret1,ret2] = optimize_2D_zished( ipath, gpath )
             I = find(old == threshold,1);
             if isempty(I)
                 fprintf('(%d/%d)...%s=%f\n',i,nThresh,name,thresh(i));
-                args = best;                
+                args = best;
                 args.(name) = thresh(i);
-                ret{idx} = run_zished(args);
+                ret{end+1} = run_zished(args);
             else
-                ret{idx} = data{I};
+                ret{end+1} = data{I};
             end
-            idx = idx + 1;
 
         end
 
