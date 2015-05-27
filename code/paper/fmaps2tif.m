@@ -16,14 +16,15 @@ function [] = fmaps2tif( fname, map, z )
             assert(z>0 & z<=Z);
             ret = ret(:,:,z);
             fname = [fname '.z' num2str(z)];
-        end
-        
+        end        
+        disp(fname);
         write_tif_image_stack(ret,fname);
     else        
         if any(z)
             assert(z>0 & z<=Z);
             ret = squeeze(fmaps(:,:,z,:));
             fname = [fname '.z' num2str(z)];
+            disp(fname);
             write_tif_image_stack(ret,fname);
         else
             save_fmap;
@@ -34,6 +35,7 @@ function [] = fmaps2tif( fname, map, z )
         for map = 1:M
             fmap = squeeze(fmaps(:,:,:,map));
             fname = [fname '.map' num2str(map)];
+            disp(fname);
             write_tif_image_stack(fmap,fname);
         end
     end
