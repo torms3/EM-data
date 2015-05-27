@@ -34,7 +34,7 @@ function fmaps2tif_script( net_type, fpath )
 
         idx = findstr(fname,'.');
         z = layer(fname(idx+1:end));
-        disp([fname(idx:end) ' = ' num2str(z)]);        
+        disp([fname(idx+1:end) ' = ' num2str(z)]);        
         % fmaps2tif(fname,[],z);
 
     end
