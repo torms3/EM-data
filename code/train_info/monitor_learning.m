@@ -10,7 +10,7 @@ function [data] = monitor_learning( cost_type, avg_winidow, start_iter, errshade
 	if ~exist('start_iter','var'); 	start_iter = [1 1];end;
 	if ~exist('errshade','var');	  errshade = [0 0];end;
 	if ~exist('errline','var');		   errline = false;end;
-	train_only = true;
+	train_only = false;
 
 	% Load train info
 	[train] = load_info('train');
