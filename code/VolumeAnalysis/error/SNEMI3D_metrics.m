@@ -41,8 +41,10 @@ p_i0 = p_ij(2:end,1);	% pixels marked as BG in segB which are not BG in segA
 p_ij = p_ij(2:end,2:end);
 
 sumA = sum(a_i.*a_i);
-sumB = sum(b_j.*b_j) +  sum(p_i0)/n;
-sumAB = sum(sum(p_ij.^2)) + sum(p_i0)/n;
+% sumB = sum(b_j.*b_j) +  sum(p_i0)/n;
+% sumAB = sum(sum(p_ij.^2)) + sum(p_i0)/n;
+sumB = sum(b_j.*b_j) +  sum(p_i0);
+sumAB = sum(sum(p_ij.^2)) + sum(p_i0);
 
 % Rand index
 %ri = full(1 - (sumA + sumB - 2*sumAB)/ n^2);
