@@ -1,10 +1,14 @@
-function [] = fmaps2tif( fname, map, z )
+function [] = fmaps2tif( fname, crop, map, z )
 
     if ~exist('map','var'); map = []; end;
     if ~exist('z','var');     z = []; end;
     
     fmaps = import_tensor(fname);
     [X,Y,Z,M] = size(fmaps);
+
+    offset = floor(([X Y Z] - crop)/2) + [1 1 1];
+    sz     = crop;
+    fmaps  = crop_tensor(fmaps,offset,sz);
 
     if any(map)
         
