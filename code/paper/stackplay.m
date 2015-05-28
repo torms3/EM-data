@@ -1,4 +1,8 @@
-function [] = stackplay( stack )
+function [] = stackplay( stack, alpha )
+
+    if ~exist('alpha','var')
+        alpha = [];
+    end
 
     dim = size(stack);
 
@@ -78,7 +82,7 @@ function [] = stackplay( stack )
     function view3D
 
         clf;
-        view3Dstack(data.stack,data.x,data.y,data.z,data.ratio);
+        view3Dstack(data.stack,alpha,data.x,data.y,data.z,data.ratio,true);
         view([45 30]);
         drawnow;
 

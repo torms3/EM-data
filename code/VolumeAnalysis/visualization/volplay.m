@@ -1,4 +1,4 @@
-function [] = volplay( volume, alphas, map )
+function [] = volplay( volume, alphas, map, ratio )
 % 
 % Display 3D volume as a stack of 2D image slices
 % 
@@ -31,6 +31,9 @@ function [] = volplay( volume, alphas, map )
 	if ~exist('map','var')
 		map = [];
 	end
+	if ~exist('ratio','var')
+		ratio = [1 1 1];
+	end
 
 	% preprocessing alpha channels
 	for i = 1:numel(alphas)
@@ -45,7 +48,8 @@ function [] = volplay( volume, alphas, map )
 	data.z 		= 1;
 	data.level 	= 0.5;
 	data.vis 	= logical(zeros(1,1+numel(alphas)));
-	data.vis(1) = true;	
+	data.vis(1) = true;
+	data.ratio  = ratio;
 	for i = 1:numel(data.rgb)
 		data.rgb{i} = rand(1,3);
 	end
@@ -136,6 +140,8 @@ function [] = volplay( volume, alphas, map )
 		display_alpha(img);
 		display_map(img);
 		hold off;
+		
+		daspect(data.ratio);
 
 		title(['z = ' num2str(data.z)]);
 

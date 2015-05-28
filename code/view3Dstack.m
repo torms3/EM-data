@@ -1,4 +1,4 @@
-function view3Dstack( stack, x, y, z, resolution, showline )
+function view3Dstack( stack, alpha, x, y, z, resolution, showline )
 
     if ~exist('showline','var'); showline = false; end;
 
@@ -8,6 +8,12 @@ function view3Dstack( stack, x, y, z, resolution, showline )
     xy = squeeze(stack(:,:,z));
     yz = squeeze(stack(x,:,:));
     zx = squeeze(stack(:,y,:));
+
+    if ~isempty(alpha)
+        axy = squeeze(alpha(:,:,z));
+        ayz = squeeze(alpha(x,:,:));
+        azx = squeeze(alpha(:,y,:));
+    end
 
     % post-processing
     x = x - 0.5;
@@ -28,19 +34,40 @@ function view3Dstack( stack, x, y, z, resolution, showline )
     xImage = [0.5 0.5; X X];
     yImage = [0.5 Y; 0.5 Y];
     zImage = [z z; z z];
-    surf(xImage,yImage,zImage,'CData',xy,'FaceColor','texturemap');
+    surf(xImage,yImage,zImage,'CData',repmat(xy,1,1,3),'FaceColor','texturemap');
+
+    % xy-alpha
+    if ~isempty(alpha)
+        alph = zeros([size(axy) 3]);
+        alph(:,:,1) = axy; % R-channel
+        surf(xImage,yImage,zImage,'CData',alph,'FaceColor','texturemap','FaceAlpha',0.4);
+    end
 
     % yz-slice
     xImage = [x x; x x];
     yImage = [0.5 0.5; Y Y];
     zImage = [0.5 Z; 0.5 Z];
-    surf(xImage,yImage,zImage,'CData',yz,'FaceColor','texturemap');
+    surf(xImage,yImage,zImage,'CData',repmat(yz,1,1,3),'FaceColor','texturemap');
 
+    % yz-alpha
+    if ~isempty(alpha)
+        alph = zeros([size(ayz) 3]);
+        alph(:,:,1) = ayz; % R-channel
+        surf(xImage,yImage,zImage,'CData',alph,'FaceColor','texturemap','FaceAlpha',0.4);
+    end
+    
     % zx-slice
     xImage = [0.5 X; 0.5 X];
     yImage = [y y; y y];
     zImage = [0.5 0.5; Z Z];
-    surf(xImage,yImage,zImage,'CData',zx,'FaceColor','texturemap');
+    surf(xImage,yImage,zImage,'CData',repmat(zx,1,1,3),'FaceColor','texturemap');
+
+    % zx-alpha
+    if ~isempty(alpha)
+        alph = zeros([size(azx) 3]);
+        alph(:,:,1) = azx; % R-channel
+        surf(xImage,yImage,zImage,'CData',alph,'FaceColor','texturemap','FaceAlpha',0.4);
+    end
 
     % line
     if showline
@@ -51,12 +78,14 @@ function view3Dstack( stack, x, y, z, resolution, showline )
 
     hold off;
 
-    colormap('gray');
+    % colormap('gray');
 
     xlim([0.5 X]);
     ylim([0.5 Y]);
     zlim([Z 0.5]);    
     
     daspect(resolution);
+
+    grid on;
 
 end
