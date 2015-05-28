@@ -1,4 +1,4 @@
-function vol2tif_script( key )
+function vol2tif_script( key, crop )
 
     list = dir(key);
     for i = 1:numel(list)
@@ -6,7 +6,7 @@ function vol2tif_script( key )
         if any(findstr(fname,'.size'))
             continue;
         end
-        vol2tif(fname);
+        vol2tif(fname,[],crop);
     end
 
 end

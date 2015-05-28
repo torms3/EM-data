@@ -1,4 +1,6 @@
-function view3Dstack( stack, x, y, z, resolution )
+function view3Dstack( stack, x, y, z, resolution, showline )
+
+    if ~exist('showline','var'); showline = false; end;
 
     [X,Y,Z] = size(stack);    
 
@@ -9,7 +11,7 @@ function view3Dstack( stack, x, y, z, resolution )
 
     % post-processing
     x = x - 0.5;
-    y = y - 0.5;
+    y = y - 0.5;    
     z = z - 0.5;
     z = -z;
     Z = -Z;    
@@ -41,9 +43,11 @@ function view3Dstack( stack, x, y, z, resolution )
     surf(xImage,yImage,zImage,'CData',zx,'FaceColor','texturemap');
 
     % line
-    line([0.5 X],[y y],[z z],'Color','r');
-    line([x x],[0.5 Y],[z z],'Color','r');
-    line([x x],[y y],[0.5 Z],'Color','r');
+    if showline
+        line([0.5 X],[y y],[z z],'Color','r');
+        line([x x],[0.5 Y],[z z],'Color','r');
+        line([x x],[y y],[0.5 Z],'Color','r');
+    end
 
     hold off;
 

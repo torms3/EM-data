@@ -1,11 +1,8 @@
 function [] = process_affinity_output( fname, filtrad, outname )
-	
-	if ~exist('filtrad','var')
-		filtrad = [];
-	end
-	if ~exist('outname','var')
-		outname = fname;
-	end
+
+	if ~iscell(fname); 			 fname = {fname}; end;	
+	if ~exist('filtrad','var'); 	filtrad = []; end;
+	if ~exist('outname','var');  outname = fname; end;
 
 	for i = 1:numel(fname)
 		
