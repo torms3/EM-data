@@ -1,6 +1,6 @@
 function fmaps2tif_script( crop, fpath )
 
-    if ~iscell(crop);              {crop};end;
+    if ~iscell(crop);       crop = {crop};end;
     if ~exist('fpath','var'); fpath = pwd;end;
     cd(fpath);
 
