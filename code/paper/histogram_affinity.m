@@ -5,17 +5,9 @@ function histogram_affinity( graph, nbin, xrange )
 
     [affin] = parse_affin_graph(graph,thold);
 
-    % plot separately
-    if false
-        figure;hold on;
-        subplot(1,3,1);histogram(affin.x(:),nbin);title('x-affinity');grid on;xlim(xrange);
-        subplot(1,3,2);histogram(affin.y(:),nbin);title('y-affinity');grid on;xlim(xrange);
-        subplot(1,3,3);histogram(affin.z(:),nbin);title('z-affinity');grid on;xlim(xrange);
-    end
-
     % plot together
     if true
-        figure;hold on;
+        hold on;
         histogram(affin.x(:),nbin);
         histogram(affin.y(:),nbin);
         histogram(affin.z(:),nbin);
