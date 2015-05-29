@@ -1,4 +1,8 @@
-function ret = zished( ipath, gpath, args )
+function ret = run_zished( ipath, gpath, args )
+
+    % zished path
+    basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
+    zished  = [basedir 'bin/watershed'];
 
     % arguments
     sysargs = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --thold=%.3f', ...
