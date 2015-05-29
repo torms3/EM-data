@@ -5,8 +5,8 @@ function ret = run_zished( ipath, gpath, args )
     zished  = [basedir 'bin/watershed'];
 
     % arguments
-    sysargs = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --thold=%.3f', ...
-                   ipath,gpath,args.high,args.low,args.thld);
+    sysargs = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --thold=%.3f --affin=%d', ...
+                   ipath,gpath,args.high,args.low,args.thld,args.affin);
     sysline = [zished sysargs];
     [~,cmdout] = system(sysline);
     disp(cmdout);
