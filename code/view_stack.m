@@ -25,7 +25,7 @@ function [rotated_stack] = view_stack( stack, perspective, resolution, alphas )
 		end
 		ratio = [resolution(1) resolution(3) resolution(2)]
 	otherwise
-		ratio = [1 1 1];
+		ratio = resolution;
 	end
 	rotated_stack = stack;
 

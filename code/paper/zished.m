@@ -1,4 +1,4 @@
-function ret = zished( ipath, gpath, args)
+function ret = zished( ipath, gpath, args )
 
     % arguments
     sysargs = sprintf(' --ipath=%s --gpath=%s --high=%.3f --low=%.3f --thold=%.3f', ...

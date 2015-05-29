@@ -1,7 +1,10 @@
-function [] = stackplay( stack, alpha )
+function [] = stackplay( stack, alpha, resolution )
 
     if ~exist('alpha','var')
         alpha = [];
+    end
+    if ~exist('resolution','var')
+        resolution = [1 1 1];
     end
 
     dim = size(stack);
@@ -11,7 +14,7 @@ function [] = stackplay( stack, alpha )
     data.x      = 1;
     data.y      = 1;
     data.z      = 1;
-    data.ratio  = [40 40 7];
+    data.ratio  = resolution;
     data.step   = 1;
     data.mode   = 3;
 

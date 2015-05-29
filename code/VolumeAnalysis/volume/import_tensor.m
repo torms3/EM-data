@@ -1,7 +1,7 @@
 function [tensor] = import_tensor( fname, dim, ext, dtype )
 	
-	if ~exist('dim','var'); 					dim = []; end;
-	if ~exist('ext','var'); 					ext = []; end;
+	if ~exist('dim','var'); 		  dim = []; end;
+	if ~exist('ext','var'); 		  ext = []; end;
 	if ~exist('dtype','var'); dtype = 'double'; end;
 
 	% tensor dimension
