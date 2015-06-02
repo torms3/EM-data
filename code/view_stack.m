@@ -24,6 +24,12 @@ function [rotated_stack] = view_stack( stack, perspective, resolution, alphas )
 			alphas{i} = rot90_3D(alphas{i},1,3);
 		end
 		ratio = [resolution(1) resolution(3) resolution(2)]
+	case 'bottom'
+		stack = rot90_3D(stack,2,3);
+		for i = 1:numel(alphas)
+			alphas{i} = rot90_3D(alphas{i},2,3);
+		end
+		ratio = [resolution(3) resolution(1) resolution(2)]
 	otherwise
 		ratio = resolution;
 	end

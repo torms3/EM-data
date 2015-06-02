@@ -47,7 +47,7 @@ function view3Dstack( stack, alpha, x, y, z, resolution, showline )
     if ~isempty(alpha)
         alph = zeros([size(axy) 3]);
         alph(:,:,1) = axy; % R-channel
-        surf(xImage,yImage,zImage,'CData',alph,'FaceColor','texturemap','FaceAlpha',0.4,'FaceLighting','gouraud');
+        surf(xImage,yImage,zImage,'CData',alph,'FaceColor','texturemap','FaceAlpha',0.45);
     end
 
     % yz-slice
@@ -62,7 +62,7 @@ function view3Dstack( stack, alpha, x, y, z, resolution, showline )
     if ~isempty(alpha)
         alph = zeros([size(ayz) 3]);
         alph(:,:,1) = ayz; % R-channel
-        surf(xImage,yImage,zImage,'CData',alph,'FaceColor','texturemap','FaceAlpha',0.4,'FaceLighting','gouraud');
+        surf(xImage,yImage,zImage,'CData',alph,'FaceColor','texturemap','FaceAlpha',0.45);
     end
     
     % zx-slice
@@ -78,7 +78,7 @@ function view3Dstack( stack, alpha, x, y, z, resolution, showline )
     if ~isempty(alpha)
         alph = zeros([size(azx) 3]);
         alph(:,:,1) = azx; % R-channel
-        surf(xImage,yImage,zImage,'CData',alph,'FaceColor','texturemap','FaceAlpha',0.4,'FaceLighting','gouraud');
+        surf(xImage,yImage,zImage,'CData',alph,'FaceColor','texturemap','FaceAlpha',0.45);
     end
 
     % line
@@ -98,6 +98,8 @@ function view3Dstack( stack, alpha, x, y, z, resolution, showline )
     
     daspect(resolution);
 
-    grid on;
+    % grid on;
+    grid off;
+    axis off;
 
 end

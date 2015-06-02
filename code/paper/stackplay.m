@@ -11,12 +11,13 @@ function [] = stackplay( stack, alpha, resolution )
 
     % set data
     data.stack = scaledata(double(stack),0,1);
-    data.x      = 1;
+    data.x      = size(stack,1);
     data.y      = 1;
     data.z      = 1;
     data.ratio  = resolution;
     data.step   = 1;
     data.mode   = 3;
+    data.el     = 30;
 
     % display the first slice 
     view3D;
@@ -40,20 +41,24 @@ function [] = stackplay( stack, alpha, resolution )
             data.mode = 2;
         case '3' % z
             data.mode = 3;
+        % case 'uparrow'
+        %     v = data.(str{data.mode});
+        %     v = rem(v - 1,dim(data.mode));
+        %     if( v == 0 )
+        %         v = dim(data.mode);
+        %     end
+        %     data.(str{data.mode}) = v;
+        % case 'downarrow'
+        %     v = data.(str{data.mode});
+        %     v = rem(v + 1,dim(data.mode));
+        %     if( v == 0 )
+        %         v = dim(data.mode);
+        %     end
+        %     data.(str{data.mode}) = v;
         case 'uparrow'
-            v = data.(str{data.mode});
-            v = rem(v - 1,dim(data.mode));
-            if( v == 0 )
-                v = dim(data.mode);
-            end
-            data.(str{data.mode}) = v;
+            data.el = min(data.el + 5,90);
         case 'downarrow'
-            v = data.(str{data.mode});
-            v = rem(v + 1,dim(data.mode));
-            if( v == 0 )
-                v = dim(data.mode);
-            end
-            data.(str{data.mode}) = v;
+            data.el = max(data.el - 5,0);
         end
         
         view3D;
@@ -86,7 +91,7 @@ function [] = stackplay( stack, alpha, resolution )
 
         clf;
         view3Dstack(data.stack,alpha,data.x,data.y,data.z,data.ratio,true);
-        view([45 30]);
+        view([45 data.el]);
         drawnow;
 
     end

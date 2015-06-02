@@ -50,8 +50,11 @@ function [] = volplay( volume, alphas, map, ratio )
 	data.vis 	= logical(zeros(1,1+numel(alphas)));
 	data.vis(1) = true;
 	data.ratio  = ratio;
+	% for i = 1:numel(data.rgb)
+	% 	data.rgb{i} = rand(1,3);
+	% end
 	for i = 1:numel(data.rgb)
-		data.rgb{i} = rand(1,3);
+		data.rgb{i} = [1 0 0];
 	end
 
 	% additional info.
