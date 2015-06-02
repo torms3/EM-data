@@ -7,15 +7,15 @@ function average_output_script
     basedir = '~/Workbench/torms3/znn-release/experiments/Ashwin/2D_boundary/train234_test1/';
 
     % VDHR-P3
-    list{idx}.path = [basedir 'VDHR/P3/iter_60K/output/'];
+    list{idx}.path = [basedir 'VDHR/P3/iter_60K/output2/'];
     idx = idx + 1;
 
     % VDHR-P2
-    list{idx}.path = [basedir 'VDHR/P2/iter_60K/output/'];
+    list{idx}.path = [basedir 'VDHR/P2/iter_60K/output2/'];
     idx = idx + 1;
 
     % VDHR-P1
-    list{idx}.path = [basedir 'VDHR/P1/iter_60K/output/'];
+    list{idx}.path = [basedir 'VDHR/P1/iter_60K/output2/'];
     idx = idx + 1;
 
     for i = 1:numel(list)
@@ -27,7 +27,7 @@ function average_output_script
     end
 
     % VDHR-avg
-    cd([basedir 'VDHR/avg/iter_60K/output/']);
+    cd([basedir 'VDHR/avg/iter_60K/output2/']);
     export_volume('out1.1',sum(cat(4,out1{:}),4)/3);
     export_volume('out2.1',sum(cat(4,out2{:}),4)/3);
     export_volume('out3.1',sum(cat(4,out3{:}),4)/3);
