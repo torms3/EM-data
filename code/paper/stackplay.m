@@ -11,12 +11,14 @@ function [] = stackplay( stack, alpha, resolution )
 
     % set data
     data.stack = scaledata(double(stack),0,1);
+    % data.stack = stack;
     data.x      = size(stack,1);
-    data.y      = 1;
+    data.y      = 1;%size(stack,2);
     data.z      = 1;
     data.ratio  = resolution;
     data.step   = 1;
     data.mode   = 3;
+    data.rot    = 45;
     data.el     = 30;
 
     % display the first slice 
@@ -59,6 +61,10 @@ function [] = stackplay( stack, alpha, resolution )
             data.el = min(data.el + 5,90);
         case 'downarrow'
             data.el = max(data.el - 5,0);
+        case 'leftarrow'
+            data.rot = min(data.rot + 5,180);
+        case 'rightarrow'
+            data.rot = max(data.rot - 5,0);
         end
         
         view3D;
@@ -91,7 +97,7 @@ function [] = stackplay( stack, alpha, resolution )
 
         clf;
         view3Dstack(data.stack,alpha,data.x,data.y,data.z,data.ratio,true);
-        view([45 data.el]);
+        view([data.rot data.el]);
         drawnow;
 
     end

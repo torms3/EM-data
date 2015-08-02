@@ -46,7 +46,7 @@ function [] = volplay( volume, alphas, map, ratio )
 	data.map 	= map;
 	data.rgb 	= cell(1,numel(data.alphas));
 	data.z 		= 1;
-	data.level 	= 0.5;
+	data.level 	= 0.2;
 	data.vis 	= logical(zeros(1,1+numel(alphas)));
 	data.vis(1) = true;
 	data.ratio  = ratio;
@@ -146,7 +146,8 @@ function [] = volplay( volume, alphas, map, ratio )
 		
 		daspect(data.ratio);
 
-		title(['z = ' num2str(data.z)]);
+		% title(['z = ' num2str(data.z)]);
+		disp(['z = ' num2str(data.z)]);
 
 	end
 

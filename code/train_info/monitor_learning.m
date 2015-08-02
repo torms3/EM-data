@@ -1,5 +1,8 @@
 function [data] = monitor_learning( cost_type, avg_winidow, start_iter, errshade, errline )
 
+	train_only = false;
+	% train_only = true;
+
 	fontsize = get(0,'DefaultAxesFontSize');
  	set(0,'DefaultAxesFontSize',12);
 
@@ -9,9 +12,7 @@ function [data] = monitor_learning( cost_type, avg_winidow, start_iter, errshade
 	if ~exist('avg_winidow','var');    avg_winidow = 0;end;
 	if ~exist('start_iter','var'); 	start_iter = [1 1];end;
 	if ~exist('errshade','var');	  errshade = [0 0];end;
-	if ~exist('errline','var');		   errline = false;end;
-	train_only = false;
-	train_only = true;
+	if ~exist('errline','var');		   errline = false;end;	
 
 	% Load train info
 	[train] = load_info('train');

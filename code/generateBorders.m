@@ -19,12 +19,12 @@ output = input;
 % maximum number of threads is 8
 numThreads = min( numThreads, 8 );
 
-matlabpool( numThreads );
+parpool( numThreads );
 
 parfor slice = 1:numSlices
     
-    currentImage = input(:,:, slice);
-    thisImage = input(:,:, slice);
+    currentImage = input(:,:,slice);
+    thisImage = input(:,:,slice);
     
     for kk1 = 1:size(thisImage,1)
         for kk2 = 1:size(thisImage,2)
@@ -49,4 +49,4 @@ end
 label = output;
 save(outputFileName,'label');
 
-matlabpool close
+parpool close

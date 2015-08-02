@@ -2,8 +2,16 @@ function view3Dstack( stack, alpha, x, y, z, resolution, showline )
 
     if ~exist('showline','var'); showline = false; end;
 
-    stack   = scaledata(double(stack),0,1);
-    [X,Y,Z] = size(stack);    
+    % stack   = scaledata(double(stack),0,1);
+    [X,Y,Z] = size(stack);
+
+    color = false;
+    % random color
+    if color
+        nseg = max(unique(stack(:)));disp(nseg);
+        clrmap = rand(nseg+1,3);
+        clrmap(1,:) = 0;        
+    end
 
     % slicing
     xy = squeeze(stack(:,:,z));
@@ -41,7 +49,15 @@ function view3Dstack( stack, alpha, x, y, z, resolution, showline )
     xImage = [0 0; X X];
     yImage = [0 Y; 0 Y];
     zImage = [z z; z z];
-    surf(xImage,yImage,zImage,'CData',repmat(xy,1,1,3),'FaceColor','texturemap','FaceAlpha',1);
+
+    if color
+        seg = zeros([size(xy) 3]);
+        seg = reshape(clrmap(xy(:)+1,:),[size(xy) 3]);
+        size(seg)
+        surf(xImage,yImage,zImage,'CData',seg,'FaceColor','texturemap','FaceAlpha',1);
+    else
+        surf(xImage,yImage,zImage,'CData',repmat(xy,1,1,3),'FaceColor','texturemap','FaceAlpha',1);
+    end
 
     % xy-alpha
     if ~isempty(alpha)
@@ -56,7 +72,14 @@ function view3Dstack( stack, alpha, x, y, z, resolution, showline )
     % zImage = [0.5 Z; 0.5 Z];
     yImage = [0 0; Y Y];
     zImage = [0 Z; 0 Z];
-    surf(xImage,yImage,zImage,'CData',repmat(yz,1,1,3),'FaceColor','texturemap');
+    if color
+        seg = zeros([size(yz) 3]);
+        seg = reshape(clrmap(yz(:)+1,:),[size(yz) 3]);
+        size(seg)
+        surf(xImage,yImage,zImage,'CData',seg,'FaceColor','texturemap','FaceAlpha',1);
+    else
+        surf(xImage,yImage,zImage,'CData',repmat(yz,1,1,3),'FaceColor','texturemap');
+    end
 
     % yz-alpha
     if ~isempty(alpha)
@@ -72,7 +95,15 @@ function view3Dstack( stack, alpha, x, y, z, resolution, showline )
     xImage = [0 X; 0 X];
     yImage = [y y; y y];
     zImage = [0 0; Z Z];
-    surf(xImage,yImage,zImage,'CData',repmat(zx,1,1,3),'FaceColor','texturemap');
+
+    if color
+        seg = zeros([size(zx) 3]);
+        seg = reshape(clrmap(zx(:)+1,:),[size(zx) 3]);
+        size(seg)
+        surf(xImage,yImage,zImage,'CData',seg,'FaceColor','texturemap','FaceAlpha',1);
+    else
+        surf(xImage,yImage,zImage,'CData',repmat(zx,1,1,3),'FaceColor','texturemap');
+    end
 
     % zx-alpha
     if ~isempty(alpha)

@@ -1,9 +1,9 @@
 function compare_prec_rec_curve( batch )
 
     % batch name
-    batchname = {'7nm-IDSIA (Test)'; ...
-                 '7nm-512pix (Training)';  ...
-                 '7nm-notTrained (Training)'};
+    batchname = {'Test'; ...
+                 'Training';  ...
+                 'Training'};
 
     S = get_exp_list;
 
@@ -22,37 +22,48 @@ function compare_prec_rec_curve( batch )
             load(file(1).name,'result');
         
             % metrics
-            S{i}.prec = result.conn.prec;
-            S{i}.rec  = result.conn.rec;
+            [~,idx] = sort(result.conn.rec,'ascend');
+            S{i}.conn.rec  = result.conn.rec(idx);
+            S{i}.conn.prec = result.conn.prec(idx);
+            
+            [~,idx] = sort(result.ws.rec,'ascend');
+            S{i}.ws.rec  = result.ws.rec(idx);
+            S{i}.ws.prec = result.ws.prec(idx);
         end
 
     end
 
     % plot
-    plot_comparison;
+    % plot_comparison('conn','connected component');
+    plot_comparison('ws','watershed');
 
 
-    function plot_comparison
+    function plot_comparison( field, method )
 
         fontsize = get(0,'DefaultAxesFontSize');
-        set(0,'DefaultAxesFontSize',12);
+        set(0,'DefaultAxesFontSize',24);
+
+        color = colormap(lines);
+
+        marker = {'-x','-s','-o'};
+        % marker = {'-x','-d','-s','-o'};
 
         figure;
         hold on;
         for i = 1:numel(S)
             data = S{i};
-            plot(data.rec,data.prec,'LineWidth',1.5);
+            h(i) = plot(data.(field).rec,data.(field).prec,marker{i},'LineWidth',3,'MarkerSize',16);
             lgnd{i} = data.lgnd;
         end
         hold off;
         grid on;
-        xlim([0.5 1]);ylim([0.5 1]);
+        xlim([0.6 1]);ylim([0.6 1]);
         
         xlabel('Recall');
         ylabel('Precision');        
-        legend(lgnd,'Location','Best');
+        legend(h,lgnd,'Location','SouthWest');
 
-        title(['Precision-Recall Curve on ' batchname{batch}]);
+        title(['Rand score (' method ')']);
 
         % revert default font size
         set(0,'DefaultAxesFontSize',fontsize);
