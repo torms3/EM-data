@@ -34,8 +34,8 @@ function compare_prec_rec_curve( batch )
     end
 
     % plot
-    % plot_comparison('conn','connected component');
-    plot_comparison('ws','watershed');
+    plot_comparison('conn','connected component');
+    % plot_comparison('ws','watershed');
 
 
     function plot_comparison( field, method )
@@ -59,8 +59,8 @@ function compare_prec_rec_curve( batch )
         grid on;
         xlim([0.6 1]);ylim([0.6 1]);
         
-        xlabel('Recall');
-        ylabel('Precision');        
+        xlabel('Rand split score');
+        ylabel('Rand merge score');
         legend(h,lgnd,'Location','SouthWest');
 
         title(['Rand score (' method ')']);

@@ -13,13 +13,13 @@ function compare_error
     % 
     % conn  = [0.1621 0.1098 0.0766];
     % conn  = [0.1621 0.1390 0.1098 0.0766];
-    conn  = [0.1390 0.1098 0.0766];
+    conn  = 1 - [0.1390 0.1098 0.0766];
 
     % watershed
     %
     % ws    = [0.0749 0.0537 0.0280];
     % ws    = [0.0749 0.0696 0.0537 0.0280];
-    ws    = [0.0696 0.0537 0.0280];
+    ws    = 1 -[0.0696 0.0537 0.0280];
 
     % legend
     % lgnd  = {'Base2D','N4','VD2D','VD2D3D'};
@@ -70,14 +70,14 @@ function compare_error
             b(i).EdgeColor = 'k';
         end
         v = axis;
-        % axis([v(1) v(2) 0 0.15]);
+        axis([v(1) v(2) 0.8 v(4)]);
         grid on;
         grid minor;
         set(gca,'XTickLabel',errtype,'XTick',1:numel(errtype));
         fix_xticklabels(gca,0.1,{'FontSize',20});
         legend(lgnd,'Location','best');
-        ylabel('Best 2D Rand error');
-        title('2D Rand Error');
+        ylabel('Rand F-score');
+        title('Best Rand F-score');
 
 
         % revert default font size
