@@ -42,11 +42,11 @@ function [data] = monitor_learning( cost_type, avg_winidow, start_iter, errshade
 	train.iter 	= train.iter(start_iter(1):end);
 	train.err 	= train.err(start_iter(1):end);
 	train.cls 	= train.cls(start_iter(1):end);
-	train.n 		= numel(train.iter);
+	train.n 	= numel(train.iter);
 	test.iter 	= test.iter(start_iter(2):end);
-	test.err 		= test.err(start_iter(2):end);
-	test.cls 		= test.cls(start_iter(2):end);
-	test.n 			= numel(test.iter);
+	test.err 	= test.err(start_iter(2):end);
+	test.cls 	= test.cls(start_iter(2):end);
+	test.n 		= numel(test.iter);
 
 	% convolution filter
 	[train] = smooth_curve(train,avg_winidow);
