@@ -7,16 +7,16 @@ function [data] = smooth_curve( data, w )
 		avgFilter 	= ones(w,1)/w;
 
 		% smoothing
-		data.iter 	= data.iter(1+halfw:end-halfw);
-		filtered		= conv(data.err, avgFilter, 'valid');		
+		data.iter 	= data.iter(w:end);
+		filtered	= conv(data.err, avgFilter, 'valid');		
 		data.stderr = sqrt(conv(data.err.^2,avgFilter,'valid') - filtered.^2);
 		data.err  	= filtered;
-		filtered		= conv(data.cls, avgFilter, 'valid');
+		filtered	= conv(data.cls, avgFilter, 'valid');
 		data.stdcls = sqrt(conv(data.cls.^2,avgFilter,'valid') - filtered.^2);
 		data.cls  	= filtered;
 		
 
-		minVal 			= min([numel(data.iter) numel(data.err) numel(data.cls)]);
+		minVal 		= min([numel(data.iter) numel(data.err) numel(data.cls)]);
 		data.iter 	= data.iter(1:minVal);
 		data.err  	= data.err(1:minVal);
 		data.stderr = data.stderr(1:minVal);

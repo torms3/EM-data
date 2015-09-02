@@ -62,7 +62,8 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
     begin = test.iter(1);
     idx = find(test.iter < begin + nvalid,1,'last');
     x = idx:idx:numel(test.iter);
-    x = test.iter(x - floor(idx/2));    
+    % x = test.iter(x);
+    x = test.iter(x - floor(idx/2));
 
     % Plot cost
     figure;
