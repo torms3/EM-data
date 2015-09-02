@@ -146,8 +146,8 @@ function [] = volplay( volume, alphas, map, ratio )
 		
 		daspect(data.ratio);
 
-		% title(['z = ' num2str(data.z)]);
-		disp(['z = ' num2str(data.z)]);
+		title(['z = ' num2str(data.z)]);
+		% disp(['z = ' num2str(data.z)]);
 
 	end
 
