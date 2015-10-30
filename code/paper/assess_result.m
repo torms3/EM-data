@@ -1,10 +1,12 @@
-function assess_result( fname, data, offset, FoV, filtrad, options, gpath )
+function assess_result( fname, data, options, offset, FoV, filtrad, gpath )
 
     if ~iscell(fname);      fname = {fname};end;
     if ~iscell(data);         data = {data};end;
     if ~exist('offset','var');  offset = [];end;
     if ~exist('FoV','var');        FoV = [];end;
     if ~exist('filtrad','var'); filtrad = 0;end;
+    if ~exist('gpath','var');    gpath = '';end;
+
     if ~exist('options','var')
         % options(1)    voxel error
         % options(2)    2D Rand error (connected component)
@@ -31,7 +33,7 @@ function assess_result( fname, data, offset, FoV, filtrad, options, gpath )
 
         % prepare boundary map
         bmap = prepare_boundary_map(fname,filtrad);
-        
+
         % coordinate correction
         if ~isempty(offset)
             bmap.coord = bmap.coord + offset;
@@ -68,7 +70,7 @@ function assess_result( fname, data, offset, FoV, filtrad, options, gpath )
 
 
         %% 2D Rand error (watershed)
-        % 
+        %
         if options(3)
             disp(['Processing 2D Rand error (watershed)...']);
             ipath = fname;
@@ -77,12 +79,12 @@ function assess_result( fname, data, offset, FoV, filtrad, options, gpath )
 
 
         %% Save
-        %       
+        %
         ox  = bmap.coord(1);oy = bmap.coord(2);oz = bmap.coord(3);
         sx  = bmap.size(1); sy = bmap.size(2); sz = bmap.size(3);
         str = sprintf('x%d_y%d_z%d_dim%dx%dx%d',ox,oy,oz,sx,sy,sz);
-            
-        fname = [fname '.' str];
+
+        % fname = [fname '.' str];
         if filtrad > 0
             fname = [fname '.median' num2str(filtrad)];
         end
@@ -95,12 +97,12 @@ function assess_result( fname, data, offset, FoV, filtrad, options, gpath )
 end
 
 %% Update result
-% 
+%
 function update_result( fname, update )
 
     if exist(fname,'file')
         load(fname);
-        
+
         fields = {'voxel','conn','ws','zws'};
         for i = 1:numel(fields)
             field = fields{i};

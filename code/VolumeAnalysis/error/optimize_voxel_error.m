@@ -33,7 +33,7 @@ function [ret] = optimize_voxel_error( prob, truth, mask, thresh )
     %% Return
     %
 	data = cell2mat(data);
-	
+
 	ret.thresh 	= extractfield(data,'thresh');
 	ret.prec 	= extractfield(data,'prec');
 	ret.rec 	= extractfield(data,'rec');
@@ -45,13 +45,13 @@ function [ret] = optimize_voxel_error( prob, truth, mask, thresh )
 
 
 	function ret = iterate_over(thresh)
-    
+
         nThresh = numel(thresh);
         ret = cell(1,nThresh);
         if exist('data','var')
             old = extractfield(cell2mat(data),'thresh');
         else
-            old = [];    
+            old = [];
         end
 
         idx = 1;

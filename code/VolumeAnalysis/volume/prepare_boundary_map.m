@@ -1,11 +1,11 @@
 function [ret] = prepare_boundary_map( fname, filtrad )
-% 
+%
 % Prepare boundary map from ZNN outputs
-% 
+%
 % Usage:
 %   prepare_bounddary_map( fname )
 %   prepare_bounddary_map( fname, filtrad )
-%   
+%
 %   fname       file name of the ZNN outputs
 %   filtrad     median filtering radius
 %
@@ -26,9 +26,13 @@ function [ret] = prepare_boundary_map( fname, filtrad )
     %% boundary prediction
     %
     fprintf('Preparing boundary map...\n');
-    fvol = fopen(fname,'r');
-    assert(fvol ~= -1);
-    ret.prob = import_volume(fname);
+    try
+        ret.prob = double(loadtiff(fname));
+    catch
+        fvol = fopen(fname,'r');
+        assert(fvol ~= -1);
+        ret.prob = import_volume(fname);
+    end
 
     % median filtering
     if filtrad > 0
