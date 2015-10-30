@@ -7,7 +7,7 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
     %
     if ~exist('cost_type','var');   cost_type = 'Cost';end;
     if ~exist('avg_winidow','var');    avg_winidow = 0;end;
-    if ~exist('start_iter','var');  start_iter = [1 1];end;
+    if ~exist('start_iter','var');      start_iter = 0;end;
     if ~exist('nvalid','var');          nvalid = 10000;end;
     if ~exist('errline','var');        errline = false;end;
 
@@ -35,18 +35,8 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
     % train/test checkpoint frequency ratio
     ratio = train.n/test.n;
 
-    % windowing
-    train.iter  = train.iter(start_iter(1):end);
-    train.err   = train.err(start_iter(1):end);
-    train.cls   = train.cls(start_iter(1):end);
-    train.n     = numel(train.iter);
-    test.iter  = test.iter(start_iter(2):end);
-    test.err   = test.err(start_iter(2):end);
-    test.cls   = test.cls(start_iter(2):end);
-    test.n     = numel(test.iter);
-
-    % convolution filter
-    [train] = smooth_curve(train,avg_winidow);    
+    % smoothing
+    [train] = smooth_curve(train,avg_winidow);
     if( avg_winidow > 0 )
         avgStr = [', Smoothing Window = ' num2str(avg_winidow)];
     else
@@ -58,7 +48,6 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
     data.test  = test;
     data.cost  = cost_type;
 
-
     begin = test.iter(1);
     idx = find(test.iter < begin + nvalid,1,'last');
     x = idx:idx:numel(test.iter);
@@ -69,12 +58,12 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
     figure;
     hold on;
 
-        % train     
+        % train
         h(1) = plot(train.iter,train.err,'-k');
         lgnd{1} = 'Train';
 
         % test
-        z = buffer(test.err,idx);        
+        z = buffer(test.err,idx);
         y = mean(z,1);
         s = std(z,1);
         if mod(numel(test.err),idx)
@@ -86,6 +75,8 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
         shadedErrorBar(x,y,stderr,{'-r','LineWidth',1.5},1,errline);
         lgnd{2} = 'Test';
 
+        xl = xlim;
+        xlim([start_iter xl(2)]);
         xlabel('Iteration');
         ylabel(cost_type);
         title(['Cost' avgStr]);
@@ -93,10 +84,10 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
 
     hold off;
     grid on;
-    
+
     % Plot classification error
     figure;
-    hold on;    
+    hold on;
 
         % train
         h(1) = plot(train.iter,train.cls,'-k');
@@ -112,9 +103,11 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
         end
         h(2) = plot(x,y,'-sr');
         stderr = [s(:) s(:)];
-        shadedErrorBar(x,y,stderr,{'-r','LineWidth',1.5},1,errline);
+        % shadedErrorBar(x,y,stderr,{'-r','LineWidth',1.5},1,errline);
         lgnd{2} = 'Test';
 
+        xl = xlim;
+        xlim([start_iter xl(2)]);
         xlabel('Iteration');
         ylabel('Classification error');
         title(['Classification Error' avgStr]);
