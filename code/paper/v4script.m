@@ -6,7 +6,9 @@ function v4script()
               'Piriform_sample4_output_0'};
 
     base = '/usr/people/kisuk/Workbench/seung-lab/znn-release/experiments/';
-    dirs = {[base 'multiscale/VD2D-aug/exp1/iter_100K/']};
+    dirs = {[base 'paper/VD2D/exp5/iter_60K/exp1/iter_150K/'], ...
+            [base 'paper/VD2D/exp5/iter_60K/exp2/iter_150K/']  ...
+    };
 
     % load data set
     data = load_Ashwin_dataset;

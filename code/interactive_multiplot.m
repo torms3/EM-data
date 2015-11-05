@@ -1,7 +1,7 @@
 function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap, ratio )
 
 	%% Argument validation
-	%	
+	%
 	if is_valid_volume_dataset(data)
 		imgCell = struct2cell(data);
 	else
@@ -22,7 +22,7 @@ function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap, ratio
 	end
 	if ~exist('coloring','var')
 		coloring = false(numel(imgCell),1);
-	else		
+	else
 		assert(numel(imgCell) == numel(coloring));
 	end
 	if ~exist('clrStr','var')
@@ -43,7 +43,7 @@ function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap, ratio
 	%
 	global invert_display
 	invert_display = false;
-	
+
 
 	%% Declare global variables
 	%
@@ -85,16 +85,16 @@ function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap, ratio
 	%
 	for i = 1:numel(imgCell)
 
-		ax(i) = subplot(subx,suby,i);		
+		ax(i) = subplot(subx,suby,i);
 		[x,y,nImages] = size(imgCell{i});
-		z = 1;		
+		z = 1;
 
 		if( isempty(clrmaps{i}) )
 			imagesc( imgCell{i}(:,:,z) );
 			colormap( clrStr{i} );
 		else
 			image( imgCell{i}(:,:,z) );
-			colormap( clrmaps{i} );			
+			colormap( clrmaps{i} );
 		end
 
 		freezeColors
@@ -150,13 +150,15 @@ function moveZ( key, imgCell, clrmaps, clrStr, ratio )
 		ax(i) = subplot(subx,suby,i);
 
 		if( isempty(clrmaps{i}) )
-			imagesc( imgCell{i}(:,:,z) );
-			colormap( clrStr{i} );			
-		else			
-			image( imgCell{i}(:,:,z) );
-			colormap( clrmaps{i} );			
+			sz = size(imgCell{i});
+			imagesc( imgCell{i}(:,:,min(z,sz(end))) );
+			colormap( clrStr{i} );
+		else
+			sz = size(imgCell{i});
+			image( imgCell{i}(:,:,min(z,sz(end))) );
+			colormap( clrmaps{i} );
 		end
-		
+
 		freezeColors
 		daspect(ratio);
 		if( invert_display )
@@ -184,7 +186,7 @@ function [ret] = extract_subplot_dim( imgCell )
 	assert(numel(imgCell)>=1);
 
 	subx = 1;
-	suby = 1;	
+	suby = 1;
 	switch numel(imgCell)
 	case 2
 		suby = 2;

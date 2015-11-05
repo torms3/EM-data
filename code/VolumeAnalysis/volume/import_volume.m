@@ -1,13 +1,13 @@
-function [vol] = import_volume( fname, dim, ext )
-% 
+function [vol] = import_volume( fname, dim, ext, dtype )
+%
 % Import 3D volume from file
-% 
+%
 % Usage:
 % 	import_volume( fname )
 % 	import_volume( fname, [x y z] )
 % 	import_volume( fname, [], ext )
 % 	import_volume( fname, [x y z], ext )
-% 	
+%
 % 	fname:	file name
 % 	dim:	3D volume dimension
 % 			if not exists, read information from [fname.size]
@@ -18,10 +18,10 @@ function [vol] = import_volume( fname, dim, ext )
 %
 % Program written by:
 % Kisuk Lee <kiskulee@mit.edu>, 2014
-	
-	if ~exist('dim','var')
-		dim = [];
-	end
+
+	if ~exist('dim','var'); 		  dim = []; end;
+	if ~exist('dtype','var'); dtype = 'double'; end;
+
 
 	% volume dimension
 	if isempty(dim)
@@ -37,20 +37,20 @@ function [vol] = import_volume( fname, dim, ext )
 	end
 	assert(numel(dim) == 3);
 	fprintf('dim = [%d %d %d]\n',dim(1),dim(2),dim(3));
-	
+
 	% volume
-	if exist('ext','var')		
+	if exist('ext','var')
 		fvol = fopen([fname '.' ext], 'r');
 	else
 		fvol = fopen(fname, 'r');
-	end	
+	end
 	if fvol < 0
 		vol = [];
 		return;
 	end
-	
+
 	vol = zeros(prod(dim), 1);
-	vol = fread(fvol, size(vol), 'double');
+	vol = fread(fvol, size(vol), dtype);
 	vol = reshape(vol, dim);
 
 end

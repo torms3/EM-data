@@ -10,18 +10,6 @@ function list = get_exp_info
     basedir = [pwd '/znn-release/experiments/'];
     cd(cur);
 
-    %  % VD2D 90K (global rebalancing)
-    % base_path        = [basedir 'paper/VD2D/exp3/'];
-    % list{idx}.path   = base_path;
-    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
-    % list{idx}.err    = [base_path 'iter_90K/'];
-    % list{idx}.batch  = [1 2 3 4];
-    % list{idx}.bname  = 'stack%d';
-    % list{idx}.fname  = 'out_sample%d_output_0.mat';
-    % list{idx}.str    = 'VD2D-90K';
-    % list{idx}.lgnd   = 'VD2D 90K';
-    % idx = idx + 1;
-
     % % N4 90K
     % base_path        = [basedir 'paper/N4/exp1/'];
     % list{idx}.path   = base_path;
@@ -202,16 +190,124 @@ function list = get_exp_info
     % list{idx}.lgnd   = 'VD2D3D (tanh) 60K+90K w/ 90K';
     % idx = idx + 1;
 
-    % VD2D3D (tanh) 90K + 90K
-    base_path        = [basedir 'paper/VD2D3D/exp6/'];
+    % % VD2D3D (tanh) 90K + 90K
+    % base_path        = [basedir 'paper/VD2D3D/exp6/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_180K/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D3D-tanh-90K+90K';
+    % list{idx}.lgnd   = 'VD2D3D (tanh) 90K+90K';
+    % idx = idx + 1;
+
+    % % VD2D-P1 250K
+    % base_path        = [basedir 'multiscale/VD2D-avg/P1/exp2/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_250K/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-P1-250K';
+    % list{idx}.lgnd   = 'VD2D-P1 250K';
+    % idx = idx + 1;
+
+    % % VD2D-P2 250K
+    % base_path        = [basedir 'multiscale/VD2D-avg/P2/exp2/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_250K/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-P2-250K';
+    % list{idx}.lgnd   = 'VD2D-P2 250K';
+    % idx = idx + 1;
+
+    % % VD2D-P3 150K
+    % base_path        = [basedir 'multiscale/VD2D-avg/P3/exp2/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_150K/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-P3-150K';
+    % list{idx}.lgnd   = 'VD2D-P3 150K';
+    % idx = idx + 1;
+
+    % % VD2D-MS 100K
+    % base_path        = [basedir 'multiscale/VD2D-MS/exp3/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_100K/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-MS-100K';
+    % list{idx}.lgnd   = 'VD2D-MS 100K';
+    % idx = idx + 1;
+
+    % % VD2D-MS-maxout 100K
+    % base_path        = [basedir 'multiscale/VD2D-MS-maxout/exp3/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_100K/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-MS-maxout-100K';
+    % list{idx}.lgnd   = 'VD2D-MS-maxout 100K';
+    % idx = idx + 1;
+
+    % % VD2D-aug 100K
+    % base_path        = [basedir 'multiscale/VD2D-aug/exp1/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_100K/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-aug-100K';
+    % list{idx}.lgnd   = 'VD2D-aug 100K';
+    % idx = idx + 1;
+
+    % VD2D-avg VD2D 90K
+    base_path        = [basedir 'paper/VD2D/exp5/'];
     list{idx}.path   = base_path;
     list{idx}.stat   = [base_path 'network/net_statistics.h5'];
-    list{idx}.err    = [base_path 'iter_180K/'];
+    list{idx}.err    = [base_path 'iter_90K/VD2D-avg/'];
     list{idx}.batch  = [1 2 3 4];
     list{idx}.bname  = 'stack%d';
     list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
-    list{idx}.str    = 'VD2D3D-tanh-90K+90K';
-    list{idx}.lgnd   = 'VD2D3D (tanh) 90K+90K';
+    list{idx}.str    = 'VD2D-avg-90K';
+    list{idx}.lgnd   = 'VD2D-avg 90K';
+    idx = idx + 1;
+
+    % VD2D-avg VD2D 60K + 90K (2x)
+    base_path        = [basedir 'paper/VD2D/exp5/iter_60K/exp1/'];
+    list{idx}.path   = base_path;
+    list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    list{idx}.err    = [base_path 'iter_150K/VD2D-avg/'];
+    list{idx}.batch  = [1 2 3 4];
+    list{idx}.bname  = 'stack%d';
+    list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    list{idx}.str    = 'VD2D-avg-150K-2x';
+    list{idx}.lgnd   = 'VD2D-avg 150K (2x)';
+    idx = idx + 1;
+
+    % VD2D-avg VD2D 60K + 90K (5x)
+    base_path        = [basedir 'paper/VD2D/exp5/iter_60K/exp2/'];
+    list{idx}.path   = base_path;
+    list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    list{idx}.err    = [base_path 'iter_150K/VD2D-avg/'];
+    list{idx}.batch  = [1 2 3 4];
+    list{idx}.bname  = 'stack%d';
+    list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    list{idx}.str    = 'VD2D-avg-150K-5x';
+    list{idx}.lgnd   = 'VD2D-avg 150K (5x)';
     idx = idx + 1;
 
 end
