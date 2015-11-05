@@ -1,33 +1,31 @@
-function export_random_patch( bname, lname, fsz, psz )
+function [x,y] = export_random_patch( bmap, lbl, psz, opath )
 
-    % input parsing & validation
-    p = inputParser;
-    addRequired(p,'bname',@(x)exist(x,'file'));
-    addRequired(p,'lname',@(x)exist(x,'file'));
-    addRequired(p,'fsz',@(x)isnumeric(x)&&(x>0));
-    addRequired(p,'psz',@(x)isnumeric(x)&&(x>0));
-    parse(p,bname,lname,fsz,psz);
-
-    assert(psz<=fsz);
-
-    bmap = import_volume(bname,[fsz fsz 1]);
-    lbl  = import_volume(lname,[fsz fsz 1]);
+    % image size
+    sz = size(bmap,1)
 
     % random location
-    x = randi(fsz-psz+1);
-    y = randi(fsz-psz+1);
+    x = randi(sz-psz+1);
+    y = randi(sz-psz+1);
 
     % extract patch
     patch.bmap = bmap(x:x+psz-1,y:y+psz-1);
     patch.lbl  = lbl(x:x+psz-1,y:y+psz-1);
 
     % export patch
-    fname = sprintf('bmap_%dx%d.bin',psz,psz);
-    export_volume(fname,patch.bmap);
-    fname = sprintf('lbl_%dx%d.bin',psz,psz);
-    export_volume(fname,patch.lbl);
+    current = pwd;
+    cd(opath);
 
-    % visualization
-    interactive_multiplot({patch.bmap,patch.lbl},[0 1]);
+        subdir = sprintf('patch_%dx%d/',psz,psz);
+        if ~exist(subdir,'dir')
+            mkdir(subdir);
+        end
+
+        fname = [subdir sprintf('x%d_y%d_bmap.bin',x,y)];
+        export_volume(fname,patch.bmap);
+
+        fname = [subdir sprintf('x%d_y%d_lbl.bin',x,y)];
+        export_volume(fname,patch.lbl);
+
+    cd(current);
 
 end

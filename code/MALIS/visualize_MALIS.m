@@ -1,50 +1,27 @@
-function visualize_MALIS()
+function visualize_MALIS( bname, lname, outname )
 
-    [lbl,bmap] = simulate_data;
+    bmap = import_volume(bname);
+    lbl  = import_volume(lname);
+
     [xaff,yaff] = make_affinity(bmap);
 
     % evolution & timestep
-    ws = import_volume('out.evolution',[10 10 100],[],'uint64');
-    ts = import_volume('out.timestep',[10 10 1],[],'uint64');
+    ws = import_tensor([outname '.evolution'],[],[],'uint64');
+    % ts = import_volume('out.timestep',[],[],'uint64');
 
     % merger & splitter weights
-    mw = import_volume('out.merger',[10 10 1]);
-    sw = import_volume('out.splitter',[10 10 1]);
+    mw = import_tensor([outname '.merger']); mw = squeeze(mw);
+    sw = import_tensor([outname '.splitter']); sw = squeeze(sw);
 
-    data = {bmap,xaff,yaff;lbl,mw,sw};
-    label = {'boundary map','x-affinity','y-affinity'; ...
-             'label','merger weight','splitter weight'};
-    [X,Y] = size(data);
-    n = X*Y;
-    idx = 1;
-    figure;
-    colormap('gray');
-    for x = 1:X
-        for y = 1:Y
-            subplot(X,Y,idx);
-            imagesc(data{x,y});
-            xlabel(label{x,y});
-            daspect([1 1 1]);
-            idx = idx + 1;
-        end
-    end
+    data = {xaff,sum(mw,3),squeeze(ws); ...
+            yaff,sum(sw,3),lbl};
+    clr = {'gray','hot',''; ...
+           'gray','hot',''};
 
-    nSeg = max(unique(ws(:,:,1)));
-    clrmap = rand(nSeg+1,3);
-    figure;
-    data = {ws(:,:,78),ws(:,:,79),ws(:,:,80); ...
-            ws(:,:,81),ws(:,:,82),ws(:,:,83)};
-    idx = 1;
-    for x = 1:X
-        for y = 1:Y
-            subplot(X,Y,idx);
-            image(data{x,y});
-            xlabel(['merge step ' num2str(idx+77)]);
-            daspect([1 1 1]);
-            idx = idx + 1;
-        end
-    end
-    colormap(clrmap);
+    label = {'x-affinity','merger weight','evolution'; ...
+             'y-affinity','splitter weight','ground truth'};
+
+    cellplay(data,'clr',clr,'label',label);
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
