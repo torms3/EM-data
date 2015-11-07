@@ -7,11 +7,16 @@ function learning_curve( fname, varargin )
     addOptional(p,'method','moving');
     addOptional(p,'nvalid',10000,@(x)isnumeric(x)&&(x>0));
     addOptional(p,'siter',0,@(x)isnumeric(x)&&(x>=0));
+    addOptional(p,'title',[],@(x)isempty(x)||isstr(x));
     parse(p,fname,varargin{:});
 
     figure;
     subplot(1,2,1); plot_curve('err','Cost');
     subplot(1,2,2); plot_curve('cls','Classification error');
+
+    if ~isempty(p.Results.title)
+        suptitle(p.Results.title);
+    end
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,21 +24,21 @@ function learning_curve( fname, varargin )
 
         hold on;
 
-            % train curve
-            train = load_data('train');
-            train = smooth_curve(train);
-            h(1) = plot(train.iter,train.(errtype),'-k');
-
             % test curve
             test = load_data('test');
             h(2) = plot_test_curve(test,errtype);
+
+            % train curve
+            train = load_data('train');
+            eiter = train.iter(end); % before smoothing
+            train = smooth_curve(train);
+            h(1) = plot(train.iter,train.(errtype),'-k');
 
         hold off;
         grid on;
 
         % plot decoration
-        xl = xlim;
-        xlim([p.Results.siter xl(2)]);
+        xlim([p.Results.siter eiter]);
         legend(h,{'Train','Test'});
         xlabel('Iteration');
         ylabel(lbl);
@@ -43,8 +48,7 @@ function learning_curve( fname, varargin )
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     function h = plot_test_curve( data, errtype )
 
-        nv = p.Results.nvalid;
-
+        nv    = p.Results.nvalid;
         intv  = find(data.iter < data.iter(1)+nv,1,'last');
         hintv = floor(intv/2);
         niter = numel(data.iter);

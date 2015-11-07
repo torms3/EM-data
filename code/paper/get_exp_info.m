@@ -274,40 +274,88 @@ function list = get_exp_info
     % list{idx}.lgnd   = 'VD2D-aug 100K';
     % idx = idx + 1;
 
-    % VD2D-avg VD2D 90K
-    base_path        = [basedir 'paper/VD2D/exp5/'];
+    % % VD2D-avg VD2D 90K
+    % base_path        = [basedir 'paper/VD2D/exp5/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_90K/VD2D-avg/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-avg-90K';
+    % list{idx}.lgnd   = 'VD2D-avg 90K';
+    % idx = idx + 1;
+
+    % % VD2D-avg VD2D 60K + 90K (2x)
+    % base_path        = [basedir 'paper/VD2D/exp5/iter_60K/exp1/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_150K/VD2D-avg/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-avg-150K-2x';
+    % list{idx}.lgnd   = 'VD2D-avg 150K (2x)';
+    % idx = idx + 1;
+
+    % % VD2D-avg VD2D 60K + 90K (5x)
+    % base_path        = [basedir 'paper/VD2D/exp5/iter_60K/exp2/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_150K/VD2D-avg/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-avg-150K-5x';
+    % list{idx}.lgnd   = 'VD2D-avg 150K (5x)';
+    % idx = idx + 1;
+
+    % VD2D-P1-F5 250K
+    base_path        = [basedir 'multiscale/VD2D-avg/P1-F5/exp1/'];
     list{idx}.path   = base_path;
     list{idx}.stat   = [base_path 'network/net_statistics.h5'];
-    list{idx}.err    = [base_path 'iter_90K/VD2D-avg/'];
+    list{idx}.err    = [base_path 'iter_250K/'];
     list{idx}.batch  = [1 2 3 4];
     list{idx}.bname  = 'stack%d';
     list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
-    list{idx}.str    = 'VD2D-avg-90K';
-    list{idx}.lgnd   = 'VD2D-avg 90K';
+    list{idx}.str    = 'VD2D-P1-F5-250K';
+    list{idx}.lgnd   = 'VD2D-P1-F5 250K';
     idx = idx + 1;
 
-    % VD2D-avg VD2D 60K + 90K (2x)
-    base_path        = [basedir 'paper/VD2D/exp5/iter_60K/exp1/'];
+    % VD2D-P1-F7-F5-F3 250K
+    base_path        = [basedir 'multiscale/VD2D-avg/P1-F7-F5-F3/exp1/'];
     list{idx}.path   = base_path;
     list{idx}.stat   = [base_path 'network/net_statistics.h5'];
-    list{idx}.err    = [base_path 'iter_150K/VD2D-avg/'];
+    list{idx}.err    = [base_path 'iter_250K/'];
     list{idx}.batch  = [1 2 3 4];
     list{idx}.bname  = 'stack%d';
     list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
-    list{idx}.str    = 'VD2D-avg-150K-2x';
-    list{idx}.lgnd   = 'VD2D-avg 150K (2x)';
+    list{idx}.str    = 'VD2D-P1-F7-F5-F3-250K';
+    list{idx}.lgnd   = 'VD2D-P1-F7-F5-F3 250K';
     idx = idx + 1;
 
-    % VD2D-avg VD2D 60K + 90K (5x)
-    base_path        = [basedir 'paper/VD2D/exp5/iter_60K/exp2/'];
+    % VD2D-P1-do0 20K
+    base_path        = [basedir 'multiscale/VD2D-avg/P1/exp3/'];
     list{idx}.path   = base_path;
     list{idx}.stat   = [base_path 'network/net_statistics.h5'];
-    list{idx}.err    = [base_path 'iter_150K/VD2D-avg/'];
+    list{idx}.err    = [base_path 'iter_250K/'];
     list{idx}.batch  = [1 2 3 4];
     list{idx}.bname  = 'stack%d';
     list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
-    list{idx}.str    = 'VD2D-avg-150K-5x';
-    list{idx}.lgnd   = 'VD2D-avg 150K (5x)';
+    list{idx}.str    = 'VD2D-P1-do0-250K';
+    list{idx}.lgnd   = 'VD2D-P1 250K (no dropout)';
+    idx = idx + 1;
+
+    % VD2D-P2-do0 20K
+    base_path        = [basedir 'multiscale/VD2D-avg/P2/exp3/'];
+    list{idx}.path   = base_path;
+    list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    list{idx}.err    = [base_path 'iter_250K/'];
+    list{idx}.batch  = [1 2 3 4];
+    list{idx}.bname  = 'stack%d';
+    list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    list{idx}.str    = 'VD2D-P2-do0-250K';
+    list{idx}.lgnd   = 'VD2D-P2 250K (no dropout)';
     idx = idx + 1;
 
 end

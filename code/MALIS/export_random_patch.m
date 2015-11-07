@@ -1,7 +1,7 @@
 function [x,y] = export_random_patch( bmap, lbl, psz, opath )
 
     % image size
-    sz = size(bmap,1)
+    sz = size(bmap,1);
 
     % random location
     x = randi(sz-psz+1);

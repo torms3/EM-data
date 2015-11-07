@@ -4,9 +4,12 @@ function cellplay( data, varargin )
     p = inputParser;
     addRequired(p,'data',@(x)iscell(x)&&(ndims(x)<3));
 
+    default = cell(size(data));
+    fn = @(x) isequal(size(data),size(x));
+    addOptional(p,'alpha',default,fn);
+
     default = repmat({'gray'},size(data));
-    fn = @(x) isequal(size(data),size(x)) && ...
-              iscell(x) && all(all(cellfun(@isstr,x)));
+    fn = @(x) isequal(size(data),size(x)) && iscell(x);
     addOptional(p,'clr',default,fn);
 
     default = cell(size(data));
@@ -18,8 +21,10 @@ function cellplay( data, varargin )
 
     % set params
     params.data   = data;
+    params.alpha  = p.Results.alpha;
     params.label  = p.Results.label;
     params.clrmap = set_colormap(p.Results.clr);
+    params.mask   = set_alpha_mask;
     params.z      = 1;
     params.Z      = cellfun(@(x)size(x,3),data);
     params.zmax   = max(params.Z(:));
@@ -42,15 +47,30 @@ function cellplay( data, varargin )
         clrmap = cell(size(data));
 
         for i = 1:numel(clr)
-            if isempty(clr{i})
-                vol = data{i};
+            if isstr(clr{i}) && strcmp(clr{i},'')
+                vol = data{i} + 1;
                 nseg = max(unique(vol(:)));
-                clrmap{i} = rand(nseg+1,3);
+                clrmap{i} = rand(nseg,3);
                 clrmap{i}(1,:) = 0;
+                params.data{i} = vol;
             else
                 clrmap{i} = clr{i};
             end
         end
+
+    end
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% Set alpha mask
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    function msk = set_alpha_mask
+
+        % default mask color: white
+        clr = [1 1 1];
+
+        sz  = size(data{1});
+        one = ones(sz(1),sz(2));
+        msk = cat(3,clr(1)*one,clr(2)*one,clr(3)*one);
 
     end
 
@@ -61,6 +81,7 @@ function cellplay( data, varargin )
 
         z = params.z;
         zmax = params.zmax;
+        step = 30;
 
         switch event.Key
         case 'uparrow'
@@ -73,9 +94,15 @@ function cellplay( data, varargin )
             if( z == 0 )
                 z = zmax;
             end
+        case 'leftarrow'
+            z = z - step;
+            z = max(min(z,zmax),1);
+        case 'rightarrow'
+            z = z + step;
+            z = max(min(z,zmax),1);
         % change color
         case 'c'
-            params.clrmap = set_colormap(p.Results.coloring);
+            params.clrmap = set_colormap(p.Results.clr);
         % print
         case 'p'
             fname = uiputfile;
@@ -115,11 +142,14 @@ function cellplay( data, varargin )
 
         for idx = 1:numel(params.data)
 
+            vol = params.data{idx};
+            if isempty(vol); continue; end;
+
             [x,y] = size(params.data);
             [i,j] = ind2sub([x,y],idx);
             ax(idx) = subplot(x,y,j+y*(i-1));
 
-            vol = params.data{idx};
+            % display image
             z   = min(params.z,params.Z(idx));
             clr = params.clrmap{idx};
             if isstr(clr)
@@ -127,9 +157,23 @@ function cellplay( data, varargin )
             else
                 image(vol(:,:,z));
             end
-            colormap(clr);
+            colormap(ax(idx),clr);
 
-            freezeColors;
+            hold on;
+
+                % display alpha channel
+                if ~isempty(params.alpha{idx})
+
+                    vol = params.alpha{idx};
+                    chn = vol(:,:,z);
+
+                    h = imshow(params.mask);
+                    set(h,'AlphaData',chn*0.2);
+
+                end
+
+            hold off;
+
             daspect(params.ratio);
             title(['z = ' num2str(z)]);
             xlabel(params.label{idx});

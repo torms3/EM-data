@@ -1,11 +1,11 @@
 function [] = volplay( volume, alphas, map, ratio )
-% 
+%
 % Display 3D volume as a stack of 2D image slices
-% 
+%
 % Usage:
 % 	volplay( volume )
 % 	volplay( volume, {alpha1,alpha2,...} )
-% 
+%
 % 	volume: 3D volume as a stack of 2D image slices
 % 	alphas: cell array of 3D alpha channels of the same size with volume
 % 			(each alpha channel is re-scaled to [0,1])
@@ -61,7 +61,7 @@ function [] = volplay( volume, alphas, map, ratio )
 	Z = size(volume,3);
 	step = 0.05;
 
-	% display the first slice	
+	% display the first slice
 	display_slice;
 	h = gcf;
 
@@ -72,10 +72,10 @@ function [] = volplay( volume, alphas, map, ratio )
 
 	%% Key press event
 	%
-	function key_press( src, event )		
-		
+	function key_press( src, event )
+
 		z = data.z;
-		
+
 		switch event.Key
 		case 'uparrow'
 			z = rem(z - 1,Z);
@@ -108,7 +108,7 @@ function [] = volplay( volume, alphas, map, ratio )
 		end
 
 		data.z = z;
-		display_slice;		
+		display_slice;
 
 	end
 
@@ -116,9 +116,9 @@ function [] = volplay( volume, alphas, map, ratio )
 	%% Mouse wheel event
 	%
 	function scroll_wheel( src, event )
-		
+
 		level = data.level;
-		
+
 		% adjust alpha level within [0,1]
 		level = level - (event.VerticalScrollCount*step);
 		level = max(min(level,1),0);
@@ -136,14 +136,14 @@ function [] = volplay( volume, alphas, map, ratio )
 		img = data.volume(:,:,data.z);
 		if ~data.vis(1)
 			img = ones(size(img));
-		end		
+		end
 		imshow(img);
 
 		hold on;
 		display_alpha(img);
 		display_map(img);
 		hold off;
-		
+
 		daspect(data.ratio);
 
 		title(['z = ' num2str(data.z)]);
@@ -156,12 +156,12 @@ function [] = volplay( volume, alphas, map, ratio )
 		for i = 1:numel(data.alphas)
 
 			alpha = data.alphas{i};
-			
+
 			clr = data.rgb{i};
 			one = ones(size(img));
 			msk = cat(3,clr(1)*one,clr(2)*one,clr(3)*one);
-			
-			h = imshow(msk);			
+
+			h = imshow(msk);
 
 			if data.vis(i+1)
 				alpha = data.level*alpha(:,:,data.z);

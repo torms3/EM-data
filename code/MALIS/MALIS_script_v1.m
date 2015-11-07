@@ -1,4 +1,4 @@
-function MALIS_script( psz, xy )
+function MALIS_script_v1( psz, xy )
 
     % params
     bname = 'boundary_map.bin';
@@ -29,7 +29,7 @@ function MALIS_script( psz, xy )
     cd(base);
     oname = [base 'out'];
 
-    % run znn-malis
+    % run ZNNv1 malis
     malis = '/usr/people/kisuk/Workbench/znn-release/bin/debug';
     temp = generate_option;
     sysargs = sprintf(' --options=%s --type=malis_2d --high=%f --low=%f', ...
@@ -38,7 +38,7 @@ function MALIS_script( psz, xy )
     system(['rm ' temp]);
 
     % visualize
-    visualize_MALIS( bpname, lpname, oname );
+    visualize_MALIS( lpname, oname, 'uint64' );
 
 
     function temp = generate_option
