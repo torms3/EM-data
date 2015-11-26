@@ -27,7 +27,7 @@ function [ret] = prepare_boundary_map( fname, filtrad )
     %
     fprintf('Preparing boundary map...\n');
     try
-        ret.prob = double(loadtiff(fname));
+        ret.prob = scaledata(double(loadtiff(fname)),0,1);
     catch
         fvol = fopen(fname,'r');
         assert(fvol ~= -1);

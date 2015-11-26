@@ -2,18 +2,15 @@ function [] = speed_info( w, lgnd, from )
 
     if ~exist('w','var');          w = 1;end;
     if ~exist('lgnd','var');   lgnd = [];end;
-    % if ~exist('estim','var'); estim = [];end;
     if ~exist('from','var');    from = 1;end;
+    % if ~exist('estim','var'); estim = [];end;
 
     % load speed info.
-    ret     = training_speed('train',lgnd);
-    
+    ret = training_speed('train',lgnd);
+
     ret.speed = ret.speed(from:end);
     ret.iter  = ret.iter(from:end);
     ret.n     = numel(ret.iter);
-
-    n    = numel(ret.iter);
-    iter = ret.iter(end-n+1:end);
 
     % compute estimated finish time
     % if ~isempty(estim)
@@ -32,9 +29,9 @@ function [] = speed_info( w, lgnd, from )
     % end
 
     % smoothing
-    speed   = conv(ret.speed,ones(w,1)/w,'valid');
-    halfw   = floor(w/2);
-    iter    = iter(1+halfw:end-halfw);
+    speed = conv(ret.speed,ones(w,1)/w,'valid');
+    siter = 1 + floor(w/2);
+    iter  = ret.iter(siter:siter+numel(speed)-1);
 
     % plotting
     plot(iter,speed);

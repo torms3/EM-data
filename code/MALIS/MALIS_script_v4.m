@@ -1,13 +1,14 @@
-function MALIS_script_v4( psz, is_debug, timestamp, xy )
+function MALIS_script_v4( psz, is_debug, timestamp, xy, z )
 
     % params
-    bname       = 'boundary_map.bin';
-    lname       = 'label_fill_hole.bin';
-    fsz         = 504;
+    bname       = 'boundary_map.tif';
+    lname       = 'label.tif';
+    fsz         = 512;
     high        = 1;
-    low         = 0;
-    phase       = 'BOTH';
-    constrain   = 0;
+    low         = 0.7;
+    phase       = 'MERGER';
+    constrain   = 1;
+    frac_norm   = 1;
 
     % argument validation
     if ~exist('psz','var');       psz = 100;         end;
@@ -16,20 +17,29 @@ function MALIS_script_v4( psz, is_debug, timestamp, xy )
     if ~exist('xy','var');        xy = [];           end;
 
     % patch
-    base  = '/usr/people/kisuk/Workbench/znn-release/experiments/malis_2d/';
-    cd([base 'data']);
+    base  = '/usr/people/kisuk/Workbench/seung-lab/znn-release/test/malis/';
+    cd([base 'data/Piriform/']);
 
         if isempty(xy)
-            bmap  = import_volume(bname,[fsz fsz 1]);
-            lbl   = import_volume(lname,[fsz fsz 1]);
-            [xy(1),xy(2)] = export_random_patch( bmap, lbl, psz, pwd );
-            fprintf('\n%dx%d patch at (x,y) = (%d,%d) has been extracted!\n', ...
-                    [psz psz xy]);
+            % bmap  = import_volume(bname,[fsz fsz 1]);
+            % lbl   = import_volume(lname,[fsz fsz 1]);
+            bmap = loadtiff(bname);
+            lbl  = loadtiff(lname);
+
+            if ~exist('z','var');z = randi(size(bmap,3));end;
+            bmap = bmap(:,:,z);
+            lbl  = lbl(:,:,z);
+
+            [xy(1),xy(2)] = export_random_patch( bmap, lbl, psz, pwd, z );
+            fprintf('\n%dx%d patch at (x,y,z) = (%d,%d,%d) has been extracted!\n', ...
+                    [psz psz xy z]);
         end
 
         subdir = sprintf('/patch_%dx%d/',psz,psz);
-        bpname = [pwd subdir sprintf('x%d_y%d_bmap.bin',xy)];
-        lpname = [pwd subdir sprintf('x%d_y%d_lbl.bin',xy)];
+        xpname = [pwd subdir sprintf('x%d_y%d_z%d_xaff.bin',[xy z])];
+        ypname = [pwd subdir sprintf('x%d_y%d_z%d_yaff.bin',[xy z])];
+        zpname = [pwd subdir sprintf('x%d_y%d_z%d_zaff.bin',[xy z])];
+        lpname = [pwd subdir sprintf('x%d_y%d_z%d_lbl.bin', [xy z])];
 
     cd(base);
     oname = [base 'out'];
@@ -58,13 +68,16 @@ function MALIS_script_v4( psz, is_debug, timestamp, xy )
         fid  = fopen(temp,'w');
 
         fprintf(fid,'size %d,%d,%d\n',1,psz,psz);
-        fprintf(fid,'bmap %s\n',bpname);
+        fprintf(fid,'xaff %s\n',xpname);
+        fprintf(fid,'yaff %s\n',ypname);
+        fprintf(fid,'zaff %s\n',zpname);
         fprintf(fid,'lbl %s\n',lpname);
         fprintf(fid,'out %s\n',oname);
         fprintf(fid,'high %f\n',high);
         fprintf(fid,'low %f\n',low);
         fprintf(fid,'phase %s\n',phase);
         fprintf(fid,'constrain %d\n',constrain);
+        fprintf(fid,'frac_norm %d\n',frac_norm);
         fprintf(fid,'debug_print 0\n');
 
         fclose(fid);

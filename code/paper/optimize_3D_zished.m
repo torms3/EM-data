@@ -1,17 +1,18 @@
 function [ret1,ret2] = optimize_3D_zished( ipath, gpath )
-    
+
     % zished path
-    basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
+    % basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
+    basedir = '/usr/people/kisuk/Workbench/seung-lab/zished/zi/watershed/';
     zished  = [basedir 'bin/watershed'];
 
     best.high = 0.999;
-    best.low  = 0;    
+    best.low  = 0;
     best.thld = 0;
 
     %% optimizing high
-     
+
     %% 1st pass
-    % resolution = 0.1    
+    % resolution = 0.1
     disp(['1st pass...']);
     thresh = [0.01 0.1:0.1:0.9 0.99];
     data   = iterate_over(thresh,'high',{});
@@ -40,7 +41,7 @@ function [ret1,ret2] = optimize_3D_zished( ipath, gpath )
     best.thld = data{I}.thld;
 
     %% 1st pass
-    % resolution = 0.1    
+    % resolution = 0.1
     disp(['1st pass...']);
     thresh = [0:0.1:data{I}.high-0.001];
     data   = iterate_over(thresh,'low',data);
@@ -64,7 +65,7 @@ function [ret1,ret2] = optimize_3D_zished( ipath, gpath )
     %% Return
     %
     data1 = cell2mat(data);
-    
+
     ret1.high = extractfield(data1,'high');
     ret1.low  = extractfield(data1,'low');
     ret1.thld = extractfield(data1,'thld');
@@ -80,16 +81,16 @@ function [ret1,ret2] = optimize_3D_zished( ipath, gpath )
     best.thld = data{I}.thld;
 
     %% 1st pass
-    % resolution = 0.1    
+    % resolution = 0.1
     disp(['1st pass...']);
     thresh = [best.thld:100:1000];
     data   = iterate_over(thresh,'thld',data);
-    
+
 
     %% Return
     %
     data2 = cell2mat(data);
-    
+
     ret2.high = extractfield(data2,'high');
     ret2.low  = extractfield(data2,'low');
     ret2.thld = extractfield(data2,'thld');
@@ -106,7 +107,7 @@ function [ret1,ret2] = optimize_3D_zished( ipath, gpath )
         else
             old = extractfield(cell2mat(data),name);
         end
-        
+
         for i = 1:nThresh
 
             threshold = thresh(i);

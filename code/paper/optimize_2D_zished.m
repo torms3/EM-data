@@ -2,7 +2,7 @@ function [ret1,ret2] = optimize_2D_zished( ipath, gpath )
 
     % zished path
     % basedir = '/data/home/kisuklee/Workbench/seung-lab/watershed/zi/watershed/';
-    basedir = '/usr/people/kisuk/Workbench/seung-lab/watershed/zi/watershed/';
+    basedir = '/usr/people/kisuk/Workbench/seung-lab/zished/zi/watershed/';
     zished  = [basedir 'bin/watershed'];
 
     best.high = 0.999;

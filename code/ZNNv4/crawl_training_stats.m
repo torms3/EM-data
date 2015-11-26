@@ -1,52 +1,73 @@
 function crawl_training_stats
 
-    % local base dir
-    cur = pwd;
-    cd(get_project_root_path);
-    cd('..');
-    local_base = pwd;
-    cd(cur);
-
-    % remote base dir
-    remote_base = '/home';
-
-    % ZNN exps base dir
-    znn_base = '/znn-release/experiments/';
-
-    % exp list
-    exps = exp_list;
-
-    % starcluster config file
-    cfg = [local_base '/znn-release/python/aws_train/EyeWire_config'];
-
     % cluster name
-    cluster = 'intel';
+    clusters{1} = 'intel';
+    clusters{2} = 'intel-1c';
 
     % crawling
-    for i = 1:numel(exps)
+    for i = 1:numel(clusters)
 
-        src = [remote_base znn_base exps{i} 'network/net_statistics.h5'];
-        dst = [local_base znn_base exps{i} 'network/'];
+        exps = exp_list(i);
 
-        cmd = ['starcluster get ' cluster];
-        cmd = [cmd ' ' src ' ' dst];
-
-        disp(cmd);
-        system(cmd);
+        for j = 1:numel(exps)
+            get_training_stat(clusters{i},exps{j});
+        end
 
     end
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%
-    % exp list
-    %%%%%%%%%%%%%%%%%%%%%%%%%%
-    function exps = exp_list()
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Experiments list
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    function exps = exp_list( ncluster )
 
         idx = 0;
-        idx = idx + 1;exps{idx} = 'multiscale/VD2D-avg/P1/exp3/';
-        idx = idx + 1;exps{idx} = 'multiscale/VD2D-avg/P2/exp3/';
-        idx = idx + 1;exps{idx} = 'multiscale/VD2D-avg/P4/exp1/';
-        idx = idx + 1;exps{idx} = 'multiscale/VD2D-avg/P1-F5/exp1/';
-        idx = idx + 1;exps{idx} = 'multiscale/VD2D-avg/P1-F7-F5-F3/exp1/';
+
+        switch ncluster
+        case 1
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P1-F5/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P1-F5/exp2/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P2/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P2/exp1/iter_30K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P2/exp1/iter_30K/exp2/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P3/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P3/exp1/iter_30K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P4/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P4/exp1/iter_20K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P1-F5/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P1-F5/exp2/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P2/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P3/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P4/exp1/';
+        case 2
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P1-F5/exp3/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P1-F5/exp3/iter_50K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P2/exp2/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P3/exp2/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/Piriform/ground_truth/P4/exp2/';
+            % idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P1-F5/exp3/';
+            % idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P1-F5/exp3/iter_50K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P1-F5/exp3/iter_50K/exp1/iter_250K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P1-F7/exp1/';
+            % idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P2/exp2/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P2/exp2/iter_180K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P3/exp2/';
+            % idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P4/exp2/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P4/exp2/iter_120K/exp1/';
+
+            % New Piriform
+            % idx=idx+1;exps{idx}='new_Piriform/N4/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/N4/exp1/iter_130K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D-tanh/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D-avg/P1-F5/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D-avg/P1-F7/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P1/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P1-F5/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P2/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P3/exp1/';
+        otherwise
+            assert(false);
+        end
 
     end
 

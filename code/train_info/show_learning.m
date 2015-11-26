@@ -51,7 +51,7 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
     begin = test.iter(1);
     idx = find(test.iter < begin + nvalid,1,'last');
     x = idx:idx:numel(test.iter);
-    % x = test.iter(x);
+    x = union(x,numel(test.iter));
     x = test.iter(x - floor(idx/2));
 
     % Plot cost
@@ -64,12 +64,13 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
 
         % test
         z = buffer(test.err,idx);
+        z(:,end) = test.err(end-idx+1:end);
+
         y = mean(z,1);
         s = std(z,1);
-        if mod(numel(test.err),idx)
-            y(end) = [];
-            s(end) = [];
-        end
+
+        % y(end) = [];
+        % s(end) = [];
         h(2) = plot(x,y,'-sr');
         stderr = [s(:) s(:)];
         shadedErrorBar(x,y,stderr,{'-r','LineWidth',1.5},1,errline);
@@ -95,15 +96,17 @@ function [data] = show_learning( cost_type, avg_winidow, start_iter, nvalid, err
 
         % test
         z = buffer(test.cls,idx);
+        z(:,end) = test.cls(end-idx+1:end);
+
         y = mean(z,1);
         s = std(z,1);
-        if mod(numel(test.cls),idx)
-            y(end) = [];
-            s(end) = [];
-        end
+        % if mod(numel(test.cls),idx)
+        %     y(end) = [];
+        %     s(end) = [];
+        % end
         h(2) = plot(x,y,'-sr');
         stderr = [s(:) s(:)];
-        % shadedErrorBar(x,y,stderr,{'-r','LineWidth',1.5},1,errline);
+        shadedErrorBar(x,y,stderr,{'-r','LineWidth',1.5},1,errline);
         lgnd{2} = 'Test';
 
         xl = xlim;

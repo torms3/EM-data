@@ -12,6 +12,11 @@ function visualize_MALIS( lname, outname )
     mw = import_tensor([outname '.merger']);
     sw = import_tensor([outname '.splitter']);
 
+    mw = sum(mw,4);
+    sw = sum(sw,4);
+
+    mw = imgaussfilt(double(mw>0.5),5);
+
     aff   = (xaff+yaff)/2;
     data  = {aff,mw; lbl,sw};
     clr   = {'gray','hot'; '','hot'};

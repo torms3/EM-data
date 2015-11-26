@@ -334,28 +334,28 @@ function list = get_exp_info
     list{idx}.lgnd   = 'VD2D-P1-F7-F5-F3 250K';
     idx = idx + 1;
 
-    % VD2D-P1-do0 20K
-    base_path        = [basedir 'multiscale/VD2D-avg/P1/exp3/'];
-    list{idx}.path   = base_path;
-    list{idx}.stat   = [base_path 'network/net_statistics.h5'];
-    list{idx}.err    = [base_path 'iter_250K/'];
-    list{idx}.batch  = [1 2 3 4];
-    list{idx}.bname  = 'stack%d';
-    list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
-    list{idx}.str    = 'VD2D-P1-do0-250K';
-    list{idx}.lgnd   = 'VD2D-P1 250K (no dropout)';
-    idx = idx + 1;
+    % % VD2D-P1-do0 20K
+    % base_path        = [basedir 'multiscale/VD2D-avg/P1/exp3/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_250K/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-P1-do0-250K';
+    % list{idx}.lgnd   = 'VD2D-P1 250K (no dropout)';
+    % idx = idx + 1;
 
-    % VD2D-P2-do0 20K
-    base_path        = [basedir 'multiscale/VD2D-avg/P2/exp3/'];
-    list{idx}.path   = base_path;
-    list{idx}.stat   = [base_path 'network/net_statistics.h5'];
-    list{idx}.err    = [base_path 'iter_250K/'];
-    list{idx}.batch  = [1 2 3 4];
-    list{idx}.bname  = 'stack%d';
-    list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
-    list{idx}.str    = 'VD2D-P2-do0-250K';
-    list{idx}.lgnd   = 'VD2D-P2 250K (no dropout)';
-    idx = idx + 1;
+    % % VD2D-P2-do0 20K
+    % base_path        = [basedir 'multiscale/VD2D-avg/P2/exp3/'];
+    % list{idx}.path   = base_path;
+    % list{idx}.stat   = [base_path 'network/net_statistics.h5'];
+    % list{idx}.err    = [base_path 'iter_250K/'];
+    % list{idx}.batch  = [1 2 3 4];
+    % list{idx}.bname  = 'stack%d';
+    % list{idx}.fname  = 'Piriform_sample%d_output_0.mat';
+    % list{idx}.str    = 'VD2D-P2-do0-250K';
+    % list{idx}.lgnd   = 'VD2D-P2 250K (no dropout)';
+    % idx = idx + 1;
 
 end
