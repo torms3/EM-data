@@ -14,7 +14,7 @@ function get_training_stat( cluster, fpath )
     znn_base = '/znn-release/experiments/';
 
     % source & destination dirs
-    src = [remote_base znn_base fpath 'network/net_statistics.h5'];
+    src = [remote_base znn_base fpath 'network/net_statistics*'];
     dst = [local_base znn_base fpath 'network/'];
 
     % make dir if not exist
