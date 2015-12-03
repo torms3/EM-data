@@ -69,11 +69,11 @@ function crawl_training_stats
             idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P3/exp1/';
 
             % affinity
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/exp2/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/exp2/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/exp2/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/exp2/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/exp2/';
         otherwise
             assert(false);
         end
