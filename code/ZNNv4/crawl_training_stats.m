@@ -63,7 +63,8 @@ function crawl_training_stats
             idx=idx+1;exps{idx}='new_Piriform/VD2D-avg/P1-F5/exp1/iter_300K/exp1/';
             idx=idx+1;exps{idx}='new_Piriform/VD2D-avg/P1-F7/exp1/';
             idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P1/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P1-F5/exp1/';
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P1-F5/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P1-F5/exp1/iter_150K/exp1/';
             idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P2/exp1/';
             idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P3/exp1/';
 
