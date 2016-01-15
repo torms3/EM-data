@@ -8,6 +8,7 @@ function ret = learning_curve( fname, varargin )
     addOptional(p,'nvalid',10000,@(x)isnumeric(x)&&(x>0));
     addOptional(p,'siter',0,@(x)isnumeric(x)&&(x>=0));
     addOptional(p,'title',[],@(x)isempty(x)||isstr(x));
+    addOptional(p,'vline',[],@(x)isempty(x)||isnumeric(x)&&(x>0));
     parse(p,fname,varargin{:});
 
     figure;
@@ -45,6 +46,12 @@ function ret = learning_curve( fname, varargin )
         legend(h,{'Train','Test'});
         xlabel('Iteration');
         ylabel(lbl);
+
+        % vertical line, if any
+        vline = p.Results.vline;
+        if ~isempty(vline)
+            line([vline vline],ylim,'Color',[1 1 0]); % currently yellow
+        end
 
     end
 
