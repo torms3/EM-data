@@ -50,7 +50,9 @@ function ret = learning_curve( fname, varargin )
         % vertical line, if any
         vline = p.Results.vline;
         if ~isempty(vline)
-            line([vline vline],ylim,'Color',[1 1 0]); % currently yellow
+            yl = ylim;
+            line([vline vline],yl,'Color',[1 1 0]); % currently yellow
+            ylim(yl);
         end
 
     end
