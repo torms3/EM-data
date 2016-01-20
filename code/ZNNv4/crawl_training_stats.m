@@ -67,24 +67,31 @@ function crawl_training_stats
             % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/P3/exp1/';
 
             % affinity
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/exp1/iter_100K/exp1/iter_120K/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/exp2/iter_150K/exp2/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/exp1/iter_300K/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/exp1/iter_70K/exp1/iter_300K/exp1/';
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/exp1/iter_100K/exp1/iter_120K/exp1/';
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/exp2/iter_150K/exp2/';
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/exp1/iter_300K/exp1/';
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/exp1/iter_70K/exp1/iter_300K/exp1/';
             % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/exp2/';
 
             % recursive affinity
-            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/recursive/P1-F5/z9/exp1/';
-            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/recursive/P1-F5/z7/exp1/';
-            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/recursive/P1-F5/z5/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/recursive/P1-F5/z9/exp2/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/recursive/P1-F5/z7/exp2/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/recursive/P1-F5/z5/exp2/';
+
+            % pretrain affinity
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/pretrain/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/pretrain/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/pretrain/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/pretrain/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/pretrain/exp1/';
 
             % multiscale affinity
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/exp1/';
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/exp1/';
             idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/exp1/iter_80K/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/pretrain/exp1/iter_200K/exp1/';
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/pretrain/exp1/iter_200K/exp1/';
             idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS-maxout/exp1/';
             idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS-maxout/exp1/iter_80K/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS-maxout/pretrain/exp2/';
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS-maxout/pretrain/exp2/';
         otherwise
             assert(false);
         end

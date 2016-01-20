@@ -1,34 +1,54 @@
 function average_script()
 
-    fnames = {'Piriform_sample1_output_0', ...
-              'Piriform_sample2_output_0', ...
-              'Piriform_sample3_output_0', ...
-              'Piriform_sample4_output_0'};
+    % fnames = {'Piriform_sample1_output', ...
+    %           'Piriform_sample9_output', ...
+    %           'Piriform_sample10_output'};
+    fnames = {'Piriform_sample2_output', ...
+              'Piriform_sample3_output', ...
+              'Piriform_sample4_output'};
 
     base = '/usr/people/kisuk/Workbench/seung-lab/znn-release/experiments/';
-    dirs = {[base 'multiscale/VD2D-avg/P1/exp2/iter_250K/'], ...
-            [base 'multiscale/VD2D-avg/P2/exp2/iter_250K/'], ...
-            [base 'multiscale/VD2D-avg/P3/exp2/iter_150K/'], ...
-            [base 'paper/VD2D/exp5/iter_60K/exp2/iter_150K/']  ...
+    dirs = {[base 'new_Piriform/VD2D3D/affinity/P1-F5/z9/exp1/iter_300K/'], ...
+            [base 'new_Piriform/VD2D3D/affinity/P1-F5/z7/exp1/iter_70K/exp1/iter_300K/'], ...
+            [base 'new_Piriform/VD2D3D/affinity/P2/exp2/iter_150K/'], ...
+            [base 'new_Piriform/VD2D3D/affinity/P3/exp1/iter_100K/exp1/iter_120K/']
     };
-    dst  = [dirs{4} 'VD2D-avg/'];
+    % dirs = {[base 'new_Piriform/VD2D3D/affinity/P1-F5/z7/exp1/iter_70K/exp1/iter_300K/'], ...
+    %         [base 'new_Piriform/VD2D3D/affinity/P2/exp2/iter_150K/'], ...
+    %         [base 'new_Piriform/VD2D3D/affinity/P3/exp1/iter_100K/exp1/iter_120K/']
+    % };
+    % dirs = {[base 'new_Piriform/VD2D3D/affinity/P1-F5/z9/exp1/iter_300K/'], ...
+    %         [base 'new_Piriform/VD2D3D/affinity/P2/exp2/iter_150K/'], ...
+    %         [base 'new_Piriform/VD2D3D/affinity/P3/exp1/iter_100K/exp1/iter_120K/']
+    % };
+
+    dst  = [base 'new_Piriform/VD2D3D/affinity/avg/z9z7P2P3/'];
+    % dst  = [base 'new_Piriform/VD2D3D/affinity/avg/z7P2P3/'];
+    % dst  = [base 'new_Piriform/VD2D3D/affinity/avg/z9P2P3/'];
     if ~exist(dst,'dir'); mkdir(dst); end;
 
     for i = 1:numel(fnames)
 
         fname = fnames{i};
         vols  = {};
-        for j = 1:numel(dirs)
 
-            disp(['cd ' dirs{j}]);
-            cd(dirs{j});
+        for j = 1:3
 
-            vols{j} = loadtiff([fname '.tif']);
+            idx = ['_' num2str(j-1)];
+
+            for k = 1:numel(dirs)
+
+                disp(['cd ' dirs{k}]);
+                cd(dirs{k});
+
+                vols{k} = loadtiff([fname idx '.tif']);
+
+            end
+
+            avg = mean(cat(4,vols{:}),4);
+            saveastiff(avg,[dst fname idx '.tif']);
 
         end
-
-        avg = mean(cat(4,vols{:}),4);
-        saveastiff(avg,[dst fname '.tif']);
 
     end
 
