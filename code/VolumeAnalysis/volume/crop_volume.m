@@ -1,11 +1,10 @@
 function [vol] = crop_volume( vol, offset, sz )
-% 
 % Crop 3D volume
-% 
+%
 % Usage:
 %   crop_volume( vol, offset )
 %   crop_volume( vol, offset, sz )
-%   
+%
 %   vol       3D volume
 %   offset    crop offset
 %   sz        crop size
@@ -14,7 +13,7 @@ function [vol] = crop_volume( vol, offset, sz )
 %   vol       cropped volume
 %
 % Program written by:
-% Kisuk Lee <kiskulee@mit.edu>  2015
+% Copyright (C) 2015-2016 	Kisuk Lee <kiskulee@mit.edu>
 
 	if ~exist('sz','var')
 		sz = [];

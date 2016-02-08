@@ -34,8 +34,8 @@ function average_script()
 
             end
 
-            avg = mean(cat(4,vols{:}),4);
-            saveastiff(avg,[dst fname idx '.tif']);
+            avg = var(cat(4,vols{:}),ones(numel(dirs),1),4);
+            saveastiff(avg,[dst fname idx '.var.tif']);
 
         end
 

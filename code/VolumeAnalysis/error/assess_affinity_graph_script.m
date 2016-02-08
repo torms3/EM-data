@@ -1,10 +1,10 @@
 function assess_affinity_graph_script( fname, data, offset, FoV, filtrad, options )
 
-	if ~iscell(fname);			fname = {fname};end;
-	if ~iscell(data);		  		data = {data};end;
-	if ~exist('offset','var');	offset = [];end;
-	if ~exist('FoV','var');			   FoV = [];end;
-	if ~exist('filtrad','var'); filtrad = 0;end;
+	if ~iscell(fname);		 fname = {fname};end;
+	if ~iscell(data);		   data = {data};end;
+	if ~exist('offset','var');	 offset = [];end;
+	if ~exist('FoV','var');			FoV = [];end;
+	if ~exist('filtrad','var');  filtrad = 0;end;
 	if ~exist('options','var')
 		% options(1)	voxel error
 		% options(2)	2D Rand error
@@ -28,7 +28,7 @@ function assess_affinity_graph_script( fname, data, offset, FoV, filtrad, option
 
 		% prepare affinity graph
 		[affin] = prepare_affinity_graph(fname,filtrad);
-		
+
 		% coordinate correction
 		if ~isempty(offset)
 			affin.coord = affin.coord + offset;
@@ -63,7 +63,7 @@ function assess_affinity_graph_script( fname, data, offset, FoV, filtrad, option
 		%% 2D Rand error
 		%
 		if options(2)
-			% xy-plane		
+			% xy-plane
 			prob = affin.xy;
 			lbl  = truth.x & truth.y;
 			msk  = masks.x & masks.y;
@@ -103,11 +103,11 @@ function assess_affinity_graph_script( fname, data, offset, FoV, filtrad, option
 
 
 		%% Save
-		%		
+		%
 		ox  = affin.coord(1);oy = affin.coord(2);oz = affin.coord(3);
 		sx  = affin.size(1); sy = affin.size(2); sz = affin.size(3);
 		str = sprintf('x%d_y%d_z%d_dim%dx%dx%d',ox,oy,oz,sx,sy,sz);
-			
+
 		fname = [fname '.' str];
 		if filtrad > 0
 			fname = [fname '.median' num2str(filtrad)];
@@ -121,12 +121,12 @@ function assess_affinity_graph_script( fname, data, offset, FoV, filtrad, option
 end
 
 %% Update result
-% 
+%
 function update_result( fname, update )
 
 	if exist(fname,'file')
 		load(fname);
-		
+
 		fields = {'x','y','z','xy','zx','xyz','ws'};
 		for i = 1:numel(fields)
 			field = fields{i};

@@ -1,11 +1,11 @@
 function [] = export_tensor( fname, tensor, ext, dtype )
-% 
+%
 % Export 4D tensor in binary format
-% 
+%
 % Usage:
 % 	export_tensor( fname, tensor )
 % 	export_tensor( fname, tensor, ext )
-% 	
+%
 % 	fname:	file name
 % 	tensor:	4D tensor
 %	ext: 	if exists, file name becomes [fname.ext]
@@ -17,12 +17,12 @@ function [] = export_tensor( fname, tensor, ext, dtype )
 % Program written by:
 % Kisuk Lee <kiskulee@mit.edu>, 2014
 
-	if ~exist('ext','var'); 					ext = []; end;
+	if ~exist('ext','var'); 		  ext = []; end;
 	if ~exist('dtype','var'); dtype = 'double'; end;
 
 	% tensor dimension
 	fsz = fopen([fname '.size'], 'w');
-	sz  = size(tensor);	
+	sz  = size(tensor);
 	switch ndims(tensor)
 	case 2; sz = [sz 1 1];
 	case 3; sz = [sz 1];
@@ -31,7 +31,7 @@ function [] = export_tensor( fname, tensor, ext, dtype )
 
 	% tensor
 	if isempty(ext)
-		fvol = fopen(fname, 'w');		
+		fvol = fopen(fname, 'w');
 	else
 		fvol = fopen([fname '.' ext], 'w');
 	end

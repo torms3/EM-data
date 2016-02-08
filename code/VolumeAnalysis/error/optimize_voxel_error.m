@@ -1,37 +1,37 @@
-function [ret] = optimize_voxel_error( prob, truth, mask, thresh )
+function [ret] = optimize_voxel_error( img, lbl, msk, thresh )
 
-	if ~exist('mask','var');mask = [];end;
-	if ~exist('thresh','var')
-		thresh = [0.01 0.1:0.1:0.9 0.99];
-	end
+	if ~exist('msk','var');       msk = [];end;
+	if ~exist('thresh','var'); thresh = [];end;
+    if ~isempty(thresh)
+        thresh = thresh((thresh >= 0) & (thresh <= 1));
+        [data] = iterate_over(thresh,[]);
+    else
+    	%% 1st pass
+        % line search interval: 0.1
+        disp(['1st pass...']);
+        thresh = [0:0.1:1];
+        [data] = iterate_over(thresh,{});
 
+    	%% 2st pass
+        % line search interval: 0.05
+        disp(['2nd pass...']);
+        [~,I]  = min(extractfield(cell2mat(data),'err'));
+        pivot  = data{I}.thresh;
+        thresh = union(thresh,[pivot-0.05,pivot+0.05]);
+        thresh = thresh((thresh >= 0) & (thresh <= 1));
+        [data] = iterate_over(thresh,data);
 
-	%% 1st pass
-    % resolution = 0.1
-    disp(['1st pass...']);
-    [data] = iterate_over(thresh);
-
-
-	%% 2st pass
-    % resolution = 0.05
-    disp(['2nd pass...']);
-    [~,I]  = min(extractfield(cell2mat(data),'err'));
-    pivot  = data{I}.thresh;
-    thresh = union(thresh,[pivot-0.05,pivot+0.05]);
-    [data]   = iterate_over(thresh);
-
-
-    %% 3rd pass
-    % resolution = 0.01
-    disp(['3rd pass...']);
-    [~,I]  = min(extractfield(cell2mat(data),'err'));
-    pivot  = data{I}.thresh;
-    thresh = union(thresh,pivot-0.05:0.01:pivot+0.05);
-    [data]   = iterate_over(thresh);
-
+        %% 3rd pass
+        % line search interval: 0.01
+        disp(['3rd pass...']);
+        [~,I]  = min(extractfield(cell2mat(data),'err'));
+        pivot  = data{I}.thresh;
+        thresh = union(thresh,pivot-0.05:0.01:pivot+0.05);
+        thresh = thresh((thresh >= 0) & (thresh <= 1));
+        [data] = iterate_over(thresh,data);
+    end
 
     %% Return
-    %
 	data = cell2mat(data);
 
 	ret.thresh 	= extractfield(data,'thresh');
@@ -44,14 +44,14 @@ function [ret] = optimize_voxel_error( prob, truth, mask, thresh )
 	ret.balerr 	= extractfield(data,'balerr');
 
 
-	function ret = iterate_over(thresh)
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	function ret = iterate_over( thresh, data )
 
         nThresh = numel(thresh);
         ret = cell(1,nThresh);
-        if exist('data','var')
+        old = [];
+        if ~isempty(data)
             old = extractfield(cell2mat(data),'thresh');
-        else
-            old = [];
         end
 
         idx = 1;
@@ -62,7 +62,7 @@ function [ret] = optimize_voxel_error( prob, truth, mask, thresh )
             I = find(old == threshold,1);
             if isempty(I)
                 fprintf('(%d/%d)... ',i,nThresh);
-                ret{idx} = compute_voxel_error(prob,truth,mask,threshold);
+                ret{idx} = compute_voxel_error(img,lbl,msk,threshold);
                 ret{idx}.thresh = threshold;
                 fprintf('Voxel error = %.4f @ %.2f\n',ret{idx}.err,threshold);
             else

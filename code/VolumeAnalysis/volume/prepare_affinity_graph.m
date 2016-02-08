@@ -1,11 +1,10 @@
 function [affin] = prepare_affinity_graph( fname, filtrad )
-% 
 % Prepare 3D affinity graph from ZNN outputs
-% 
+%
 % Usage:
 % 	prepare_affinity_graph( fname )
 % 	prepare_affinity_graph( fname, filtrad )
-% 	
+%
 % 	fname		file name of the ZNN outputs
 %	filtrad		median filtering radius
 %
@@ -21,7 +20,7 @@ function [affin] = prepare_affinity_graph( fname, filtrad )
 % 		.size	affinity graph size
 %
 % Program written by:
-% Kisuk Lee <kiskulee@mit.edu> 	2015
+% Copyright (C) 2015-2016 	Kisuk Lee <kiskulee@mit.edu>
 
 	if ~exist('filtrad','var')
 		filtrad = 0;

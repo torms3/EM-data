@@ -7,6 +7,7 @@ function ret = learning_curve( fname, varargin )
     addOptional(p,'method','moving');
     addOptional(p,'nvalid',10000,@(x)isnumeric(x)&&(x>0));
     addOptional(p,'siter',0,@(x)isnumeric(x)&&(x>=0));
+    addOptional(p,'eiter',0,@(x)isnumeric(x)&&(x>=0));
     addOptional(p,'title',[],@(x)isempty(x)||isstr(x));
     addOptional(p,'vline',[],@(x)isempty(x)||isnumeric(x)&&(x>0));
     parse(p,fname,varargin{:});
@@ -40,6 +41,10 @@ function ret = learning_curve( fname, varargin )
 
         hold off;
         grid on;
+
+        if p.Results.eiter > 0
+            eiter = p.Results.eiter;
+        end
 
         % plot decoration
         xlim([p.Results.siter eiter]);

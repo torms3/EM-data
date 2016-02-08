@@ -23,7 +23,8 @@ function get_training_stat( cluster, fpath )
     % run starcluster command
     cmd = ['starcluster get ' cluster];
     cmd = [cmd ' ' src ' ' dst];
-    disp(cmd);system(cmd);
+    disp(cmd);
+    %system(cmd);
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
