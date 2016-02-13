@@ -22,6 +22,20 @@ function affinity_graph_script( fname, data, options )
             result = compute_affinty_voxel_error(fname,label);
         end
 
+        %% 2D Rand error
+        % connected component
+        if options(2)
+            disp(['Processing 3D Rand error (watershed)...']);
+            % [result.ws] = optimize_3D_Rand_error(affin,truth);
+        end
+
+        %% 2D Rand error
+        % watershed
+        if options(2)
+            disp(['Processing 3D Rand error (watershed)...']);
+            % [result.ws] = optimize_3D_Rand_error(affin,truth);
+        end
+
         %% 3D Rand error
         % watershed
         if options(2)

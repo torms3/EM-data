@@ -31,6 +31,15 @@ function ret = optimize_Rand_score( ws_seg, gt_seg, mt )
     thresh = thresh((thresh >= 0) & (thresh <= 1));
     [data] = iterate_over(thresh,data);
 
+    %% 4th pass
+    % line search interval: 0.001
+    disp(['4th pass...']);
+    [~,I]  = max(extractfield(cell2mat(data),'rf'));
+    pivot  = data{I}.thresh;
+    thresh = union(thresh,pivot-0.005:0.001:pivot+0.005);
+    thresh = thresh((thresh >= 0) & (thresh <= 1));
+    [data] = iterate_over(thresh,data);
+
     %% Return
     data   = cell2mat(data);
     ret.th = extractfield(data,'thresh');
@@ -67,7 +76,6 @@ function ret = optimize_Rand_score( ws_seg, gt_seg, mt )
             data{end+1} = D;
 
         end
-
 
     end
 

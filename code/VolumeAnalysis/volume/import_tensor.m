@@ -6,19 +6,10 @@ function [tensor] = import_tensor( fname, dim, ext, dtype )
 
 	% tensor dimension
 	if isempty(dim)
-		fsz = fopen([fname '.size'], 'r');
-		if fsz < 0
-			tensor = [];
-			return;
-		end
-		x = fread(fsz, 1, 'uint32');
-		y = fread(fsz, 1, 'uint32');
-		z = fread(fsz, 1, 'uint32');
-		w = fread(fsz, 1, 'uint32');
-		dim = [x y z w];
+		dim = import_size(fname,4);
 	end
 	assert(numel(dim) == 4);
-	fprintf('dim = [%d %d %d %d]\n',dim(1),dim(2),dim(3),dim(4));
+	fprintf('dim = [%d %d %d %d]\n',dim);
 
 	% tensor
 	if isempty(ext)
