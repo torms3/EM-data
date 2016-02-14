@@ -20,11 +20,12 @@
 
 #include <iostream>
 #include <map>
+#include <cmath>
 
 template< typename ID >
 inline std::pair<double,double>
-compute_VI_score( ID* segA,
-                  ID* segB,
+compute_VI_score( ID* segA, // ground truth segmentation
+                  ID* segB, // proposal segmentation
                   std::size_t n )
 {
     typedef std::map<ID, std::size_t> vector_type;
@@ -40,8 +41,8 @@ compute_VI_score( ID* segA,
     // construct overlap matrix
     for ( std::ptrdiff_t idx = 0; idx < n; ++idx )
     {
-        ID wsv = segA[idx]; // watershed voxel
-        ID gtv = segB[idx]; // ground truth voxel
+        ID gtv = segA[idx]; // watershed voxel
+        ID wsv = segB[idx]; // ground truth voxel
 
         if ( gtv ) // foreground restriction
         {
@@ -60,38 +61,43 @@ compute_VI_score( ID* segA,
     }
 
     // compute stats
-    double sumAB = 0;
+    double Hp = 0;
     for ( mit a = p_ij.begin(); a != p_ij.end(); ++a )
     {
         vector_type& row = a->second;
         for ( vit b = row.begin(); b != row.end(); ++b )
         {
-            sumAB += b->second * b->second;
+            double _p_ij = static_cast<double>(b->second)/n;
+            Hp += _p_ij * std::log(_p_ij);
         }
     }
-    sumAB += p_i0/static_cast<double>(n);
+    Hp -= p_i0 * std::log(n)/n;
 
-    double sumA = 0;
+    double HT = 0;
     for ( vit a = a_i.begin(); a != a_i.end(); ++a )
     {
-        sumA += a->second * a->second;
+        double _a_i = static_cast<double>(a->second)/n;
+        HT -= _a_i * std::log(_a_i);
     }
 
-    double sumB = 0;
+    double HS = 0;
     for ( vit b = b_j.begin(); b != b_j.end(); ++b )
     {
-        sumB += b->second * b->second;
+        double _b_j = static_cast<double>(b->second)/n;
+        HS -= _b_j * std::log(_b_j);
     }
-    sumB += p_i0/static_cast<double>(n);
+    HS += p_i0 * std::log(n)/n;
 
-    double prec = sumAB/sumB;
-    double rec  = sumAB/sumA;
-    // double re   = prec*rec*2/(prec+rec);
-    // std::cout << "Precision : " << prec << "\n";
-    // std::cout << "Recall    : " << rec  << "\n";
-    // std::cout << "Rand error: " << 1-re << "\n";
+    double I = Hp + HT + HS;
 
-    return std::make_pair(prec,rec);
+    double merge = I/HT;
+    double split = I/HS;
+    // double score = merge*split*2/(merge+split);
+    // std::cout << "Merge score: " << merge << "\n";
+    // std::cout << "Split score: " << split << "\n";
+    // std::cout << "VI  F-score: " << score << "\n";
+
+    return std::make_pair(merge,split);
 }
 
 #include "mex.h"

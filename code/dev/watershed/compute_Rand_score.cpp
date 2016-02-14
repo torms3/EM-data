@@ -23,8 +23,8 @@
 
 template< typename ID >
 inline std::pair<double,double>
-compute_Rand_score( ID* segA,
-                    ID* segB,
+compute_Rand_score( ID* segA, // ground truth segmentation
+                    ID* segB, // proposal segmentation
                     std::size_t n )
 {
     typedef std::map<ID, std::size_t> vector_type;
@@ -40,8 +40,8 @@ compute_Rand_score( ID* segA,
     // construct overlap matrix
     for ( std::ptrdiff_t idx = 0; idx < n; ++idx )
     {
-        ID wsv = segA[idx]; // watershed voxel
-        ID gtv = segB[idx]; // ground truth voxel
+        ID gtv = segA[idx]; // watershed voxel
+        ID wsv = segB[idx]; // ground truth voxel
 
         if ( gtv ) // foreground restriction
         {
@@ -86,14 +86,14 @@ compute_Rand_score( ID* segA,
     // sumB += p_i0/static_cast<double>(n);
     sumB += p_i0;
 
-    double prec = sumAB/sumB;
-    double rec  = sumAB/sumA;
-    // double re   = prec*rec*2/(prec+rec);
-    // std::cout << "Precision : " << prec << "\n";
-    // std::cout << "Recall    : " << rec  << "\n";
-    // std::cout << "Rand error: " << 1-re << "\n";
+    double merge = sumAB/sumB;
+    double split = sumAB/sumA;
+    // double score = merge*split*2/(merge+split);
+    // std::cout << "Merge  score: " << merge << "\n";
+    // std::cout << "Split  score: " << split  << "\n";
+    // std::cout << "Rand F-score: " << score << "\n";
 
-    return std::make_pair(prec,rec);
+    return std::make_pair(merge,split);
 }
 
 #include "mex.h"
