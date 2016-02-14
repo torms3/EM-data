@@ -4,11 +4,11 @@ function Rand_score( fpath, template, samples, varargin )
     p = inputParser;
     addRequired(p,'fpath',@(x)iscell(x));
     addRequired(p,'template',@(x)isstr(x));
-    addRequired(p,'samples',@(x)isnumeric(x));
-    addOptional(p,'high',0.999,@(x)isnumeric(x)&&(0<=x)&&(x<=1));
-    addOptional(p,'low',0.3,@(x)isnumeric(x)&&(0<=x)&&(x<=1));
-    addOptional(p,'thold',256,@(x)isnumeric(x)&&(x>=0));
-    addOptional(p,'arg',0.3,@(x)isnumeric(x)&&(0<=x)&&(x<=1));
+    addRequired(p,'samples',@(x)isnumeric(x)&&all(x>=0));
+    addOptional(p,'high',0.999,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
+    addOptional(p,'low',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
+    addOptional(p,'thold',256,@(x)isnumeric(x)&&all(x>=0));
+    addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'overwrite',false,@(x)islogical(x));
     parse(p,fpath,template,samples,varargin{:});
 
