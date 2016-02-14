@@ -11,8 +11,7 @@ function Rand_score( fpath, template, samples, varargin )
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'overwrite',false,@(x)islogical(x));
     parse(p,fpath,template,samples,varargin{:});
-
-    if ~iscell(fpath); fpath = {fpath}; end;
+    overwrite = p.Results.overwrite;
 
     % watershed parameters
     args.iname = 'place_holder';
@@ -69,7 +68,7 @@ function Rand_score( fpath, template, samples, varargin )
         args.oname = [pwd '/' oname];
         args.isize = import_size(fname,3);
 
-        if ~p.Results.overwrite && exist([oname '.segment'],'file') == 2
+        if ~overwrite && exist([oname '.segment'],'file') == 2
             return;
         end
 
