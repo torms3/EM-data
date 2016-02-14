@@ -9,12 +9,14 @@ function merge_split_plot( fpath, nickname, fname, varargin )
     addOptional(p,'low',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'thold',256,@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
+    addOptional(p,'metric','Rand',@(x)isstr(x));
     parse(p,fpath,nickname,fname,varargin{:});
 
-    high  = p.Results.high;
-    low   = p.Results.low;
-    thold = p.Results.thold;
-    arg   = p.Results.arg;
+    high   = p.Results.high;
+    low    = p.Results.low;
+    thold  = p.Results.thold;
+    arg    = p.Results.arg;
+    metric = p.Results.metric;
 
     figure;
     hold on;
@@ -38,13 +40,15 @@ function merge_split_plot( fpath, nickname, fname, varargin )
                             continue;
                         end
 
-                        % sort
-                        rs = result.rs;
-                        rm = result.rm;
-                        [~,idx] = sort(rs,'ascend');
+                        thresh  = result.(metric).thresh;
+                        split   = result.(metric).split;
+                        merge   = result.(metric).merge;
+                        score   = result.(metric).score;
+                        [~,idx] = sort(thresh,'ascend');
 
                         % plot
-                        plot(rs(idx),rm(idx),'-');
+                        % plot(merge(idx),split(idx),'-');
+                        plot(thresh(idx),split(idx),'-');
 
                         % legend
                         lgnd = p.Results.nickname{n};
@@ -52,7 +56,7 @@ function merge_split_plot( fpath, nickname, fname, varargin )
                         lgnd = [lgnd ', low=' num2str(low(j))];
                         lgnd = [lgnd ', size=' num2str(thold(k))];
                         lgnds{end+1} = lgnd;
-                        disp([lgnds{end} ', best Rand F-score = ' num2str(max(result.rf))]);
+                        disp([lgnds{end} ', best ' metric ' F-score = ' num2str(max(score))]);
                     end
                 end
             end
@@ -62,8 +66,8 @@ function merge_split_plot( fpath, nickname, fname, varargin )
     hold off;
     grid on;
     legend(lgnds);
-    xlabel('Rand split score');
-    ylabel('Rand merge score');
-    title('Rand score');
+    xlabel([metric ' merge score']);
+    ylabel([metric ' split score']);
+    title([metric ' score']);
 
 end
