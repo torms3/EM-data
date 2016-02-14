@@ -1,4 +1,4 @@
-function Rand_score( fpath, fname, samples )
+function Rand_score( fpath, template, samples )
 
     if ~iscell(fpath); fpath = {fpath}; end;
 
