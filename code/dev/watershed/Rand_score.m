@@ -2,13 +2,14 @@ function Rand_score( fpath, template, samples, varargin )
 
     % input parsing & validation
     p = inputParser;
-    addRequired(p,'fpath',@(x)exist(x,'dir'));
+    addRequired(p,'fpath',@(x)iscell(x));
     addRequired(p,'template',@(x)isstr(x));
     addRequired(p,'samples',@(x)isnumeric(x));
     addOptional(p,'high',0.999,@(x)isnumeric(x)&&(0<=x)&&(x<=1));
     addOptional(p,'low',0.3,@(x)isnumeric(x)&&(0<=x)&&(x<=1));
     addOptional(p,'thold',256,@(x)isnumeric(x)&&(x>=0));
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&(0<=x)&&(x<=1));
+    addOptional(p,'overwrite',false,@(x)islogical(x));
     parse(p,fpath,template,samples,varargin{:});
 
     if ~iscell(fpath); fpath = {fpath}; end;
@@ -33,6 +34,7 @@ function Rand_score( fpath, template, samples, varargin )
     arg   = p.Results.arg;
     cur   = pwd;
     for p = 1:numel(fpath)
+        if ~exist(fpath{p},'dir'); continue; end;
         cd(fpath{p});
         for i = 1:numel(samples)
             for j = 1:numel(high)
@@ -67,7 +69,7 @@ function Rand_score( fpath, template, samples, varargin )
         args.oname = [pwd '/' oname];
         args.isize = import_size(fname,3);
 
-        if exist([oname '.segment'],'file') == 2
+        if ~p.Results.overwrite && exist([oname '.segment'],'file') == 2
             return;
         end
 
