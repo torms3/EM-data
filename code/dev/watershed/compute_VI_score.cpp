@@ -23,9 +23,9 @@
 
 template< typename ID >
 inline std::pair<double,double>
-compare_segmentation( ID* segA,
-                      ID* segB,
-                      std::size_t n )
+compute_VI_score( ID* segA,
+                  ID* segB,
+                  std::size_t n )
 {
     typedef std::map<ID, std::size_t> vector_type;
     typedef std::map<ID, vector_type> matrix_type;
@@ -96,7 +96,7 @@ compare_segmentation( ID* segA,
 
 #include "mex.h"
 
-// result = compare_segmentation(segA,segB)
+// result = compute_VI_score(segA,segB)
 void mexFunction( int nlhs, mxArray* plhs[],
                   int nrhs, const mxArray* prhs[] )
 {
@@ -119,7 +119,7 @@ void mexFunction( int nlhs, mxArray* plhs[],
     std::size_t sz = dim[2];
 
     std::pair<double,double> score =
-        compare_segmentation<uint32_t>
+        compute_VI_score<uint32_t>
             (reinterpret_cast<uint32_t*>(mxGetData(prhs[0])),
              reinterpret_cast<uint32_t*>(mxGetData(prhs[1])),
              sx*sy*sz);

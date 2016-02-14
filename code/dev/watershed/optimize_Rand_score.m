@@ -65,7 +65,7 @@ function ret = optimize_Rand_score( ws_seg, gt_seg, mt )
 
             fprintf('(%d/%d)...threshold=%f\n',i,nThresh,thresh(i));
             seg = merge_regions(ws_seg,mt.vals,mt.pairs,thresh(i));
-            score = compare_segmentation(uint32(seg),gt_seg);
+            score = compute_Rand_score(uint32(seg),gt_seg);
             fprintf('merger  : %f\nsplitter: %f\n',score);
 
             D.thresh = thresh(i);
