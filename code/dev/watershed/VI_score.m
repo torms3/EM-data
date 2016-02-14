@@ -90,24 +90,24 @@ function VI_score( fpath, template, samples, varargin )
 
     end
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    function update_result( fname, update )
+end
 
-        if exist(fname,'file')
-            load(fname);
-            fields = {'args','rm','rs','rf','VI'};
-            for i = 1:numel(fields)
-                field = fields{i};
-                if isfield(update,field)
-                    result.(field) = update.(field);
-                end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function update_result( fname, update )
+
+    if exist(fname,'file')
+        load(fname);
+        fields = {'args','rm','rs','rf','VI'};
+        for i = 1:numel(fields)
+            field = fields{i};
+            if isfield(update,field)
+                result.(field) = update.(field);
             end
-        else
-            result = update;
         end
-
-        save(fname,'result');
-
+    else
+        result = update;
     end
+
+    save(fname,'result');
 
 end
