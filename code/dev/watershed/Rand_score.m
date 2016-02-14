@@ -68,12 +68,13 @@ function Rand_score( fpath, template, samples, varargin )
         args.oname = [pwd '/' oname];
         args.isize = import_size(fname,3);
 
-        if ~overwrite && exist([oname '.segment'],'file') == 2
-            return;
+        if ~exist([oname '.segment'],'file')
+            run_watershed(args); % watershed
         end
 
-        % watershed
-        run_watershed(args);
+        if ~overwrite
+            continue;
+        end
 
         % load segmentation
         seg = import_volume(oname, args.isize, 'segment', 'uint32');
