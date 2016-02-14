@@ -11,11 +11,10 @@ function v1out_to_affin( fname, oname )
         aff{1} = import_volume([fname{i} '.0'],[],[],'double');
         aff{2} = import_volume([fname{i} '.1'],[],[],'double');
         aff{3} = import_volume([fname{i} '.2'],[],[],'double');
-
-        aff = single(cat(4,aff{:}));
+        affin  = single(cat(4,aff{:}));
 
         % export affinity graph binary
-        export_tensor(oname{i},aff,'affin','single');
+        export_tensor(oname{i},affin,'affin','single');
 
         % exprot hdf5
         % hdf5write([oname{i} '.h5'],'/main',aff);
