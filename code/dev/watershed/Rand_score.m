@@ -1,4 +1,4 @@
-function Rand_score( fpath )
+function Rand_score( fpath, fname, samples )
 
     if ~iscell(fpath); fpath = {fpath}; end;
 
@@ -13,9 +13,7 @@ function Rand_score( fpath )
     args.lowt  = 256;
 
     % Piriform
-    template   = 'Piriform_sample%d_output';
-    samples    = [1 9 10];
-    data       = load_Piriform_dataset(samples);
+    data  = load_Piriform_dataset(samples);
 
     high  = [0.999];
     low   = [0.0];
