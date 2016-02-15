@@ -82,8 +82,8 @@ function VI_score( fpath, template, samples, varargin )
         mt = load_merge_tree(oname);
 
         % optimize VI score
-        result.args = args;
-        result.VI   = optimize_VI_score(seg, gt_seg, mt);
+        result.WS = args;
+        result.VI = optimize_VI_score(seg, gt_seg, mt);
 
         % if exist, update
         update_result([oname '.mat'], result);

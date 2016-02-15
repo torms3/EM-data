@@ -82,8 +82,8 @@ function Rand_score( fpath, template, samples, varargin )
         mt = load_merge_tree(oname);
 
         % optimize Rand score & save
-        result = optimize_Rand_score(seg, gt_seg, mt);
-        result.args = args;
+        result.Rand = optimize_Rand_score(seg, gt_seg, mt);
+        result.WS = args;
         save([oname '.mat'],'result');
 
     end
