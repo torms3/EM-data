@@ -44,11 +44,16 @@ function merge_split_plot( fpath, nickname, fname, varargin )
                         split   = result.(metric).split;
                         merge   = result.(metric).merge;
                         score   = result.(metric).score;
-                        [~,idx] = sort(thresh,'ascend');
 
-                        % plot
-                        % plot(merge(idx),split(idx),'-');
-                        plot(thresh(idx),split(idx),'-');
+                        if strcmp(metric,'Rand')
+                            [~,idx] = sort(split,'ascend');
+                            plot(split(idx),merge(idx),'-');
+                        elseif strcmp(metric,'VI')
+                            [~,idx] = sort(merge,'ascend');
+                            plot(merge(idx),split(idx),'-');
+                        else
+                            assert(false);
+                        end
 
                         % legend
                         lgnd = p.Results.nickname{n};

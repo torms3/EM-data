@@ -100,9 +100,7 @@ function update_result( fname, update )
         fields = fieldnames(update);
         for i = 1:numel(fields)
             field = fields{i};
-            if isfield(result,field)
-                result.(field) = update.(field);
-            end
+            result.(field) = update.(field);
         end
     else
         result = update;
