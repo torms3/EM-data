@@ -16,7 +16,7 @@ function ret = optimize_Rand_score( ws_seg, gt_seg, mt )
     %% 2st pass
     % line search interval: 0.05
     disp(['2nd pass...']);
-    [~,I]  = max(extractfield(cell2mat(data),'rf'));
+    [~,I]  = max(extractfield(cell2mat(data),'score'));
     pivot  = data{I}.thresh;
     thresh = union(thresh,[pivot-0.05,pivot+0.05]);
     thresh = thresh((thresh >= 0) & (thresh <= 1));
@@ -25,7 +25,7 @@ function ret = optimize_Rand_score( ws_seg, gt_seg, mt )
     %% 3rd pass
     % line search interval: 0.01
     disp(['3rd pass...']);
-    [~,I]  = max(extractfield(cell2mat(data),'rf'));
+    [~,I]  = max(extractfield(cell2mat(data),'score'));
     pivot  = data{I}.thresh;
     thresh = union(thresh,pivot-0.05:0.01:pivot+0.05);
     thresh = thresh((thresh >= 0) & (thresh <= 1));
@@ -34,7 +34,7 @@ function ret = optimize_Rand_score( ws_seg, gt_seg, mt )
     %% 4th pass
     % line search interval: 0.001
     disp(['4th pass...']);
-    [~,I]  = max(extractfield(cell2mat(data),'rf'));
+    [~,I]  = max(extractfield(cell2mat(data),'score'));
     pivot  = data{I}.thresh;
     thresh = union(thresh,pivot-0.005:0.001:pivot+0.005);
     thresh = thresh((thresh >= 0) & (thresh <= 1));
