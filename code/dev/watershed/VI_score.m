@@ -97,10 +97,10 @@ function update_result( fname, update )
 
     if exist(fname,'file')
         load(fname);
-        fields = {'args','rm','rs','rf','VI'};
+        fields = fieldnames(update);
         for i = 1:numel(fields)
             field = fields{i};
-            if isfield(update,field)
+            if isfield(result,field)
                 result.(field) = update.(field);
             end
         end

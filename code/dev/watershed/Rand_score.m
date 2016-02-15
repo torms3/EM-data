@@ -82,10 +82,33 @@ function Rand_score( fpath, template, samples, varargin )
         mt = load_merge_tree(oname);
 
         % optimize Rand score & save
+        result.WS   = args;
         result.Rand = optimize_Rand_score(seg, gt_seg, mt);
-        result.WS = args;
-        save([oname '.mat'],'result');
+
+
+        % if exist, update
+        update_result([oname '.mat'], result);
 
     end
+
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function update_result( fname, update )
+
+    if exist(fname,'file')
+        load(fname);
+        fields = fieldnames(update);
+        for i = 1:numel(fields)
+            field = fields{i};
+            if isfield(result,field)
+                result.(field) = update.(field);
+            end
+        end
+    else
+        result = update;
+    end
+
+    save(fname,'result');
 
 end

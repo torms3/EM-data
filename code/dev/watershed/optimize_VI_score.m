@@ -69,9 +69,9 @@ function ret = optimize_VI_score( ws_seg, gt_seg, mt )
             fprintf('merger  : %f\nsplitter: %f\n',score);
 
             D.thresh = thresh(i);
-            D.merge = score(1);
-            D.split = score(2);
-            D.score = D.merge*D.split*2/(D.merge+D.split);
+            D.merge  = score(1);
+            D.split  = score(2);
+            D.score  = D.merge*D.split*2/(D.merge+D.split);
 
             data{end+1} = D;
 

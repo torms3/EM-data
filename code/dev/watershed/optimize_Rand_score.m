@@ -41,11 +41,11 @@ function ret = optimize_Rand_score( ws_seg, gt_seg, mt )
     [data] = iterate_over(thresh,data);
 
     %% Return
-    data   = cell2mat(data);
-    ret.th = extractfield(data,'thresh');
-    ret.rm = extractfield(data,'rm');
-    ret.rs = extractfield(data,'rs');
-    ret.rf = extractfield(data,'rf');
+    data = cell2mat(data);
+    ret.thresh = extractfield(data,'thresh');
+    ret.merge  = extractfield(data,'merge');
+    ret.split  = extractfield(data,'split');
+    ret.score  = extractfield(data,'score');
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,9 +69,9 @@ function ret = optimize_Rand_score( ws_seg, gt_seg, mt )
             fprintf('merger  : %f\nsplitter: %f\n',score);
 
             D.thresh = thresh(i);
-            D.rm     = score(1);
-            D.rs     = score(2);
-            D.rf     = D.rm*D.rs*2/(D.rm+D.rs);
+            D.merge  = score(1);
+            D.split  = score(2);
+            D.score  = D.merge*D.split*2/(D.merge+D.split);
 
             data{end+1} = D;
 
