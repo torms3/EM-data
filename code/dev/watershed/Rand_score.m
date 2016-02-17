@@ -85,7 +85,6 @@ function Rand_score( fpath, template, samples, varargin )
         result.WS   = args;
         result.Rand = optimize_Rand_score(seg, gt_seg, mt);
 
-
         % if exist, update
         update_result([oname '.mat'], result);
 

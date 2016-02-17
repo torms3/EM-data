@@ -48,9 +48,13 @@ function merge_split_plot( fpath, nickname, fname, varargin )
                         if strcmp(metric,'Rand')
                             [~,idx] = sort(split,'ascend');
                             plot(split(idx),merge(idx),'-');
+                            xlabel([metric ' split score']);
+                            ylabel([metric ' merge score']);
                         elseif strcmp(metric,'VI')
                             [~,idx] = sort(merge,'ascend');
                             plot(merge(idx),split(idx),'-');
+                            xlabel([metric ' merge score']);
+                            ylabel([metric ' split score']);
                         else
                             assert(false);
                         end
@@ -71,8 +75,6 @@ function merge_split_plot( fpath, nickname, fname, varargin )
     hold off;
     grid on;
     legend(lgnds);
-    xlabel([metric ' merge score']);
-    ylabel([metric ' split score']);
     title([metric ' score']);
 
 end

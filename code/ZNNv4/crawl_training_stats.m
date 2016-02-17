@@ -49,9 +49,9 @@ function crawl_training_stats
             % idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P1-F5/exp3/iter_50K/exp1/';
 
             % SNEMI3D
-            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P4/exp2/iter_100K/exp1/';
-            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P3/exp2/';
-            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P2/exp2/iter_180K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P4/exp2/iter_100K/exp1/iter_150K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P3/exp2/iter_250K/exp1/';
+            idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P2/exp2/iter_180K/exp1/iter_250K/exp1/';
             idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P1-F5/exp3/iter_50K/exp1/iter_250K/exp1/iter_350K/exp1/';
             % idx=idx+1;exps{idx}='multiscale/VD2D-avg/SNEMI3D/P1-F7/exp2/';
 
@@ -90,46 +90,59 @@ function crawl_training_stats
 
             % multiscale affinity
             % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/exp1/';
-            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/exp1/iter_80K/exp1/';
-            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/pretrain/exp1/iter_200K/exp1/iter_300K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/exp1/iter_80K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS/pretrain/exp1/iter_200K/exp1/iter_300K/exp1/';
             % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS-maxout/exp1/';
             % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS-maxout/exp1/iter_80K/exp1/';
             % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/MS-maxout/pretrain/exp2/';
 
-	        % multiscale maxpool
+            % multiscale maxpool
             % idx=idx+1;exps{idx}='multiscale/VD2D-MS-maxpool/SNEMI3D/exp1/iter_50K/exp1/';
             % idx=idx+1;exps{idx}='multiscale/VD2D-MS-maxpool/Piriform/original/exp1/';
             % idx=idx+1;exps{idx}='new_Piriform/VD2D-MS/maxpool/exp1/';
 
     	    % nodeout
-    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/nodeout/exp2/iter_100K/exp1/';
-    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/nodeout/exp1/iter_150K/exp1/';
+    	    %idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/nodeout/exp2/iter_100K/exp1/';
+    	    %idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/nodeout/exp1/iter_150K/exp1/';
     	    % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/nodeout/exp2/';
-    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/nodeout/exp2/iter_150K/exp1/';
-    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/nodeout/exp2/iter_100K/exp1/';
+    	    %idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/nodeout/exp2/iter_150K/exp1/';
+    	    %idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/nodeout/exp2/iter_100K/exp1/';
 
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/nodeout/double_nodes/exp1/iter_20K/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/nodeout/double_nodes/exp1/';
-            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/nodeout/double_nodes/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/nodeout/double_nodes/exp2/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/nodeout/double_nodes/exp1/iter_80K/exp1/';
+            % nodeout (double)
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/nodeout/double_nodes/exp1/iter_20K/exp1/iter_30K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/nodeout/double_nodes/exp1/iter_100K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/nodeout/double_nodes/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/nodeout/double_nodes/exp2/iter_120K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/nodeout/double_nodes/exp1/iter_80K/exp1/iter_130K/exp1/iter_150K/exp1/';
 
-	        % batch normalization
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/normalize/exp1/';
+            % dropnode
+    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/dropnode/P3/exp1/';
+    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/dropnode/P2/exp1/';
+    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/dropnode/z9/exp1/';
+    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/dropnode/z7/exp1/';
+    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/dropnode/z5/exp1/';
+    	    idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/dropnode/MS/drop2/exp1/';
+
+            % batch normalization
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/normalize/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z5/normalize/exp1/iter_60K/exp1/';
             idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/normalize/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/normalize/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z7/normalize/exp1/iter_30K/exp1/';
+            % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/normalize/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/normalize/exp1/iter_70K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/normalize/exp1/iter_30K/exp1/iter_40K/exp1/';
             % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P2/normalize/exp1/';
             % idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P3/normalize/exp1/';
 
-	        % residual
+            % residual
             idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/residual/exp1/iter_100K/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/residual/exp2/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/affinity/P1-F5/z9/residual/exp2/iter_50K/exp1/';
 
             % multiply
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/recursive/P3/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/recursive/stochastic/P3/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/recursive/multiply/P3/exp1/';
-            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/recursive/multiply/stochastic/P3/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/recursive/P3/exp1/iter_250K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/recursive/stochastic/P3/exp1/iter_270K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/recursive/multiply/P3/exp1/iter_230K/exp1/';
+            idx=idx+1;exps{idx}='new_Piriform/VD2D3D/recursive/multiply/stochastic/P3/exp1/iter_230K/exp1/';
         otherwise
             assert(false);
         end
