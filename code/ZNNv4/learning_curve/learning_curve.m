@@ -10,7 +10,14 @@ function ret = learning_curve( fname, varargin )
     addOptional(p,'eiter',0,@(x)isnumeric(x)&&(x>=0));
     addOptional(p,'title',[],@(x)isempty(x)||isstr(x));
     addOptional(p,'vline',[],@(x)isempty(x)||isnumeric(x)&&(x>0));
+    addOptional(p,'ucost',false,@(x)islogical(x));
     parse(p,fname,varargin{:});
+
+    if p.Results.ucost
+        cost_type = 'ucost';
+    else
+        cost_type = 'err';
+    end
 
     figure;
     h(1) = subplot(1,2,1); plot_curve('err','Cost');
@@ -30,11 +37,11 @@ function ret = learning_curve( fname, varargin )
         hold on;
 
             % test curve
-            test = load_data(fname,'test');
+            test = load_data(fname,'test',cost_type);
             h(2) = plot_test_curve(test,errtype);
 
             % train curve
-            train = load_data(fname,'train');
+            train = load_data(fname,'train',cost_type);
             eiter = train.iter(end); % before smoothing
             train = smooth_curve(train,p.Results.w);
             h(1)  = plot(train.iter,train.(errtype),'-k');

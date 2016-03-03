@@ -1,11 +1,11 @@
-function [] = export_volume( fname, volume, ext )
-% 
+function [] = export_volume( fname, volume, ext, dtype )
+%
 % Export 3D volume in binary format
-% 
+%
 % Usage:
 % 	export_volume( fname, volume )
 % 	export_volume( fname, volume, ext )
-% 	
+%
 % 	fname:	file name
 % 	volume:	3D volume
 %	ext: 	if exists, file name becomes [fname.ext]
@@ -17,20 +17,22 @@ function [] = export_volume( fname, volume, ext )
 % Program written by:
 % Kisuk Lee <kiskulee@mit.edu>, 2014
 
+	if ~exist('dtype','var'); dtype = 'double'; end;
+
 	% volume dimension
 	fsz = fopen([fname '.size'], 'w');
-	sz  = size(volume);	
+	sz  = size(volume);
 	if ndims(sz) < 3
 		sz = [sz 1];
 	end
 	fwrite(fsz, uint32(sz), 'uint32');
 
 	% volume
-	if exist('ext','var')		
+	if exist('ext','var')
 		fvol = fopen([fname '.' ext], 'w');
 	else
 		fvol = fopen(fname, 'w');
-	end		
-	fwrite(fvol, double(volume), 'double');
+	end
+	fwrite(fvol, volume, dtype);
 
 end
