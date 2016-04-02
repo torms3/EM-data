@@ -9,7 +9,7 @@ function ret = learning_curve( fname, varargin )
     addOptional(p,'siter',0,@(x)isnumeric(x)&&(x>=0));
     addOptional(p,'eiter',0,@(x)isnumeric(x)&&(x>=0));
     addOptional(p,'title',[],@(x)isempty(x)||isstr(x));
-    addOptional(p,'vline',[],@(x)isempty(x)||isnumeric(x)&&(x>0));
+    addOptional(p,'vline',[],@(x)isempty(x)||isnumeric(x));
     addOptional(p,'ucost',false,@(x)islogical(x));
     parse(p,fname,varargin{:});
 
