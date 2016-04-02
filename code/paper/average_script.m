@@ -39,10 +39,10 @@ function average_script()
     for i = 1:numel(outputs)
 
         % SNEMI3D
-        fname = sprintf('SNEMI3D_sample%d_output',outputs(i));
+        % fname = sprintf('SNEMI3D_sample%d_output',outputs(i));
 
         % Piriform
-        % fname = sprintf('Piriform_sample%d_output',outputs(i));
+        fname = sprintf('Piriform_sample%d_output',outputs(i));
 
         vols  = {};
 
