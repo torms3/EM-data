@@ -46,7 +46,7 @@ function average_script()
 
         vols  = {};
 
-        for j = 2:3 % affinity
+        for j = 1:3 % affinity
         % for j = 1:1 % boundary
 
             idx = ['_' num2str(j-1)];
