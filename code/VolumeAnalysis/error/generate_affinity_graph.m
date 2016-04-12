@@ -35,7 +35,7 @@ function [G] = generate_affinity_graph( lbl )
 	%% z-axis
 	% boundary-boundary affinity mask
 	bbMask = B(:,:,1:end-1) & B(:,:,2:end);
-	
+
 	z = lbl(:,:,1:end-1) - lbl(:,:,2:end);
 	bMap = (z ~= 0) | bbMask;
 
@@ -45,7 +45,7 @@ function [G] = generate_affinity_graph( lbl )
 
 
 	%% Affinity graph
-	% 
+	%
 	G.x = double(x);
 	G.y = double(y);
 	G.z = double(z);
