@@ -27,7 +27,7 @@ function average_script()
     outputs = [1 9 10];
     exps = {'P3','P2','z7','z9'};
     % exps = {'MS','MSF','DropNode-avg'};
-    msk  = [1 2 3 4];
+    msk  = [1 2 3];
     % msk  = [1 2];
     % dirs = {[base 'new_Piriform/VD2D3D/affinity/dropnode/P3/exp1/iter_80K/exp1/iter_100K/exp1/iter_190K/'], ...
     %         [base 'new_Piriform/VD2D3D/affinity/dropnode/P2/exp1/iter_70K/exp1/iter_100K/exp1/iter_120K/exp1/iter_140K/'], ...
