@@ -33,7 +33,7 @@ function simple_merge_split_plot( fname, nickname, metric )
         end
 
         % legend
-        lgnds{end+1} = p.Results.nickname{n};
+        lgnds{end+1} = nickname{n};
         disp([lgnds{end} ', best ' metric ' F-score = ' num2str(max(score))]);
 
     end
