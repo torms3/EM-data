@@ -11,7 +11,8 @@ function mean_affinity_script()
         for j = 1:numel(samples)
             sample = samples(j);
             iname  = [pwd '/' sprintf(template,sample) '.h5'];
-            oname  = [pwd '/' sprintf(template,sample) '_mean_affinity'];
+            % oname  = [pwd '/' sprintf(template,sample) '_mean_affinity'];
+            oname  = [pwd '/' sprintf(template,sample) '_mean_affinity_low0'];
             if exist([oname '.h5'], 'file') ~= 2
                 disp(['mean affinity agglomeration: ' oname '.h5']);
                 mean_affinity_agglomeration(iname, [oname '.h5']);
