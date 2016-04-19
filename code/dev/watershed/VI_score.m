@@ -7,6 +7,7 @@ function VI_score( fpath, template, samples, varargin )
     addRequired(p,'samples',@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'high',0.999,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'low',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
+    addOptional(p,'merge',true,@(x)islogical(x));
     addOptional(p,'thold',256,@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'overwrite',false,@(x)islogical(x));
@@ -17,10 +18,11 @@ function VI_score( fpath, template, samples, varargin )
     args.iname = 'place_holder';
     args.oname = 'place_holder';
     args.isize = [];
-    args.lowv  = 0.3;
-    args.farg1 = 0.3;
     args.highv = 0.999;
+    args.lowv  = 0.3;
+    args.merge = p.Results.merge;
     args.thold = 256;
+    args.farg1 = 0.3;
     args.lowt  = 256;
 
     % Piriform
@@ -37,15 +39,19 @@ function VI_score( fpath, template, samples, varargin )
         cd(fpath{p});
         for i = 1:numel(samples)
             for j = 1:numel(high)
+                args.highv = high(j);
                 for k = 1:numel(low)
-                    for l = 1:numel(thold)
-                        for m = 1:numel(arg)
-                            args.highv = high(j);
-                            args.lowv  = low(k);
+                    args.lowv = low(k);
+                    if args.merge
+                        for l = 1:numel(thold)
                             args.thold = thold(l);
-                            args.farg1 = arg(m);
-                            do_compute(samples(i),data{i}.label);
+                            for m = 1:numel(arg)
+                                args.farg1 = arg(m);
+                                do_compute(samples(i),data{i}.label);
+                            end
                         end
+                    else
+                        do_compute(samples(i),data{i}.label);
                     end
                 end
             end
@@ -62,8 +68,10 @@ function VI_score( fpath, template, samples, varargin )
         fname = sprintf(template, sample);
         oname = [fname '_high' num2str(args.highv)];
         oname = [oname '_low' num2str(args.lowv)];
-        oname = [oname '_size' num2str(args.thold)];
-        oname = [oname '_arg' num2str(args.farg1)];
+        if args.merge
+            oname = [oname '_size' num2str(args.thold)];
+            oname = [oname '_arg' num2str(args.farg1)];
+        end
         args.iname = [pwd '/' fname '.affin'];
         args.oname = [pwd '/' oname];
         args.isize = import_size(fname,3);

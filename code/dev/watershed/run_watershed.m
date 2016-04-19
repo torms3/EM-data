@@ -9,6 +9,7 @@ function run_watershed( args )
 %   args.farg1 = 0.3;
 %   args.thold = 256;
 %   args.lowt  = 256;
+%   args.merge = 1;
 %
 
     % local base dir
@@ -25,6 +26,7 @@ function run_watershed( args )
     params{end+1} = ['--zSize ' num2str(args.isize(3))];
     params{end+1} = ['--highv ' num2str(args.highv)];
     params{end+1} = ['--lowv ' num2str(args.lowv)];
+    params{end+1} = ['--enableMerge ' num2str(args.merge)];
     params{end+1} = ['--funcArg1 ' num2str(args.farg1)];
     params{end+1} = ['--thold ' num2str(args.thold)];
     params{end+1} = ['--lowt ' num2str(args.lowt)];

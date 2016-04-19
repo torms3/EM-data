@@ -7,6 +7,7 @@ function merge_split_plot( fpath, nickname, fname, varargin )
     addRequired(p,'fname',@(x)isstr(x));
     addOptional(p,'high',0.999,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'low',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
+    addOptional(p,'merge',true,@(x)islogical(x));
     addOptional(p,'thold',256,@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'metric','Rand',@(x)isstr(x));
@@ -14,6 +15,7 @@ function merge_split_plot( fpath, nickname, fname, varargin )
 
     high   = p.Results.high;
     low    = p.Results.low;
+    aggl   = p.Results.merge;
     thold  = p.Results.thold;
     arg    = p.Results.arg;
     metric = p.Results.metric;
@@ -32,8 +34,10 @@ function merge_split_plot( fpath, nickname, fname, varargin )
                         % load data
                         oname = [fname '_high' num2str(high(i))];
                         oname = [oname '_low' num2str(low(j))];
-                        oname = [oname '_size' num2str(thold(k))];
-                        oname = [oname '_arg' num2str(arg(l))];
+                        if aggl
+                            oname = [oname '_size' num2str(thold(k))];
+                            oname = [oname '_arg' num2str(arg(l))];
+                        end
                         try
                             load([oname '.mat']);
                         catch
@@ -63,7 +67,10 @@ function merge_split_plot( fpath, nickname, fname, varargin )
                         lgnd = p.Results.nickname{n};
                         lgnd = [lgnd ', high=' num2str(high(i))];
                         lgnd = [lgnd ', low=' num2str(low(j))];
-                        lgnd = [lgnd ', size=' num2str(thold(k))];
+                        if aggl
+                            lgnd = [lgnd ', size=' num2str(thold(k))];
+                            lgnd = [lgnd ', thold=' num2str(arg(l))];
+                        end
                         lgnds{end+1} = lgnd;
                         disp([lgnds{end} ', best ' metric ' F-score = ' num2str(max(score))]);
                     end
