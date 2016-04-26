@@ -72,7 +72,9 @@ function VI_score( fpath, template, samples, varargin )
             oname = [oname '_size' num2str(args.thold)];
             oname = [oname '_arg' num2str(args.farg1)];
         end
-        args.iname = [pwd '/' fname '.affin'];
+	    oname = [oname '_u'];
+        % args.iname = [pwd '/' fname '.affin'];
+        args.iname = [pwd '/' fname '.uaffin'];
         args.oname = [pwd '/' oname];
         args.isize = import_size(fname,3);
 

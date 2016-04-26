@@ -38,6 +38,7 @@ function merge_split_plot( fpath, nickname, fname, varargin )
                             oname = [oname '_size' num2str(thold(k))];
                             oname = [oname '_arg' num2str(arg(l))];
                         end
+			            oname = [oname '_u'];
                         try
                             load([oname '.mat']);
                         catch
@@ -50,12 +51,12 @@ function merge_split_plot( fpath, nickname, fname, varargin )
                         score   = result.(metric).score;
 
                         if strcmp(metric,'Rand')
-                            [~,idx] = sort(split,'ascend');
+                            [~,idx] = sort(thresh,'descend');
                             plot(split(idx),merge(idx),'-');
                             xlabel([metric ' split score']);
                             ylabel([metric ' merge score']);
                         elseif strcmp(metric,'VI')
-                            [~,idx] = sort(merge,'ascend');
+                            [~,idx] = sort(thresh,'ascend');
                             plot(merge(idx),split(idx),'-');
                             xlabel([metric ' merge score']);
                             ylabel([metric ' split score']);
