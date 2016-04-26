@@ -85,7 +85,9 @@ function ret = learning_curve( fname, varargin )
 
         h = plot(x,y,'-sr');
         stderr = [s(:) s(:)];
-        shadedErrorBar(x,y,stderr,{'-r','LineWidth',1.5},1);
+        if length(x)==length(stderr)
+            shadedErrorBar(x,y,stderr,{'-r','LineWidth',1.5},1);
+        end
 
     end
 

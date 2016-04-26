@@ -1,5 +1,8 @@
 function simple_merge_split_plot( fname, nickname, metric )
 
+    fontsize = get(0,'DefaultAxesFontSize');
+    set(0,'DefaultAxesFontSize',16);
+
     figure;
     hold on;
     lgnds = {};
@@ -41,6 +44,12 @@ function simple_merge_split_plot( fname, nickname, metric )
     hold off;
     grid on;
     legend(lgnds);
+    xlim([0 1]);
+    ylim([0 1]);
+    daspect([1 1 1]);
     title([metric ' score']);
+
+    % revert default font size
+    set(0,'DefaultAxesFontSize',fontsize);
 
 end
