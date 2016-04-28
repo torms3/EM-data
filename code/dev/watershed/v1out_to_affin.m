@@ -17,7 +17,7 @@ function v1out_to_affin( fname, oname )
         export_tensor(oname{i},affin,'affin','single');
 
         % exprot hdf5
-        % hdf5write([oname{i} '.h5'],'/main',aff);
+        hdf5write([oname{i} '.h5'],'/main',aff);
 
     end
 
