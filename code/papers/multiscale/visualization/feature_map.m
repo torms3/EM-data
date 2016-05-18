@@ -1,6 +1,5 @@
-function [fmaps] = feature_map( lname )
+function [fmaps] = feature_map( sample, lname )
 
-    sample = 10;
     template = ['Piriform_sample' num2str(sample)];
     if exist('lname','var')
         template = [template '_' lname];

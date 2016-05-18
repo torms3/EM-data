@@ -4,13 +4,13 @@ function cellplay( data, varargin )
     p = inputParser;
     addRequired(p,'data',@(x)iscell(x)&&(ndims(x)<3));
 
-    default = cell(size(data));
-    fn = @(x) isequal(size(data),size(x));
-    addOptional(p,'alpha',default,fn);
-
     default = repmat({'gray'},size(data));
     fn = @(x) isequal(size(data),size(x)) && iscell(x);
     addOptional(p,'clr',default,fn);
+
+    default = cell(size(data));
+    fn = @(x) isequal(size(data),size(x));
+    addOptional(p,'alpha',default,fn);
 
     default = cell(size(data));
     fn = @(x) isequal(size(data),size(x)) && ...
