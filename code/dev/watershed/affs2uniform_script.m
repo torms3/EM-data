@@ -1,6 +1,6 @@
-function affs2uniform_script( fpath, samples )
+function affs2uniform_script( fpath, prefix, samples )
 
-    template  = 'Piriform_sample%d_output';
+    template = [prefix '_sample%d_output'];
     for i = 1:numel(fpath)
         disp(fpath{i});
         cd(fpath{i});
