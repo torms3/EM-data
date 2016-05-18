@@ -14,10 +14,10 @@ function v1out_to_affin( fname, oname )
         affin  = single(cat(4,aff{:}));
 
         % export affinity graph binary
-        export_tensor(oname{i},affin,'affin','single');
+        % export_tensor(oname{i},affin,'affin','single');
 
         % exprot hdf5
-        hdf5write([oname{i} '.h5'],'/main',aff);
+        hdf5write([oname{i} '.h5'],'/main',affin);
 
     end
 

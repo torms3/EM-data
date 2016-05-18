@@ -9,7 +9,9 @@ function data = load_data( fname, phase, errtype )
     data.err  = hdf5read(fname,['/' phase '/' errtype]); % cost
 
     n = numel(data.err);
-    data.iter(1:end-n) = [];
-    data.cls(1:end-n)  = [];
+    if numel(data.iter) > n
+        data.iter(1:end-n) = [];
+        data.cls(1:end-n)  = [];
+    end
 
 end
