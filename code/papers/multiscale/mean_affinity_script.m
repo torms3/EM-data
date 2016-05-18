@@ -1,6 +1,6 @@
-function mean_affinity_script( fpath, samples )
+function mean_affinity_script( fpath, prefix, samples )
 
-    template = 'Piriform_sample%d_output';
+    template = [prefix '_sample%d_output'];
     data     = load_Piriform_dataset(samples);
 
     for i = 1:numel(fpath)
@@ -9,7 +9,7 @@ function mean_affinity_script( fpath, samples )
         for j = 1:numel(samples)
             sample = samples(j);
             iname  = [pwd '/' sprintf(template,sample) '.h5'];
-            oname  = [pwd '/' sprintf(template,sample) '_mean_affinity_nu'];
+            oname  = [pwd '/' sprintf(template,sample) '_mean_affinity'];
             if exist([oname '.h5'], 'file') ~= 2
                 disp(['mean affinity agglomeration: ' oname '.h5']);
                 mean_affinity_agglomeration(iname, [oname '.h5']);
