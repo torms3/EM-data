@@ -11,6 +11,8 @@ function ret = learning_curve( fname, varargin )
     addOptional(p,'title',[],@(x)isempty(x)||isstr(x));
     addOptional(p,'vline',[],@(x)isempty(x)||isnumeric(x));
     addOptional(p,'ucost',false,@(x)islogical(x));
+    addOptional(p,'train',[],@(x)isstruct(x));
+    addOptional(p,'test',[],@(x)isstruct(x));
     parse(p,fname,varargin{:});
 
     if p.Results.ucost
@@ -37,11 +39,19 @@ function ret = learning_curve( fname, varargin )
         hold on;
 
             % test curve
-            test = load_data(fname,'test',cost_type);
+            if isempty(p.Results.test)
+                test = load_data(fname,'test',cost_type);
+            else
+                test = p.Results.test;
+            end
             h(2) = plot_test_curve(test,errtype);
 
             % train curve
-            train = load_data(fname,'train',cost_type);
+            if isempty(p.Results.train)
+                train = load_data(fname,'train',cost_type);
+            else
+                train = p.Results.train;
+            end
             eiter = train.iter(end); % before smoothing
             train = smooth_curve(train,p.Results.w);
             h(1)  = plot(train.iter,train.(errtype),'-k');
@@ -63,7 +73,9 @@ function ret = learning_curve( fname, varargin )
         vline = p.Results.vline;
         if ~isempty(vline)
             yl = ylim;
-            line([vline vline],yl,'Color',[1 1 0]); % currently yellow
+            for i = 1:numel(vline)
+                line([vline(i) vline(i)],yl,'Color',[1 1 0]); % yellow
+            end
             ylim(yl);
         end
 

@@ -66,7 +66,8 @@ function cellplay( data, varargin )
     function msk = set_alpha_mask
 
         % default mask color: white
-        clr = [1 1 1];
+        % clr = [1 1 1];
+        clr = [1 0 0];
 
         sz  = size(data{1});
         one = ones(sz(1),sz(2));
