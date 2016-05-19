@@ -1,6 +1,8 @@
-function [affs] = softmax_affinity( prefix, sample )
+function [affs] = softmax_affinity( prefix, sample, lname )
 
-    fname = [prefix '_sample' num2str(sample) '_output'];
+    if ~exist('lname','var'); lname = 'output'; end;
+
+    fname = [prefix '_sample' num2str(sample) '_' lname];
 
     C = {};
     for i = 1:6
