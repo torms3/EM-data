@@ -1,6 +1,8 @@
-function v4out_to_affin( fname )
+function v4out_to_affin( prefix, sample )
 
     % e.g. fname = 'Piriform_sample1_output'
+    fname = [prefix '_sample' num2str(sample) '_output'];
+
     try
         aff = tif_to_affin;
     catch
