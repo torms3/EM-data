@@ -1,6 +1,5 @@
-function boundary_map_script( fname, data, options )
+function boundary_map_script( prefix, samples, data, options )
 
-    if ~iscell(fname);  fname = {fname};end;
     if ~iscell(data);     data = {data};end;
     if ~exist('options','var')
         % options(1)    pixel error
@@ -9,9 +8,10 @@ function boundary_map_script( fname, data, options )
         options = [1 0 0];
     end
 
-    for i = 1:numel(fname)
-        disp(['Processing ' fname{i} '...']);
-        assess_boundary_map(fname{i},data{i}.label);
+    for i = 1:numel(samples)
+        fname = [prefix '_sample' num2str(samples(i)) '_output'];
+        disp(['Processing ' fname '...']);
+        assess_boundary_map(fname,data{i}.label);
     end
 
 
