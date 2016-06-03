@@ -10,6 +10,7 @@ function merge_split_plot( fpath, nickname, fname, varargin )
     addOptional(p,'merge',true,@(x)islogical(x));
     addOptional(p,'thold',256,@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
+    addOptional(p,'remap',false,@(x)islogical(x));
     addOptional(p,'metric','Rand',@(x)isstr(x));
     parse(p,fpath,nickname,fname,varargin{:});
 
@@ -38,7 +39,9 @@ function merge_split_plot( fpath, nickname, fname, varargin )
                             oname = [oname '_size' num2str(thold(k))];
                             oname = [oname '_arg' num2str(arg(l))];
                         end
-			            oname = [oname '_u'];
+			            if p.Results.remap
+                            oname = [oname '_u'];
+                        end
                         try
                             load([oname '.mat']);
                         catch

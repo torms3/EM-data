@@ -47,12 +47,11 @@ function cellplay( data, varargin )
         clrmap = cell(size(data));
 
         for i = 1:numel(clr)
-            if isstr(clr{i}) && strcmp(clr{i},'')
-                vol = data{i} + 1;
+            if isempty(clr{i})
+                vol = data{i};
                 nseg = max(unique(vol(:)));
                 clrmap{i} = rand(nseg,3);
                 clrmap{i}(1,:) = 0;
-                params.data{i} = vol;
             else
                 clrmap{i} = clr{i};
             end

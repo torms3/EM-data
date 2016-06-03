@@ -3,6 +3,14 @@ function mean_affinity_script( fpath, prefix, samples )
     template = [prefix '_sample%d_output'];
     data     = load_Piriform_dataset(samples);
 
+    idx = samples == 2;
+    if any(idx)
+        disp('correcting Piriform sample2 label...');
+        affs = make_affinity(data{idx}.label);
+        seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),affs(:,:,:,3));
+        data{idx}.label = seg;
+    end
+
     for i = 1:numel(fpath)
         cd(fpath{i});
 

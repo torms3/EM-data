@@ -1,7 +1,7 @@
 function mean_affinity_agglomeration( iname, oname )
 
     % local base dir
-    local_base = '/usr/people/kisuk/Workbench/seung-lab';
+    local_base = '/usr/people/kisuk/Workbench_local/seung-lab';
 
     % mean affinity agglomeration
     mean_agg = [local_base '/spipe/mean_affinity.jl'];
