@@ -9,6 +9,7 @@ function VI_score( fpath, template, samples, varargin )
     addOptional(p,'low',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'merge',true,@(x)islogical(x));
     addOptional(p,'thold',256,@(x)isnumeric(x)&&all(x>=0));
+    addOptional(p,'lowt',256,@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'overwrite',false,@(x)islogical(x));
     parse(p,fpath,template,samples,varargin{:});
@@ -33,6 +34,7 @@ function VI_score( fpath, template, samples, varargin )
     low   = p.Results.low;
     thold = p.Results.thold;
     arg   = p.Results.arg;
+    dust  = p.Results.lowt;
     cur   = pwd;
     for p = 1:numel(fpath)
         if ~exist(fpath{p},'dir'); continue; end;
@@ -47,7 +49,10 @@ function VI_score( fpath, template, samples, varargin )
                             args.thold = thold(l);
                             for m = 1:numel(arg)
                                 args.farg1 = arg(m);
-                                do_compute(samples(i),data{i}.label);
+                                for n = 1:numel(dust)
+                                    args.lowt = dust(m);
+                                    do_compute(samples(i),data{i}.label);
+                                end
                             end
                         end
                     else
@@ -71,6 +76,7 @@ function VI_score( fpath, template, samples, varargin )
         if args.merge
             oname = [oname '_size' num2str(args.thold)];
             oname = [oname '_arg' num2str(args.farg1)];
+            oname = [oname '_dust' num2str(args.lowt)];
         end
 	    oname = [oname '_u'];
         % args.iname = [pwd '/' fname '.affin'];
