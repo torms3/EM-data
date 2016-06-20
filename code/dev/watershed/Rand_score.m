@@ -45,6 +45,7 @@ function Rand_score( fpath, template, samples, varargin )
     low   = p.Results.low;
     thold = p.Results.thold;
     arg   = p.Results.arg;
+    dust  = p.Results.lowt;
     cur   = pwd;
     for p = 1:numel(fpath)
         if ~exist(fpath{p},'dir'); continue; end;
@@ -59,7 +60,10 @@ function Rand_score( fpath, template, samples, varargin )
                             args.thold = thold(l);
                             for m = 1:numel(arg)
                                 args.farg1 = arg(m);
-                                do_compute(samples(i),data{i}.label);
+                                for n = 1:numel(dust)
+                                    args.lowt = dust(n);
+                                    do_compute(samples(i),data{i}.label);
+                                end
                             end
                         end
                     else
