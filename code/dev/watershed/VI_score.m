@@ -10,9 +10,12 @@ function VI_score( fpath, template, samples, varargin )
     addOptional(p,'merge',true,@(x)islogical(x));
     addOptional(p,'thold',256,@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
+    addOptional(p,'remap',false,@(x)islogical(x));
     addOptional(p,'overwrite',false,@(x)islogical(x));
     parse(p,fpath,template,samples,varargin{:});
-    overwrite = p.Results.overwrite;
+
+    remap      = p.Results.remap;
+    overwrite  = p.Results.overwrite;
 
     % watershed parameters
     args.iname = 'place_holder';
@@ -27,6 +30,14 @@ function VI_score( fpath, template, samples, varargin )
 
     % Piriform
     data  = load_Piriform_dataset(samples);
+
+    % special case
+    idx = samples == 2;
+    if any(idx)
+        affs = make_affinity(data{idx}.label);
+        seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),affs(:,:,:,3));
+        data{idx}.label = seg;
+    end
 
     % grid optimization
     high  = p.Results.high;
@@ -72,9 +83,11 @@ function VI_score( fpath, template, samples, varargin )
             oname = [oname '_size' num2str(args.thold)];
             oname = [oname '_arg' num2str(args.farg1)];
         end
-	    oname = [oname '_u'];
-        % args.iname = [pwd '/' fname '.affin'];
-        args.iname = [pwd '/' fname '.uaffin'];
+	    args.iname = [pwd '/' fname '.affin'];
+        if remap
+            oname = [oname '_u'];
+            args.iname = [pwd '/' fname '.uaffin'];
+        end
         args.oname = [pwd '/' oname];
         args.isize = import_size(fname,3);
 
