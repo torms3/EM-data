@@ -83,6 +83,7 @@ function Rand_score( fpath, template, samples, varargin )
         if args.merge
             oname = [oname '_size' num2str(args.thold)];
             oname = [oname '_arg' num2str(args.farg1)];
+            oname = [oname '_dust' num2str(args.lowt)];
         end
 	    args.iname = [pwd '/' fname '.affin'];
         if remap
