@@ -41,7 +41,7 @@ function ret = optimize_Rand_score( ws_seg, gt_seg, mt )
     [data] = iterate_over(thresh,data);
 
     %% Return
-    data = cell2mat(data);
+    data       = cell2mat(data);
     ret.thresh = extractfield(data,'thresh');
     ret.merge  = extractfield(data,'merge');
     ret.split  = extractfield(data,'split');
