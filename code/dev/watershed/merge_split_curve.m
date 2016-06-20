@@ -22,6 +22,7 @@ function merge_split_curve( data, metric )
     end
 
     disp(['Best ' metric ' F-score = ' num2str(max(score))]);
+
     grid on;
     grid minor;
 

@@ -9,6 +9,7 @@ function Rand_score( fpath, template, samples, varargin )
     addOptional(p,'low',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'merge',true,@(x)islogical(x));
     addOptional(p,'thold',256,@(x)isnumeric(x)&&all(x>=0));
+    addOptional(p,'lowt',256,@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'remap',false,@(x)islogical(x));
     addOptional(p,'overwrite',false,@(x)islogical(x));
