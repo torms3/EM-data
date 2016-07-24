@@ -1,7 +1,13 @@
-function mean_affinity_script( fpath, prefix, samples )
+function mean_affinity_script( fpath, prefix, samples, remap, is_2D, template )
 
-    template = [prefix '_sample%d_output'];
-    data     = load_Piriform_dataset(samples);
+    if ~exist('reamp','var'); remap = false; end;
+    if ~exist('is_2D','var'); is_2D = false; end;
+
+    if ~exist('template','var')
+        template = [prefix '_sample%d_output'];
+    end
+
+    data = load_Piriform_dataset(samples);
 
     idx = samples == 2;
     if any(idx)
@@ -11,12 +17,26 @@ function mean_affinity_script( fpath, prefix, samples )
         data{idx}.label = seg;
     end
 
+    % convert 3D segmentation to 2D one
+    if is_2D
+        for idx = 1:numel(data)
+            affs = make_affinity(data{idx}.label);
+            zaff = zeros(size(affs(:,:,:,3)));
+            seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),zaff);
+            data{idx}.label = seg;
+        end
+    end
+
     for i = 1:numel(fpath)
         cd(fpath{i});
 
         for j = 1:numel(samples)
             sample = samples(j);
-            iname  = [pwd '/' sprintf(template,sample) '.h5'];
+            if remap
+                iname  = [pwd '/' sprintf(template,sample) '_u.h5'];
+            else
+                iname  = [pwd '/' sprintf(template,sample) '.h5'];
+            end
             oname  = [pwd '/' sprintf(template,sample) '_mean_affinity'];
             if exist([oname '.h5'], 'file') ~= 2
                 disp(['mean affinity agglomeration: ' oname '.h5']);

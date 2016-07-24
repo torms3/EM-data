@@ -1,4 +1,4 @@
-function Rand_score( fpath, template, samples, varargin )
+function VI_2D_score( fpath, template, samples, varargin )
 
     % input parsing & validation
     p = inputParser;
@@ -30,13 +30,13 @@ function Rand_score( fpath, template, samples, varargin )
     args.lowt  = 256;
 
     % Piriform
-    data = load_Piriform_dataset(samples);
+    data  = load_Piriform_dataset(samples);
 
-    % special case
-    idx = samples == 2;
-    if any(idx)
+   % convert 3D segmentation to 2D one
+    for idx = 1:numel(data)
         affs = make_affinity(data{idx}.label);
-        seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),affs(:,:,:,3));
+        zaff = zeros(size(affs(:,:,:,3)));
+        seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),zaff);
         data{idx}.label = seg;
     end
 
@@ -61,7 +61,7 @@ function Rand_score( fpath, template, samples, varargin )
                             for m = 1:numel(arg)
                                 args.farg1 = arg(m);
                                 for n = 1:numel(dust)
-                                    args.lowt = dust(n);
+                                    args.lowt = dust(m);
                                     do_compute(samples(i),data{i}.label);
                                 end
                             end
@@ -89,7 +89,7 @@ function Rand_score( fpath, template, samples, varargin )
             oname = [oname '_arg' num2str(args.farg1)];
             oname = [oname '_dust' num2str(args.lowt)];
         end
-	    args.iname = [pwd '/' fname '.affin'];
+        args.iname = [pwd '/' fname '.affin'];
         if remap
             oname = [oname '_u'];
             args.iname = [pwd '/' fname '.uaffin'];
@@ -110,9 +110,9 @@ function Rand_score( fpath, template, samples, varargin )
         % load merge tree
         mt = load_merge_tree(oname);
 
-        % optimize Rand score & save
-        result.WS   = args;
-        result.Rand = optimize_Rand_score(seg, gt_seg, mt);
+        % optimize VI score
+        result.WS = args;
+        result.VI = optimize_VI_score(seg, gt_seg, mt);
 
         % if exist, update
         update_result([oname '.mat'], result);

@@ -1,4 +1,4 @@
-function Rand_score( fpath, template, samples, varargin )
+function Rand_2D_score( fpath, template, samples, varargin )
 
     % input parsing & validation
     p = inputParser;
@@ -32,11 +32,11 @@ function Rand_score( fpath, template, samples, varargin )
     % Piriform
     data = load_Piriform_dataset(samples);
 
-    % special case
-    idx = samples == 2;
-    if any(idx)
+    % convert 3D segmentation to 2D one
+    for idx = 1:numel(data)
         affs = make_affinity(data{idx}.label);
-        seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),affs(:,:,:,3));
+        zaff = zeros(size(affs(:,:,:,3)));
+        seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),zaff);
         data{idx}.label = seg;
     end
 
@@ -89,7 +89,7 @@ function Rand_score( fpath, template, samples, varargin )
             oname = [oname '_arg' num2str(args.farg1)];
             oname = [oname '_dust' num2str(args.lowt)];
         end
-	    args.iname = [pwd '/' fname '.affin'];
+        args.iname = [pwd '/' fname '.affin'];
         if remap
             oname = [oname '_u'];
             args.iname = [pwd '/' fname '.uaffin'];

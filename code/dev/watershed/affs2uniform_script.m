@@ -1,6 +1,9 @@
-function affs2uniform_script( fpath, prefix, samples )
+function affs2uniform_script( fpath, prefix, samples, template )
 
-    template = [prefix '_sample%d_output'];
+    if ~exist('template','var')
+        template = [prefix '_sample%d_output'];
+    end
+
     for i = 1:numel(fpath)
         disp(fpath{i});
         cd(fpath{i});

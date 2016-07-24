@@ -1,6 +1,6 @@
-function [fmaps] = feature_map( sample, lname )
+function [fmaps] = feature_map( prefix, sample, lname )
 
-    template = ['Piriform_sample' num2str(sample)];
+    template = [prefix '_sample' num2str(sample)];
     if exist('lname','var')
         template = [template '_' lname];
     end
@@ -12,8 +12,8 @@ function [fmaps] = feature_map( sample, lname )
         name = names{i};disp(name);
         name = name(1:end-4);
         pos  = findstr(name,'_');
-        key  = name(pos(2)+1:pos(3)-1);
-        num  = str2num(name(pos(3)+1:end));
+        key  = name(pos(end-1)+1:pos(end)-1);
+        num  = str2num(name(pos(end)+1:end));
         val  = {};
         if fmaps.isKey(key)
             val = fmaps(key);

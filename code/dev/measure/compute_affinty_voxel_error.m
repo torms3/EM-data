@@ -12,9 +12,24 @@ function ret = compute_affinty_voxel_error( fname, label )
         disp([fname ' is being processed...']);
 
         % ConvNet output affinity graph
-        affin.z = loadtiff([fname '_0.tif']);
-        affin.y = loadtiff([fname '_1.tif']);
-        affin.x = loadtiff([fname '_2.tif']);
+        try
+            affin.z = loadtiff([fname '_0.tif']);
+            affin.y = loadtiff([fname '_1.tif']);
+            affin.x = loadtiff([fname '_2.tif']);
+        catch
+            try
+                aff = import_tensor(fname,[],'affin','single');
+            catch
+                try
+                    aff = hdf5read([fname '.h5'],'/main');
+                catch
+                    assert(0);
+                end
+            end
+            affin.x = aff(:,:,:,1);
+            affin.y = aff(:,:,:,2);
+            affin.z = aff(:,:,:,3);
+        end
 
         % ground truth affinity graph
         truth = generate_affinity_graph(label);

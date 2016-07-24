@@ -29,8 +29,12 @@ function v4out_to_affin( prefix, sample )
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     function aff = tif_to_affin()
 
-        aff{1} = loadtiff([fname '_2.tif']); % x-affinity
-        aff{2} = loadtiff([fname '_1.tif']); % y-affinity
+        % aff{1} = loadtiff([fname '_2.tif']); % x-affinity
+        % aff{2} = loadtiff([fname '_1.tif']); % y-affinity
+        % aff{3} = loadtiff([fname '_0.tif']); % z-affinity
+
+        aff{1} = loadtiff([fname '_1.tif']); % x-affinity
+        aff{2} = loadtiff([fname '_2.tif']); % y-affinity
         aff{3} = loadtiff([fname '_0.tif']); % z-affinity
 
         aff = cat(4,aff{:});
