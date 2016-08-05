@@ -1,17 +1,19 @@
-function data = load_data( fname, phase, errtype )
-
-    if ~exist('errtype','var'); errtype = 'err'; end;
+function data = load_data( fname, phase, keys )
 
     assert(strcmp(phase,'train')||strcmp(phase,'test'));
 
-    data.iter = hdf5read(fname,['/' phase '/it']);       % iterations
-    data.cls  = hdf5read(fname,['/' phase '/cls']);      % classification error
-    data.err  = hdf5read(fname,['/' phase '/' errtype]); % cost
+    len = [];
+    for i = 1:numel(keys)
+        key = keys{i};
+        val = hdf5read(fname,['/' phase '/' key]);
+        data.(key) = val(:);
+        len(i) = numel(val);
+    end
 
-    n = numel(data.err);
-    if numel(data.iter) > n
-        data.iter(1:end-n) = [];
-        data.cls(1:end-n)  = [];
+    n = min(len);
+    fields = fieldnames(data);
+    for i = 1:numel(fields)
+        data.(fields{i})(1:end-n) = [];
     end
 
 end

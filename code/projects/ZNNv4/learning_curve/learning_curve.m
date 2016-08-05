@@ -1,8 +1,9 @@
-function ret = learning_curve( fname, varargin )
+function ret = learning_curve( fname, keys, varargin )
 
     % input parsing & validation
     p = inputParser;
     addRequired(p,'fname',@(x)exist(x,'file'));
+    addRequired(p,'keys',@(x)numel(keys)==3);
     addOptional(p,'w',1,@(x)isnumeric(x)&&(x>0));
     addOptional(p,'method','moving');
     addOptional(p,'nvalid',10000,@(x)isnumeric(x)&&(x>0));
@@ -10,20 +11,15 @@ function ret = learning_curve( fname, varargin )
     addOptional(p,'eiter',0,@(x)isnumeric(x)&&(x>=0));
     addOptional(p,'title',[],@(x)isempty(x)||isstr(x));
     addOptional(p,'vline',[],@(x)isempty(x)||isnumeric(x));
-    addOptional(p,'ucost',false,@(x)islogical(x));
     addOptional(p,'train',[],@(x)isstruct(x));
     addOptional(p,'test',[],@(x)isstruct(x));
-    parse(p,fname,varargin{:});
+    parse(p,fname,keys,varargin{:});
 
-    if p.Results.ucost
-        cost_type = 'ucost';
-    else
-        cost_type = 'err';
-    end
+    iter = keys{1};
 
     figure;
-    h(1) = subplot(1,2,1); plot_curve('err','Cost');
-    h(2) = subplot(1,2,2); plot_curve('cls','Classification error');
+    h(1) = subplot(1,2,1); plot_curve(keys{2},'Cost');
+    h(2) = subplot(1,2,2); plot_curve(keys{3},'Classification error');
 
     if ~isempty(p.Results.title)
         suptitle(p.Results.title);
@@ -40,7 +36,7 @@ function ret = learning_curve( fname, varargin )
 
             % test curve
             if isempty(p.Results.test)
-                test = load_data(fname,'test',cost_type);
+                test = load_data(fname,'test',keys);
             else
                 test = p.Results.test;
             end
@@ -48,13 +44,13 @@ function ret = learning_curve( fname, varargin )
 
             % train curve
             if isempty(p.Results.train)
-                train = load_data(fname,'train',cost_type);
+                train = load_data(fname,'train',keys);
             else
                 train = p.Results.train;
             end
-            eiter = train.iter(end); % before smoothing
+            eiter = train.(iter)(end); % before smoothing
             train = smooth_curve(train,p.Results.w);
-            h(1)  = plot(train.iter,train.(errtype),'-k');
+            h(1)  = plot(train.(iter),train.(errtype),'-k');
 
         hold off;
         grid on;
@@ -85,13 +81,13 @@ function ret = learning_curve( fname, varargin )
     function h = plot_test_curve( data, errtype )
 
         nv    = p.Results.nvalid;
-        intv  = find(data.iter < data.iter(1)+nv,1,'last');
+        intv  = find(data.(iter) < data.(iter)(1)+nv,1,'last');
         hintv = floor(intv/2);
-        niter = numel(data.iter);
+        niter = numel(data.(iter));
         idx   = intv:intv:niter;
 
         [z,~] = buffer(data.(errtype),intv); % only take full frames
-        x = data.iter(idx-hintv);
+        x = data.(iter)(idx-hintv);
         y = mean(z,1);
         s = std(z,1);
 

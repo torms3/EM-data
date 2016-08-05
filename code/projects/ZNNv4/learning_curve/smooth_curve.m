@@ -11,24 +11,33 @@ function data = smooth_curve( data, varargin )
     m = p.Results.method;
 
     if w > 0
-        filtered    = smooth(data.err,w,m);
-        data.stderr = sqrt(smooth(data.err.^2,w,m) - filtered.^2);
-        data.err    = filtered;
-        filtered    = smooth(data.cls,w,m);
-        data.stdcls = sqrt(smooth(data.cls.^2,w,m) - filtered.^2);
-        data.cls    = filtered;
+        fields = fieldnames(data);
+        if isfield(data,'iter')
+            iter = 'iter';
+        elseif isfield(data,'it')
+            iter = 'it';
+        else
+            assert(false);
+        end
+        for i = 1:numel(fields)
+            field = fields{i};
+            if strcmp(field,iter);continue;end;
+            filtered = smooth(data.(field),w,m);
+            data.(field) = filtered;
+            key = ['stderr_' field];
+            data.(key) = sqrt(smooth(data.(field).^2,w,m) - filtered.^2);
+        end
 
         % cutting leading and trailing edges
         if strcmp(m,'moving')
             hw  = floor(w/2);
-            n   = numel(data.iter);
+            n   = numel(data.(iter));
             idx = [1:hw n-hw+1:n];
 
-            data.iter(idx)   = [];
-            data.stderr(idx) = [];
-            data.err(idx)    = [];
-            data.stdcls(idx) = [];
-            data.cls(idx)    = [];
+            for i = 1:numel(fields)
+                field = fields{i};
+                data.(field)(idx) = [];
+            end
         end
     end
 
