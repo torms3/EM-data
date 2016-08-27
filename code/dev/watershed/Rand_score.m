@@ -30,7 +30,9 @@ function Rand_score( fpath, template, samples, varargin )
     args.lowt  = 256;
 
     % Piriform
-    data = load_Piriform_dataset(samples);
+    % data = load_Piriform_dataset(samples);
+    % Zfish validation
+    data = load_zfish_validation();
 
     % special case
     idx = samples == 2;

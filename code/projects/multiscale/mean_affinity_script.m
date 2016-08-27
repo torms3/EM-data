@@ -7,7 +7,8 @@ function mean_affinity_script( fpath, prefix, samples, remap, is_2D, template )
         template = [prefix '_sample%d_output'];
     end
 
-    data = load_Piriform_dataset(samples);
+    % data = load_Piriform_dataset(samples);
+    data = load_zfish_validation();
 
     idx = samples == 2;
     if any(idx)
