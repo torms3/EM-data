@@ -4,7 +4,7 @@ function data = load_Piriform_dataset( idx )
     if isempty(idx);        idx = 1:10; end;
 
     cur = pwd;
-    cd('~/Data_local/datasets/Piriform/');
+    cd('~/Data_local/datasets/piriform/');
 
     for i = 1:numel(idx)
         n = idx(i);

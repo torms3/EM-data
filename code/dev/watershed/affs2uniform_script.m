@@ -1,8 +1,4 @@
-function affs2uniform_script( fpath, prefix, samples, template )
-
-    if ~exist('template','var')
-        template = [prefix '_sample%d_output'];
-    end
+function affs2uniform_script( fpath, template, samples )
 
     for i = 1:numel(fpath)
         disp(fpath{i});
@@ -11,9 +7,10 @@ function affs2uniform_script( fpath, prefix, samples, template )
             sample = samples(j);
             fname  = sprintf(template,sample);
             disp(fname);
-            affs   = import_tensor(fname,[],'affin','single');
-            affs   = affs2uniform(affs);
-            export_tensor(fname,affs,'uaffin','single');
+            aff = import_tensor(fname,[],'affin','single');
+            aff = affs2uniform(aff);
+            export_tensor(fname,aff,'uaffin','single');
+            hdf5write([fname '_u.h5'],'/main',aff);
         end
     end
 
