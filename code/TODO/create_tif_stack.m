@@ -11,6 +11,9 @@ function [ret] = create_tif_stack( fpath, match )
 		flist = dir([fpath '*.png']);
 		if isempty(flist)
 			flist = dir([fpath '*.tif']);
+			if isempty(flist)
+				flist = dir([fpath '*.tiff']);
+			end
 		end
 	end
 
@@ -19,7 +22,7 @@ function [ret] = create_tif_stack( fpath, match )
 	names = sort(names);
 
 	% create stack
-	ret = [];	
+	ret = [];
 	for i = 1:numel(flist)
 		fname = names{i};
 		disp(fname);
@@ -27,7 +30,7 @@ function [ret] = create_tif_stack( fpath, match )
 			section = loadtiff([fpath fname]);
 		else
 			section = imread([fpath fname]);
-		end		
+		end
 		ret = cat(4,ret,section);
 	end
 	ret = squeeze(ret);

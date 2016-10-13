@@ -23,6 +23,7 @@ function compare_3D_ensemble( data, metric, varargin )
     hold on;
     plot_comparison(metric);
     hold off;
+    daspect([1 1 1]);
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     function plot_comparison( metric )
@@ -30,7 +31,7 @@ function compare_3D_ensemble( data, metric, varargin )
         clrmap = colormap(lines);
 
         for i = 1:ndata
-            h = merge_split_curve(data{i},metric);
+            h = merge_split_curve(data{i},metric,lgnd{i});
 
             % line color
             if isempty(color)
@@ -40,7 +41,9 @@ function compare_3D_ensemble( data, metric, varargin )
             end
 
             % line style
-            if ~isempty(style); h.LineStyle = style; end;
+            if i < 4
+              if ~isempty(style); h.LineStyle = style; end;
+            end
             if ~isempty(width); h.LineWidth = width; end;
         end
 
@@ -48,7 +51,9 @@ function compare_3D_ensemble( data, metric, varargin )
         if ~isempty(lgnd); legend(lgnd,'location','Best'); end;
 
         % focus
-        if ~isempty(focus)
+        if isempty(focus)
+            axis([0 1 0 1]);
+        else
             v = axis;
             axis([focus(1) v(2) focus(2) v(4)]);
         end

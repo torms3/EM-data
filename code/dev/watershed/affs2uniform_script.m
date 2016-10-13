@@ -10,7 +10,7 @@ function affs2uniform_script( fpath, template, samples )
             aff = import_tensor(fname,[],'affin','single');
             aff = affs2uniform(aff);
             export_tensor(fname,aff,'uaffin','single');
-            hdf5write([fname '_u.h5'],'/main',aff);
+            hdf5write([fname '_u.h5'],'/main',single(aff));
         end
     end
 

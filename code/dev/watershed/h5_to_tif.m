@@ -1,9 +1,11 @@
-function h5_to_tif( fname )
+function h5_to_tif( fname, location )
 
-  aff = hdf5read([fname '.h5'], '/main');
+  if ~exist('location','var'); location = 'main'; end;
 
-  saveastiff(aff(:,:,:,1), [fname '_0.tif'] );
-  saveastiff(aff(:,:,:,2), [fname '_1.tif'] );
-  saveastiff(aff(:,:,:,3), [fname '_2.tif'] );
+  out = hdf5read([fname '.h5'], ['/' location]);
+
+  for i = 1:size(out,4)
+    saveastiff(out(:,:,:,i), [fname '_' num2str(i-1) '.tif'] );
+  end
 
 end

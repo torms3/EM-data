@@ -1,4 +1,4 @@
-function [train,test] = load_SNEMI3D_dataset
+function [train,test] = load_SNEMI3D_dataset_old
 
     homeDir = get_project_root_path;
 

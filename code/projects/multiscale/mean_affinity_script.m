@@ -1,21 +1,23 @@
 function mean_affinity_script( fpath, template, samples, remap, is_2D )
 
     if ~iscell(fpath); fpath = {fpath};      end;
-    if ~exist('reamp','var'); remap = false; end;
+    if ~exist('remap','var'); remap = false; end;
     if ~exist('is_2D','var'); is_2D = false; end;
 
-    % piriform dataset.
-    % data = load_Piriform_dataset(samples);
-    % zfish blend test.
-    data = load_zfish_validation();
+    %data = load_Piriform_dataset(samples); % piriform dataset.
+    %data = load_zfish_validation(); % zfish blend test.    
+    %data = load_zfish_dataset(samples); % zfish dataset.
+    %data = load_pinky_dataset(samples); % pinky dataset.
+    %data = load_pinky_validation();  % pinky validation.
+    data = load_SNEMI3D_dataset(samples,false);  % SNEMI3D dataset.
 
-    idx = samples == 2;
-    if any(idx)
-        disp('Correcting Piriform sample2 label...');
-        affs = make_affinity(data{idx}.label);
-        seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),affs(:,:,:,3));
-        data{idx}.label = seg;
-    end
+    %idx = samples == 2;
+    %if any(idx)
+    %    disp('Correcting Piriform sample2 label...');
+    %    affs = make_affinity(data{idx}.label);
+    %    seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),affs(:,:,:,3));
+    %    data{idx}.label = seg;
+    %end
 
     % Convert 3D segmentation to 2D one.
     if is_2D
