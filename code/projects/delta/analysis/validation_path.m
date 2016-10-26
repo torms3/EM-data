@@ -8,7 +8,7 @@ function [vpath] = validation_path( fpath, iters, subdir )
             for k = 1:numel(subdir)
                 cd(fpath{i});
                 cd(['iter_' num2str(iters(j))]);
-                cd(subdir{j});
+                cd(subdir{k});
                 vpath{end+1} = pwd;
             end
         end
