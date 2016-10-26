@@ -1,4 +1,4 @@
-function Rand_score( fpath, template, samples, varargin )
+function Rand_score( fpath, template, samples, data, varargin )
 
     % input parsing & validation
     p = inputParser;

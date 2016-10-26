@@ -1,4 +1,4 @@
-function VI_score( fpath, template, samples, varargin )
+function VI_score( fpath, template, samples, data, varargin )
 
     % input parsing & validation
     p = inputParser;
