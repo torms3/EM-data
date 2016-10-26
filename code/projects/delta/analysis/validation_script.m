@@ -1,8 +1,5 @@
 function validation_script( fpath, prefix, sample, iters, option )
 
-    % DEBUG
-    option = [1 0 0 0];
-
     % Load ground truth.
     switch prefix
         case 'SNEMI3D'
@@ -11,6 +8,7 @@ function validation_script( fpath, prefix, sample, iters, option )
         otherwise
             assert(false);
     end
+    template = [prefix '_dataset%d_output'];
 
     cur = pwd;
     for i = 1:numel(fpath)
@@ -29,20 +27,41 @@ function validation_script( fpath, prefix, sample, iters, option )
 
         % Classification error.
         if option(1)
-            fname = {};
-            for i = 1:numel(sample)
-                fname{i} = [prefix '_dataset' num2str(sample(i)) '_output'];
+            for j = 1:numel(sample)
+                fname = {sprintf(template,sample(j))};
+                affinity_graph_script(fname,data1(j));
             end
-            affinity_graph_script(fname,data1);
         end
         % Rand score.
         if option(2)
+            prepare;
+            % Rand_score({pwd},template,sample,'high',0.9,'low',0.01,'thold',800,'lowt',600,'arg',0.2,'remap',true,'overwrite',true);
         end
         % VI Score.
         if option(3)
+            prepare;
+            % VI_score({pwd},template,sample,'high',0.9,'low',0.01,'thold',800,'lowt',600,'arg',0.2,'remap',true,'overwrite',true);
         end
         % Mean affinity.
         if option(4)
+            prepare;
+            % mean_affinity_script({pwd}, template, sample, true);
+        end
+
+    end
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    function prepare
+
+        for j = 1:numel(sample)
+            oname = sprintf(template,sample(j));
+            if exist([oname '.affin'],'file') ~= 2
+                aff = hdf5read([oname '.h5'],'/main');
+                export_tensor(oname,aff,'affin','single');
+            end
+            if exist([oname '.uaffin'],'file') ~= 2
+                affs2uniform_script({pwd}, template, sample(j));
+            end
         end
 
     end
