@@ -25,13 +25,13 @@ function compare_voxel( data, metric, varargin )
     hold on;
     for i = 1:numel(data)
         x = data{i}.iter;
-        y = 1-data{i}.data;
+        y = data{i}.data;
         h = plot(x,y);
         if ~isempty(lwidth); h.LineWidth = lwidth; end;
         if ~isempty(lstyle); h.LineStyle = lstyle; end;
         if ~isempty(mstyle); h.Marker    = mstyle; end;
-        % Best accuracy.
-        disp(['Best accuracy = ' num2str(max(y)) ' (' lgnd{i} ')']);
+        % Best score.
+        disp(['Best ' metric ' score = ' num2str(max(y)) ' (' lgnd{i} ')']);
     end
     hold off;
 
@@ -41,8 +41,8 @@ function compare_voxel( data, metric, varargin )
     % Plot decoration.
     grid on;
     xlabel('Iteration');
-    ylabel('Accuracy');
+    ylabel('Score');
     legend(lgnd,'location','Best');
-    title([metric ' accuracy']);
+    title([metric ' score']);
 
 end

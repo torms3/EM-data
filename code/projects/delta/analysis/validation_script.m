@@ -40,7 +40,7 @@ function validation_script( fpath, prefix, sample, iters, option, varargin )
         % VI Score.
         if option(3)
             prepare;
-            Rand_score({pwd},template,sample,data,varargin{:});
+            VI_score({pwd},template,sample,data,varargin{:});
         end
         % Mean affinity.
         if option(4)
