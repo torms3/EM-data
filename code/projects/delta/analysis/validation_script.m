@@ -1,4 +1,4 @@
-function validation_script( fpath, prefix, sample, iters, option, varargin )
+function validation_script( fpath, prefix, sample, option, varargin )
 
     % Load ground truth.
     switch prefix
@@ -13,23 +13,7 @@ function validation_script( fpath, prefix, sample, iters, option, varargin )
     cur = pwd;
     for i = 1:numel(fpath)
         cd(fpath{i});
-        cur2 = pwd;
-        for i = 1:numel(iters)
-            iter = iters(i);
-            cd([cur2 '/iter_' num2str(iter)]);
-            measure;
-            cur3 = pwd;
-            if exist('flip-xy','dir')
-                cd('flip-xy');
-                measure;
-                cd(cur3);
-            end
-            if exist('flip-xyz','dir')
-                cd('flip-xyz');
-                measure;
-                cd(cur3);
-            end
-        end
+        measure;
     end
     cd(cur);
 
