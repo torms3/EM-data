@@ -9,6 +9,7 @@ function compare_3D_ensemble( data, metric, varargin )
     addOptional(p,'width',[],@(x)isnumeric(x)&&(0<x));
     addOptional(p,'style','',@(x)isstr(x));
     addOptional(p,'lgnd',{},@(x)iscell(x));
+    addOptional(p,'fontsize',{},@(x)isnumeric(x)&&(0<x));
     parse(p,data,metric,varargin{:});
 
     color = p.Results.color;
@@ -19,11 +20,17 @@ function compare_3D_ensemble( data, metric, varargin )
 
     ndata = numel(data);
 
+    fontsize = get(0,'DefaultAxesFontSize');
+    set(0,'DefaultAxesFontSize',p.Results.fontsize);
+
     figure;
     hold on;
     plot_comparison(metric);
     hold off;
     daspect([1 1 1]);
+
+    % revert default font size
+    set(0,'DefaultAxesFontSize',fontsize);
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     function plot_comparison( metric )
