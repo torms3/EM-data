@@ -5,6 +5,7 @@ function Rand_score( fpath, template, samples, varargin )
     addRequired(p,'fpath',@(x)iscell(x));
     addRequired(p,'template',@(x)isstr(x));
     addRequired(p,'samples',@(x)isnumeric(x)&&all(x>=0));
+    addRequired(p,'data',@(x)iscell(x));
     addOptional(p,'high',0.999,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'low',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'merge',true,@(x)islogical(x));
@@ -34,7 +35,7 @@ function Rand_score( fpath, template, samples, varargin )
     %data = load_zfish_validation();  % zfish validation.
     %data = load_pinky_dataset(samples);  % pinky dataset.
     %data = load_pinky_validation();  % pinky validation.
-    data = load_SNEMI3D_dataset(samples,false);  % SNEMI3D dataset.
+    %data = load_SNEMI3D_dataset(samples,false);  % SNEMI3D dataset.
 
     % special case
     %idx = samples == 2;

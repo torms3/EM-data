@@ -1,10 +1,10 @@
-function validation_script( fpath, prefix, sample, iters, option )
+function validation_script( fpath, prefix, sample, iters, option, varargin )
 
     % Load ground truth.
     switch prefix
         case 'SNEMI3D'
+            data = load_SNEMI3D_dataset(sample, false);
             data1 = load_SNEMI3D_dataset(sample, true);
-            data2 = load_SNEMI3D_dataset(sample, false);
         otherwise
             assert(false);
     end
@@ -35,17 +35,17 @@ function validation_script( fpath, prefix, sample, iters, option )
         % Rand score.
         if option(2)
             prepare;
-            % Rand_score({pwd},template,sample,'high',0.9,'low',0.01,'thold',800,'lowt',600,'arg',0.2,'remap',true,'overwrite',true);
+            Rand_score({pwd},template,sample,data,varargin);
         end
         % VI Score.
         if option(3)
             prepare;
-            % VI_score({pwd},template,sample,'high',0.9,'low',0.01,'thold',800,'lowt',600,'arg',0.2,'remap',true,'overwrite',true);
+            Rand_score({pwd},template,sample,data,varargin);
         end
         % Mean affinity.
         if option(4)
             prepare;
-            % mean_affinity_script({pwd}, template, sample, true);
+            mean_affinity_script({pwd},template,sample,data,varargin);
         end
 
     end
