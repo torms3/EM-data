@@ -53,14 +53,14 @@ function data = load_SNEMI3D_dataset( idx, bordered )
 
     function [ret] = load_original( phase )
 
-	assert(strcmp(phase,'train') || strcmp(phase,'test'));
-	if exist(phase,'var')
-	    ret = eval(phase);
-	else
-	    disp(['load ' phase '...']);
-	    ret.img = loadtiff([phase '-input.tif']);
-	    ret.lbl = loadtiff([phase '-labels.tif']);
-	end
+        assert(strcmp(phase,'train') || strcmp(phase,'test'));
+        if exist(phase,'var')
+            ret = eval(phase);
+        else
+            disp(['load ' phase '...']);
+            ret.img = loadtiff([phase '-input.tif']);
+            ret.lbl = loadtiff([phase '-labels.tif']);
+        end
 
     end
 
