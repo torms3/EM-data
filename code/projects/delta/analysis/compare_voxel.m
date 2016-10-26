@@ -22,16 +22,21 @@ function compare_voxel( data, metric, varargin )
     end
 
     figure;
+
+    % Curves.
     hold on;
     for i = 1:numel(data)
         x = data{i}.iter;
         y = data{i}.data;
         h = plot(x,y);
+        % Style.
         if ~isempty(lwidth); h.LineWidth = lwidth; end;
         if ~isempty(lstyle); h.LineStyle = lstyle; end;
         if ~isempty(mstyle); h.Marker    = mstyle; end;
         % Best score.
-        disp(['Best ' metric ' score = ' num2str(max(y)) ' (' lgnd{i} ')']);
+        color{i} = h.Color;
+        [best{i},idx{i}] = max(y);
+        disp(['Best ' metric ' score = ' num2str(best{i}) ' (' lgnd{i} ')']);
     end
     hold off;
 
@@ -44,5 +49,17 @@ function compare_voxel( data, metric, varargin )
     ylabel('Score');
     legend(lgnd,'location','Best');
     title([metric ' score']);
+
+    % Best line.
+    hold on;
+    for i = 1:numel(data)
+        x = data{i}.iter(idx{i});
+        y = best{i};
+        h = plot(x,y,'o');
+        h.Color = [0 0 0];
+        h.MarkerFaceColor = color{i};
+        line([0 x],[y y],'LineStyle','-.','Color',color{i});
+    end
+    hold off;
 
 end

@@ -1,4 +1,4 @@
-function mean_affinity_agglomeration( iname, oname )
+function mean_affinity_agglomeration( iname, oname, param )
 
     % local base dir.
     local_base = '/usr/people/kisuk/Workbench_local/seung-lab';
@@ -8,7 +8,12 @@ function mean_affinity_agglomeration( iname, oname )
 
     % Run.
     sysargs = [iname ' ' oname];
-    sysline = ['julia ' mean_agg ' ' sysargs];
+    sysargs = [sysargs ' ' num2str(param.high)];
+    sysargs = [sysargs ' ' num2str(param.low) ];
+    sysargs = [sysargs ' ' num2str(param.size)];
+    sysargs = [sysargs ' ' num2str(param.arg) ];
+    sysargs = [sysargs ' ' num2str(param.dust)];
+    sysline = ['julia ' mean_agg ' ' sysargs  ];
     % disp(sysline);
     [~,cmdout] = system(sysline);
     disp(cmdout);
