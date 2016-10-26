@@ -14,7 +14,7 @@ function VI_score( fpath, template, samples, varargin )
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
     addOptional(p,'remap',false,@(x)islogical(x));
     addOptional(p,'overwrite',false,@(x)islogical(x));
-    parse(p,fpath,template,samples,varargin{:});
+    parse(p,fpath,template,samples,data,varargin{:});
 
     remap      = p.Results.remap;
     overwrite  = p.Results.overwrite;
