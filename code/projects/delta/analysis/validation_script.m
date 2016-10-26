@@ -13,11 +13,22 @@ function validation_script( fpath, prefix, sample, iters, option, varargin )
     cur = pwd;
     for i = 1:numel(fpath)
         cd(fpath{i});
-        root = pwd;
+        cur2 = pwd;
         for i = 1:numel(iters)
             iter = iters(i);
-            cd([root '/iter_' num2str(iter)]);
+            cd([cur2 '/iter_' num2str(iter)]);
             measure;
+            cur3 = pwd;
+            if exist('flip-xy','dir')
+                cd('flip-xy');
+                measure;
+                cd(cur3);
+            end
+            if exist('flip-xyz','dir')
+                cd('flip-xyz');
+                measure;
+                cd(cur3);
+            end
         end
     end
     cd(cur);
