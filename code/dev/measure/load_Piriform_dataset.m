@@ -11,6 +11,12 @@ function data = load_Piriform_dataset( idx )
         disp(['load stack' num2str(n) '...']);
         data{i}.image = loadtiff(['stack' num2str(n) '-image.tif']);
         data{i}.label = loadtiff(['stack' num2str(n) '-label.tif']);
+        % special case
+        if n == 2
+            aff = make_affinity(data{i}.label);
+            seg = get_segmentation(aff(:,:,:,1),aff(:,:,:,2),aff(:,:,:,3));
+            data{i}.label = seg;
+        end
     end
 
     cd(cur);

@@ -30,21 +30,6 @@ function Rand_score( fpath, template, samples, varargin )
     args.farg1 = 0.3;
     args.lowt  = 256;
 
-    %data = load_Piriform_dataset(samples);  % piriform dataset.
-    %data = load_zfish_dataset(samples);  % zfish dataset.
-    %data = load_zfish_validation();  % zfish validation.
-    %data = load_pinky_dataset(samples);  % pinky dataset.
-    %data = load_pinky_validation();  % pinky validation.
-    %data = load_SNEMI3D_dataset(samples,false);  % SNEMI3D dataset.
-
-    % special case
-    %idx = samples == 2;
-    %if any(idx)
-    %    affs = make_affinity(data{idx}.label);
-    %    seg  = get_segmentation(affs(:,:,:,1),affs(:,:,:,2),affs(:,:,:,3));
-    %    data{idx}.label = seg;
-    %end
-
     % grid optimization
     high  = p.Results.high;
     low   = p.Results.low;
