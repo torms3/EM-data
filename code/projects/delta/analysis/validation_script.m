@@ -35,17 +35,17 @@ function validation_script( fpath, prefix, sample, iters, option, varargin )
         % Rand score.
         if option(2)
             prepare;
-            Rand_score({pwd},template,sample,data,varargin);
+            Rand_score({pwd},template,sample,data,varargin{:});
         end
         % VI Score.
         if option(3)
             prepare;
-            Rand_score({pwd},template,sample,data,varargin);
+            Rand_score({pwd},template,sample,data,varargin{:});
         end
         % Mean affinity.
         if option(4)
             prepare;
-            mean_affinity_script({pwd},template,sample,data,varargin);
+            mean_affinity_script({pwd},template,sample,data,varargin{:});
         end
 
     end
