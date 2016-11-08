@@ -3,7 +3,7 @@ function ret = learning_curve( fname, keys, varargin )
     % input parsing & validation
     p = inputParser;
     addRequired(p,'fname',@(x)exist(x,'file'));
-    addRequired(p,'keys',@(x)numel(keys)==3);
+    addRequired(p,'keys',@(x)numel(keys)>1);
     addOptional(p,'w',1,@(x)isnumeric(x)&&(x>0));
     addOptional(p,'method','moving');
     addOptional(p,'nvalid',10000,@(x)isnumeric(x)&&(x>0));
@@ -18,8 +18,12 @@ function ret = learning_curve( fname, keys, varargin )
     iter = keys{1};
 
     figure;
-    h(1) = subplot(1,2,1); plot_curve(keys{2},'Cost');
-    h(2) = subplot(1,2,2); plot_curve(keys{3},'Classification error');
+    for i = 1:numel(keys)-1
+        h(i) = subplot(1,numel(keys)-1,i);
+        plot_curve(keys{i+1});
+        % h(1) = subplot(1,2,1); plot_curve(keys{2});
+        % h(2) = subplot(1,2,2); plot_curve(keys{3});
+    end
 
     if ~isempty(p.Results.title)
         suptitle(p.Results.title);
@@ -30,7 +34,7 @@ function ret = learning_curve( fname, keys, varargin )
     ret.h = h;
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    function plot_curve( errtype, lbl )
+    function plot_curve( errtype )
 
         hold on;
 
@@ -40,7 +44,7 @@ function ret = learning_curve( fname, keys, varargin )
             else
                 test = p.Results.test;
             end
-            h(2) = plot_test_curve(test,errtype);
+            hh(2) = plot_test_curve(test,errtype);
 
             % train curve
             if isempty(p.Results.train)
@@ -50,7 +54,7 @@ function ret = learning_curve( fname, keys, varargin )
             end
             eiter = train.(iter)(end); % before smoothing
             train = smooth_curve(train,p.Results.w);
-            h(1)  = plot(train.(iter),train.(errtype),'-k');
+            hh(1)  = plot(train.(iter),train.(errtype),'-k');
 
         hold off;
         grid on;
@@ -61,9 +65,9 @@ function ret = learning_curve( fname, keys, varargin )
 
         % plot decoration
         xlim([p.Results.siter eiter]);
-        legend(h,{'Train','Test'});
+        legend(hh,{'Train','Test'});
         xlabel('Iteration');
-        ylabel(lbl);
+        ylabel(errtype);
 
         % vertical line, if any
         vline = p.Results.vline;
