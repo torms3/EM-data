@@ -1,4 +1,4 @@
-function ret = rgb2seg( rgb, renumber )
+function [ret] = rgb2seg( rgb, renumber )
 
     if ~exist('renumber','var'); renumber = true; end;
 
