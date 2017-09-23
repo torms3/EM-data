@@ -8,10 +8,10 @@ function compare_prec_rec_curve( batch )
     S = get_exp_list;
 
     % collect data
-    for i = 1:numel(S)    
+    for i = 1:numel(S)
 
         disp(S{i}.lgnd);
-        cd(S{i}.path);        
+        cd(S{i}.path);
 
         % load
         file = dir(['out' num2str(batch) '*.mat']);
@@ -20,12 +20,12 @@ function compare_prec_rec_curve( batch )
             S{i}.rec  = nan;
         else
             load(file(1).name,'result');
-        
+
             % metrics
             [~,idx] = sort(result.conn.rec,'ascend');
             S{i}.conn.rec  = result.conn.rec(idx);
             S{i}.conn.prec = result.conn.prec(idx);
-            
+
             [~,idx] = sort(result.ws.rec,'ascend');
             S{i}.ws.rec  = result.ws.rec(idx);
             S{i}.ws.prec = result.ws.prec(idx);
@@ -34,8 +34,8 @@ function compare_prec_rec_curve( batch )
     end
 
     % plot
-    plot_comparison('conn','connected component');
-    % plot_comparison('ws','watershed');
+    % plot_comparison('conn','connected component');
+    plot_comparison('ws','watershed');
 
 
     function plot_comparison( field, method )
@@ -58,7 +58,7 @@ function compare_prec_rec_curve( batch )
         hold off;
         grid on;
         xlim([0.6 1]);ylim([0.6 1]);
-        
+
         xlabel('Rand split score');
         ylabel('Rand merge score');
         legend(h,lgnd,'Location','SouthWest');

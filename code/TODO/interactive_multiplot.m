@@ -69,11 +69,11 @@ function [clrmap] = interactive_multiplot( data, coloring, clrStr, clrmap, ratio
 		if( coloring(i) )
 			vol = imgCell{i} + 1;
 			nSeg = max(unique(vol(:))); disp(nSeg);
-			if( ~exist('clrmap','var') )
+			if ~exist('clrmap','var')
 				clrmap = rand(nSeg,3);
 				clrmap(1,:) = 0;
-				imgCell{i} = vol;
 			end
+            imgCell{i} = vol;
 			clrmaps{i} = clrmap;
 		else
 			clrmaps{i} = [];

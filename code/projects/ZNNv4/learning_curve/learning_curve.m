@@ -1,6 +1,6 @@
 function ret = learning_curve( fname, keys, varargin )
 
-    % input parsing & validation
+    % Input parsing & validation.
     p = inputParser;
     addRequired(p,'fname',@(x)exist(x,'file'));
     addRequired(p,'keys',@(x)numel(keys)>1);
@@ -29,7 +29,12 @@ function ret = learning_curve( fname, keys, varargin )
         suptitle(p.Results.title);
     end
 
-    % return
+    % Autosave.
+    % f = getframe(gcf);
+    % imwrite(f.cdata,'~/Pictures/learning_curve.png','png');
+    print('-clipboard','-dbitmap');
+
+    % Return.
     ret.params = p.Results;
     ret.h = h;
 
@@ -65,7 +70,7 @@ function ret = learning_curve( fname, keys, varargin )
 
         % plot decoration
         xlim([p.Results.siter eiter]);
-        legend(hh,{'Train','Test'});
+        legend(hh,{'Train','Test'},'AutoUpdate','off');
         xlabel('Iteration');
         ylabel(errtype);
 
