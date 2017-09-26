@@ -1,7 +1,7 @@
 function H=shadedErrorBar(x,y,errBar,lineProps,transparent,errline)
 % function H=shadedErrorBar(x,y,errBar,lineProps,transparent)
 %
-% Purpose 
+% Purpose
 % Makes a 2-d line plot with a pretty shaded error bar made
 % using patch. Error bar color is chosen automatically.
 %
@@ -15,41 +15,41 @@ function H=shadedErrorBar(x,y,errBar,lineProps,transparent,errline)
 %          bar. ** alternatively ** errBar can be a cellArray of
 %          two function handles. The first defines which statistic
 %          the line should be and the second defines the error
-%          bar. 
+%          bar.
 % lineProps - [optional,'-k' by default] defines the properties of
-%             the data line. e.g.:    
+%             the data line. e.g.:
 %             'or-', or {'-or','markerfacecolor',[1,0.2,0.2]}
 % transparent - [optional, 0 by default] if ==1 the shaded error
 %               bar is made transparent, which forces the renderer
 %               to be openGl. However, if this is saved as .eps the
 %               resulting file will contain a raster not a vector
-%               image. 
+%               image.
 %
 % Outputs
-% H - a structure of handles to the generated plot objects.     
+% H - a structure of handles to the generated plot objects.
 %
 %
 % Examples
 % y=randn(30,80); x=1:size(y,2);
 % shadedErrorBar(x,mean(y,1),std(y),'g');
-% shadedErrorBar(x,y,{@median,@std},{'r-o','markerfacecolor','r'});    
-% shadedErrorBar([],y,{@median,@std},{'r-o','markerfacecolor','r'});    
+% shadedErrorBar(x,y,{@median,@std},{'r-o','markerfacecolor','r'});
+% shadedErrorBar([],y,{@median,@std},{'r-o','markerfacecolor','r'});
 %
 % Overlay two transparent lines
 % y=randn(30,80)*10; x=(1:size(y,2))-40;
-% shadedErrorBar(x,y,{@mean,@std},'-r',1); 
+% shadedErrorBar(x,y,{@mean,@std},'-r',1);
 % hold on
 % y=ones(30,1)*x; y=y+0.06*y.^2+randn(size(y))*10;
-% shadedErrorBar(x,y,{@mean,@std},'-b',1); 
+% shadedErrorBar(x,y,{@mean,@std},'-b',1);
 % hold off
 %
 %
 % Rob Campbell - November 2009
 
 
-    
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
-% Error checking    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Error checking
 error(nargchk(3,6,nargin))
 
 
@@ -78,7 +78,7 @@ end
 
 
 %If only one error bar is specified then we will mirror it, turning it into
-%both upper and lower bars. 
+%both upper and lower bars.
 if length(errBar)==length(errBar(:))
     errBar=repmat(errBar(:)',2,1);
 else
@@ -95,15 +95,15 @@ end
 %Set default options
 defaultProps={'-k'};
 if nargin<4 || isempty(lineProps)
-    lineProps=defaultProps; 
+    lineProps=defaultProps;
 end
 if ~iscell(lineProps)
-    lineProps={lineProps}; 
+    lineProps={lineProps};
 end
 
 
 if nargin<5 || ~isnumeric(transparent)
-    transparent=0; 
+    transparent=0;
 end
 
 if ~exist('errline','var')
@@ -112,7 +112,7 @@ end
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Plot the main line. We plot this first in order to extract the RGB values
 % for the line colour. I am not aware of a function that does this.
 H.mainLine=plot(x,y,lineProps{:});
@@ -121,7 +121,7 @@ H.mainLine=plot(x,y,lineProps{:});
 % Work out the color of the shaded region and associated lines
 % Using alpha requires the render to be openGL and so you can't
 % save a vector image. On the other hand, you need alpha if you're
-% overlaying lines. We therefore provide the option of choosing alpha 
+% overlaying lines. We therefore provide the option of choosing alpha
 % or a de-saturated solid colour for the patch surface.
 
 col=get(H.mainLine,'color');
@@ -137,7 +137,7 @@ else
     set(gcf,'renderer','painters')
 end
 
-    
+
 %Calculate the y values at which we will place the error bars
 uE=y+errBar(1,:);
 lE=y-errBar(2,:);
@@ -163,7 +163,7 @@ H.patch=patch(xP,yP,1,'facecolor',patchColor,...
               'facealpha',faceAlpha);
 
 
-%Make nice edges around the patch. 
+%Make nice edges around the patch.
 if errline
     H.edge(1)=plot(x,lE,'-','color',edgeColor);
     H.edge(2)=plot(x,uE,'-','color',edgeColor);
@@ -178,4 +178,3 @@ H.mainLine=plot(x,y,lineProps{:});
 
 
 if ~holdStatus, hold off, end
-

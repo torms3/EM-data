@@ -1,9 +1,9 @@
 function [seg,mt] = load_segmentation( fname )
 
-    % segmentation
+    % Segmentation.
     seg = hdf5read(fname,'/main');
 
-    % merge tree
+    % Merge tree.
     dendValues = hdf5read(fname,'/dendValues');
     [dendValues,idx] = sort(dendValues,'descend');
     mt.vals = double(dendValues);

@@ -1,6 +1,6 @@
 function Rand_score( fpath, template, samples, data, varargin )
 
-    % input parsing & validation
+    % Input parsing & validation.
     p = inputParser;
     addRequired(p,'fpath',@(x)iscell(x));
     addRequired(p,'template',@(x)isstr(x));
@@ -12,14 +12,16 @@ function Rand_score( fpath, template, samples, data, varargin )
     addOptional(p,'thold',256,@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'lowt',256,@(x)isnumeric(x)&&all(x>=0));
     addOptional(p,'arg',0.3,@(x)isnumeric(x)&&all(0<=x)&&all(x<=1));
-    addOptional(p,'remap',false,@(x)islogical(x));
+    % addOptional(p,'remap',false,@(x)islogical(x));
     addOptional(p,'overwrite',false,@(x)islogical(x));
+    addOptional(p,'relative',true,@(x)islogical(x));
     parse(p,fpath,template,samples,data,varargin{:});
 
-    remap      = p.Results.remap;
+    % remap      = p.Results.remap;
     overwrite  = p.Results.overwrite;
+    relative   = p.Results.relative;
 
-    % watershed parameters
+    % Watershed parameters.
     args.iname = 'place_holder';
     args.oname = 'place_holder';
     args.isize = [];
@@ -30,7 +32,7 @@ function Rand_score( fpath, template, samples, data, varargin )
     args.farg1 = 0.3;
     args.lowt  = 256;
 
-    % grid optimization
+    % Grid optimization.
     high  = p.Results.high;
     low   = p.Results.low;
     thold = p.Results.thold;
@@ -68,8 +70,8 @@ function Rand_score( fpath, template, samples, data, varargin )
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     function do_compute( sample, gt_seg )
 
-        %% assume that we are in the right directory location.
-        %
+        % Assume that we are in the right directory location.
+
         % watershed parameters
         fname = sprintf(template, sample);
         oname = [fname '_high' num2str(args.highv)];

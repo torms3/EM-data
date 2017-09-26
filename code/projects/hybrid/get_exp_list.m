@@ -113,7 +113,7 @@ function list = get_exp_list()
     basedir = '~/Workbench/torms3/znn-release/experiments/Ashwin/2D_boundary/train234_test1/';
 
     % VDHR-P3 (10nm 90K)
-    list{idx}.path  = [basedir 'VDHR/P3/iter_90K/output/'];
+    list{idx}.path  = [basedir 'VDHR/P3/iter_90K/output2/'];
     list{idx}.str   = 'VD2D3D';
     list{idx}.lgnd  = 'VD2D3D';
     list{idx}.batch = [1 2 3];
