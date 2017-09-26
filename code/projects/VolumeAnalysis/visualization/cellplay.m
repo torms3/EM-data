@@ -49,7 +49,11 @@ function cellplay( data, varargin )
         for i = 1:numel(clr)
             if isempty(clr{i})
                 vol = data{i};
-                nseg = max(unique(vol(:)));
+                uid = unique(vol(:));
+                nseg = max(uid(:));
+                if any(uid == 0)
+                    nseg = nseg + 1;
+                end
                 clrmap{i} = rand(nseg,3);
                 clrmap{i}(1,:) = 0;
             else

@@ -9,8 +9,8 @@ function data = load_Piriform_dataset( idx )
     for i = 1:numel(idx)
         n = idx(i);
         disp(['load stack' num2str(n) '...']);
-        data{i}.image = loadtiff(['stack' num2str(n) '-image.tif']);
-        data{i}.label = loadtiff(['stack' num2str(n) '-label.tif']);
+        data{i}.image = hdf5read(['stack' num2str(n) '-image.h5'],'/main');
+        data{i}.label = hdf5read(['stack' num2str(n) '-label.h5'],'/main');
         % special case
         if n == 2
             aff = make_affinity(data{i}.label);

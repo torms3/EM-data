@@ -4,7 +4,7 @@ function data = load_zfish_dataset( idx )
     if isempty(idx);        idx = 1:7; end;
 
     cur = pwd;
-    cd('~/Data_local/datasets/zfish/');
+    cd('~/Data_local/datasets/Zfish/original');
 
     imgs{1} = 'r1.daan.img.h5';
     lbls{1} = 'r1.daan.lbl.h5';
