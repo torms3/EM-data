@@ -1,10 +1,10 @@
-function data = load_Piriform_dataset( idx )
+function [data] = load_Piriform_dataset( idx )
 
     if ~exist('idx','var'); idx = [];   end;
     if isempty(idx);        idx = 1:10; end;
 
     cur = pwd;
-    cd('~/Data_local/datasets/piriform/');
+    cd('~/Data_local/datasets/Piriform/original');
 
     for i = 1:numel(idx)
         n = idx(i);
@@ -12,11 +12,11 @@ function data = load_Piriform_dataset( idx )
         data{i}.image = hdf5read(['stack' num2str(n) '-image.h5'],'/main');
         data{i}.label = hdf5read(['stack' num2str(n) '-label.h5'],'/main');
         % special case
-        % if n == 2
-        %     aff = make_affinity(data{i}.label);
-        %     seg = get_segmentation(aff(:,:,:,1),aff(:,:,:,2),aff(:,:,:,3));
-        %     data{i}.label = seg;
-        % end
+        if n == 2
+            aff = make_affinity(data{i}.label);
+            seg = get_segmentation(aff(:,:,:,1),aff(:,:,:,2),aff(:,:,:,3));
+            data{i}.label = seg;
+        end
     end
 
     cd(cur);
