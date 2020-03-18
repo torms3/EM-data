@@ -1,4 +1,4 @@
 EM-data
 =======
 
-EM data manipulation
+Matlab scripts for EM data manipulation.
